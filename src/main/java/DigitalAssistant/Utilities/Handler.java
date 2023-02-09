@@ -1,4 +1,4 @@
-package DigitalAssistant.utilities;
+package DigitalAssistant.Utilities;
 
 import DigitalAssistant.gui.stages.MenuStage;
 import javafx.stage.Stage;

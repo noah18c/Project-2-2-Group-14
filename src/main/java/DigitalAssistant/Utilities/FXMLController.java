@@ -1,4 +1,4 @@
-package DigitalAssistant.utilities;
+package DigitalAssistant.Utilities;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

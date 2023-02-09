@@ -1,6 +1,6 @@
 package DigitalAssistant.gui.scenes;
 
-import DigitalAssistant.utilities.Handler;
+import DigitalAssistant.Utilities.Handler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
