@@ -17,8 +17,8 @@ public class InitMenuScene {
     public InitMenuScene(Handler handler){
         this.handler = handler;
         this.title = "Your friendly neighbourhood Digital Assistant";
-        this.width = handler.getScreen().getWidth()/6;
-        this.height = handler.getScreen().getHeight()/3;
+        this.width = handler.getScreen().getWidth()/3;
+        this.height = handler.getScreen().getHeight()/2;
     }
 
     public void display() throws Exception{
