@@ -1,3 +1,6 @@
 .label {
 
 }
+#messenger{
+    -fx-prompt-text-fill: #4f4f4f;
+}

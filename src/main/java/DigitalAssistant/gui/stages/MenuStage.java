@@ -29,14 +29,10 @@ public class MenuStage extends Application {
 
         InitMenuScene scene = new InitMenuScene(handler);
         scene.display();
-         /*
-        ChatScene scene = new ChatScene(handler);
-        scene.display();
-
-          */
 
         primaryStage.setScene(scene.getScene());
         primaryStage.show();
+        primaryStage.setMaximized(false);
     }
 
     public Stage getWindow() {

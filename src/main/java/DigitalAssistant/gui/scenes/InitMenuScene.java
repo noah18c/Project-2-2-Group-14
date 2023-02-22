@@ -1,21 +1,38 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.Transition;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class InitMenuScene implements SceneInterface{
+public class InitMenuScene implements SceneInterface {
 
     private Handler handler;
     private Scene scene;
     private String title;
     private int width, height;
+
+    @FXML
+    private Label introLabel;
+
+    @FXML
+    private Button proceedButton;
 
 
     public InitMenuScene(Handler handler){
@@ -37,6 +54,10 @@ public class InitMenuScene implements SceneInterface{
             throw new RuntimeException(e);
         }
         this.scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
+        proceedButton.setDisable(true);
+        this.AnimateText();
+        //proceedButton.setDisable(false);
     }
 
     public void proceed(ActionEvent e){
@@ -48,6 +69,28 @@ public class InitMenuScene implements SceneInterface{
 
     public Scene getScene(){
         return this.scene;
+    }
+
+    public void AnimateText() {
+        String content = introLabel.getText();
+        final Animation animation = new Transition() {
+            {
+                setCycleDuration(Duration.millis(6000));
+            }
+
+            protected void interpolate(double frac) {
+                final int length = content.length();
+                final int n = Math.round(length * (float) frac);
+                introLabel.setText(content.substring(0, n));
+            }
+        };
+        animation.setOnFinished(e ->{
+            proceedButton.setDisable(false);
+        });
+
+        animation.play();
+
+
     }
 
 }

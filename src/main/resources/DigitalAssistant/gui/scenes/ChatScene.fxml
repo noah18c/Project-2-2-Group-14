@@ -17,8 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="536.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DigitalAssistant.gui.scenes.ChatController">
+<VBox prefHeight="536.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="452.0">
          <children>
@@ -73,7 +72,7 @@
                   <Bloom />
                </effect>
             </Button>
-            <ChoiceBox layoutY="497.0" prefHeight="38.0" prefWidth="29.0" style="-fx-background-color: #A9A9A9;">
+            <ChoiceBox layoutY="497.0" prefHeight="38.0" prefWidth="34.0" style="-fx-background-color: #A9A9A9;">
                <effect>
                   <Lighting diffuseConstant="2.0" specularConstant="0.0" specularExponent="0.0">
                      <bumpInput>
