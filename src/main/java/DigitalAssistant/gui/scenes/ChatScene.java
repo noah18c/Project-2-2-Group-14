@@ -1,19 +1,38 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 
-public class ChatScene implements SceneInterface {
+public class ChatScene implements SceneInterface, Initializable {
 
     private Handler handler;
     private Scene scene;
     private String title;
     private int width, height;
+
+    @FXML
+    private ChoiceBox<?> choiceBox;
+
+    @FXML
+    private ListView<String> listview;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private Button sendButton;
+
+    @FXML
+    private TextField textField;
+    ObservableList<String> observableItems = FXCollections.observableArrayList("");
 
 
     public ChatScene(Handler handler){
@@ -25,6 +44,7 @@ public class ChatScene implements SceneInterface {
 
     public void display() {
         handler.getWindow().setTitle(this.title);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatScene.fxml"));
         loader.setController(this);
 
@@ -34,9 +54,28 @@ public class ChatScene implements SceneInterface {
             throw new RuntimeException(e);
         }
         this.scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+
+        init();
     }
+
+    private void init() {
+
+        sendButton.setOnAction(e -> {
+            String writtenText = (String) textField.getText();
+            textField.clear();
+            listview.getItems().addAll(writtenText);
+        });
+
+
+    }
+
 
     public Scene getScene(){
         return this.scene;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        listview.setItems(observableItems);
     }
 }
