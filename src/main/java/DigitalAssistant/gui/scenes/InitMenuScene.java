@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 
-public class InitMenuScene {
+public class InitMenuScene implements SceneInterface{
 
     private Handler handler;
     private Scene scene;
@@ -22,7 +22,7 @@ public class InitMenuScene {
         this.height = handler.getScreen().getHeight()/2;
     }
 
-    public void display() throws Exception{
+    public void display() throws Exception {
         handler.getWindow().setTitle(this.title);
         Parent root = FXMLLoader.load(getClass().getResource("initMenuScene.fxml"));
 
@@ -36,6 +36,10 @@ public class InitMenuScene {
 
     public Scene getScene(){
         return this.scene;
+    }
+
+    public Handler getHandler(){
+        return this.handler;
     }
 
 }

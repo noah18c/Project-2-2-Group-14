@@ -2,6 +2,7 @@
 package DigitalAssistant.gui.stages;
 
 import DigitalAssistant.Utilities.Handler;
+import DigitalAssistant.gui.scenes.ChatScene;
 import DigitalAssistant.gui.scenes.InitMenuScene;
 import DigitalAssistant.Utilities.*;
 import javafx.application.Application;
@@ -25,7 +26,11 @@ public class MenuStage extends Application {
         this.window = primaryStage;
         this.window.getIcons().add(loadImages.getIcon());
 
+        /*
         InitMenuScene scene = new InitMenuScene(handler);
+        scene.display();
+         */
+        ChatScene scene = new ChatScene(handler);
         scene.display();
 
         primaryStage.setScene(scene.getScene());
