@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
@@ -19,7 +22,7 @@
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="452.0">
          <children>
-            <ScrollPane layoutY="132.0" prefHeight="365.0" prefWidth="449.0">
+            <ScrollPane hbarPolicy="NEVER" layoutY="132.0" prefHeight="365.0" prefWidth="449.0">
                <content>
                   <ListView prefHeight="367.0" prefWidth="448.0" style="-fx-background-color: #ffffff; -fx-border-style: solid; -fx-border-color: #ffffff; -fx-border-image-width: 50px;">
                      <effect>
@@ -34,13 +37,16 @@
                      </light>
                   </Lighting>
                </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
             </ScrollPane>
             <ImageView fitHeight="132.0" fitWidth="476.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../img/banner.gif" />
                </image>
             </ImageView>
-            <TextField layoutY="498.0" prefHeight="38.0" prefWidth="363.0" promptText="Type here" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #ffffff;">
+            <TextField layoutX="35.0" layoutY="498.0" prefHeight="38.0" prefWidth="328.0" promptText="Type here" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #ffffff;">
                <effect>
                   <Glow level="0.4">
                      <input>
@@ -63,7 +69,22 @@
                <font>
                   <Font name="Lucida Console" size="12.800000190734863" />
                </font>
+               <effect>
+                  <Bloom />
+               </effect>
             </Button>
+            <ChoiceBox layoutY="497.0" prefHeight="38.0" prefWidth="29.0" style="-fx-background-color: #A9A9A9;">
+               <effect>
+                  <Lighting diffuseConstant="2.0" specularConstant="0.0" specularExponent="0.0">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </ChoiceBox>
          </children>
       </AnchorPane>
    </children>
