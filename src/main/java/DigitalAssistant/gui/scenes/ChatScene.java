@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import java.io.IOException;
+
 public class ChatScene implements SceneInterface {
 
     private Handler handler;
@@ -21,19 +23,20 @@ public class ChatScene implements SceneInterface {
         this.height = handler.getScreen().getHeight()/2;
     }
 
-    public void display() throws Exception {
+    public void display() {
         handler.getWindow().setTitle(this.title);
-        Parent root = FXMLLoader.load(getClass().getResource("ChatScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatScene.fxml"));
+        loader.setController(this);
 
-        this.scene = new Scene(root, width, height);
+        try {
+            this.scene = new Scene(loader.load(), width, height);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
     }
 
     public Scene getScene(){
         return this.scene;
-    }
-
-    public Handler getHandler(){
-        return this.handler;
     }
 }

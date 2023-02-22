@@ -26,12 +26,14 @@ public class MenuStage extends Application {
         this.window = primaryStage;
         this.window.getIcons().add(loadImages.getIcon());
 
-        /*
+
         InitMenuScene scene = new InitMenuScene(handler);
         scene.display();
-         */
+         /*
         ChatScene scene = new ChatScene(handler);
         scene.display();
+
+          */
 
         primaryStage.setScene(scene.getScene());
         primaryStage.show();

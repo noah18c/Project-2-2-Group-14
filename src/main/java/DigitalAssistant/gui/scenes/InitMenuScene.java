@@ -5,6 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class InitMenuScene implements SceneInterface{
@@ -22,24 +25,29 @@ public class InitMenuScene implements SceneInterface{
         this.height = handler.getScreen().getHeight()/2;
     }
 
-    public void display() throws Exception {
+    public void display() {
         handler.getWindow().setTitle(this.title);
-        Parent root = FXMLLoader.load(getClass().getResource("initMenuScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("initMenuScene.fxml"));
+        loader.setController(this);
 
-        this.scene = new Scene(root, width, height);
+
+        try {
+            this.scene = new Scene(loader.load(), width, height);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
     }
 
     public void proceed(ActionEvent e){
-        System.out.println("hello");
+        ChatScene chatScene = new ChatScene(handler);
+        chatScene.display();
+        handler.getWindow().setScene(chatScene.getScene());
+        handler.getWindow().show();
     }
 
     public Scene getScene(){
         return this.scene;
-    }
-
-    public Handler getHandler(){
-        return this.handler;
     }
 
 }
