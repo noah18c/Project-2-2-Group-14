@@ -5,29 +5,66 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox prefHeight="536.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DigitalAssistant.gui.scenes.ChatController">
    <children>
-      <VBox layoutX="105.0" prefHeight="400.0" prefWidth="388.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="452.0">
          <children>
-            <ScrollPane prefHeight="382.0" prefWidth="386.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <ListView layoutX="3.0" prefHeight="342.0" prefWidth="366.0" style="-fx-background-color: #556B2F; -fx-border-style: solid; -fx-border-color: black;">
-                           <effect>
-                              <Glow />
-                           </effect>
-                        </ListView>
-                        <TextField layoutX="3.0" layoutY="340.0" prefHeight="30.0" prefWidth="311.0" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #000000;" />
-                        <Button layoutX="313.0" layoutY="342.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: black;" text="Send" textFill="WHITE" />
-                     </children>
-                  </AnchorPane>
-              </content>
+            <ScrollPane layoutY="132.0" prefHeight="365.0" prefWidth="449.0">
+               <content>
+                  <ListView prefHeight="367.0" prefWidth="448.0" style="-fx-background-color: #ffffff; -fx-border-style: solid; -fx-border-color: #ffffff; -fx-border-image-width: 50px;">
+                     <effect>
+                        <Glow />
+                     </effect>
+                  </ListView>
+               </content>
+               <effect>
+                  <Lighting bumpInput="$null">
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
             </ScrollPane>
+            <ImageView fitHeight="132.0" fitWidth="476.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/banner.gif" />
+               </image>
+            </ImageView>
+            <TextField layoutY="498.0" prefHeight="38.0" prefWidth="363.0" promptText="Type here" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #ffffff;">
+               <effect>
+                  <Glow level="0.4">
+                     <input>
+                        <Lighting diffuseConstant="0.91" specularConstant="0.0" specularExponent="11.84" surfaceScale="2.71">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </input>
+                  </Glow>
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.800000190734863" />
+               </font>
+            </TextField>
+            <Button layoutX="363.0" layoutY="498.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="86.0" style="-fx-background-color: black; -fx-effect: pan;" text="Send" textFill="#fcfbfb">
+               <font>
+                  <Font name="Lucida Console" size="12.800000190734863" />
+               </font>
+            </Button>
          </children>
-      </VBox>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</VBox>
