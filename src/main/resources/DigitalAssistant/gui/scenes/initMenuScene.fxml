@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DigitalAssistant.gui.scenes.InitMenuScene">
    <children>
       <ImageView fitHeight="122.0" fitWidth="123.0" layoutX="239.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,6 +19,6 @@
             <Font name="Courier New" size="20.0" />
          </font>
       </Label>
-      <Button alignment="BOTTOM_LEFT" layoutX="244.0" layoutY="330.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="111.0" style="-fx-font-family: courier; -fx-background-color: linear-gradient(#800000, #be1d00); -fx-background-radius: 40;" text="Proceed" textFill="WHITE" />
+      <Button alignment="BOTTOM_LEFT" layoutX="244.0" layoutY="330.0" mnemonicParsing="false" onAction="#proceed" prefHeight="34.0" prefWidth="111.0" style="-fx-font-family: courier; -fx-background-color: linear-gradient(#800000, #be1d00); -fx-background-radius: 40;" text="Proceed" textFill="WHITE" />
    </children>
 </AnchorPane>

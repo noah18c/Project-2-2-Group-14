@@ -1,6 +1,7 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,6 +28,10 @@ public class InitMenuScene {
 
         this.scene = new Scene(root, width, height);
         this.scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+    }
+
+    public void proceed(ActionEvent e){
+        System.out.println("hello");
     }
 
     public Scene getScene(){
