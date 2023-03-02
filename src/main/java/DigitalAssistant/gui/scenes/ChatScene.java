@@ -8,8 +8,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.VBox;
 
+import javax.swing.text.Document;
 import java.io.IOException;
+import java.net.*;
+import java.util.ResourceBundle;
+import java.io.IOException;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChatScene implements SceneInterface, Initializable {
 
@@ -29,6 +42,9 @@ public class ChatScene implements SceneInterface, Initializable {
 
     @FXML
     private Button sendButton;
+
+    @FXML
+    private VBox vBox;
 
     @FXML
     private TextField textField;
@@ -63,6 +79,21 @@ public class ChatScene implements SceneInterface, Initializable {
         sendButton.setOnAction(e -> {
             String writtenText = (String) textField.getText();
             textField.clear();
+
+            try
+            {
+                URL url=new URL("https://google.co.in");
+                URLConnection connection=url.openConnection();
+                connection.connect();
+                java.awt.Desktop.getDesktop().browse(java.net.URI.create("http://www.google.com/search?hl=en&q="+writtenText.replace(" ", "+")+"&btnG=Google+Search"));
+
+            }
+            catch(Exception ee)
+            {
+                System.out.println("shit");
+            }
+
+
             listview.getItems().addAll(writtenText);
         });
 

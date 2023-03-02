@@ -33,6 +33,7 @@ public class MenuStage extends Application {
         primaryStage.setScene(scene.getScene());
         primaryStage.show();
         primaryStage.setMaximized(false);
+        primaryStage.setResizable(false);
     }
 
     public Stage getWindow() {
