@@ -1,8 +1,11 @@
 package DigitalAssistant.skillLogic;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Parser {
+    public ArrayList<ArrayList<String>> messages = new ArrayList();
+    public int lastMessageIndex = -1;
     public String lastParsedString;
     public Time.Month month;
     public Time time = new Time();
@@ -14,22 +17,18 @@ public class Parser {
         isLeap = Time.isLeapYear(year);
     }
 
-    public void getSkillInputs(String stringToParse){
+    public void tokenizeMessage(String stringToParse){
+        ArrayList<String> phrases = new ArrayList();
         Scanner scanner = new Scanner(stringToParse);
         String previousString = "";
         scanner.useDelimiter(" ");
         while(scanner.hasNext()){
             String currentSring = scanner.next();
-
-            /*If a month is detected, save it and check to see if a day is entered before or after and save it, 
-                otherwise display error
-             */
-            time.isMonth(currentSring, this);
-            
-    
-            previousString = currentSring;
+            phrases.add(currentSring);
         }
         scanner.close();
+        messages.add(phrases);
+        lastMessageIndex++;
     }
 
     public static int getInt(String str){
@@ -38,13 +37,48 @@ public class Parser {
         return Integer.valueOf(strReg);
     }
     
+    public ArrayList<ArrayList<String>> getMessages() {
+        return messages;
+    }
+
+    public int getLastMessageIndex() {
+        return lastMessageIndex;
+    }
+
+    public String getLastParsedString() {
+        return lastParsedString;
+    }
+
+    public Time.Month getMonth() {
+        return month;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public boolean isLeap() {
+        return isLeap;
+    }
+    
     public static void main(String[] args) {
         Parser parser = new Parser();
         String example = "Place a meeting on the 14th of February";
-        parser.getSkillInputs(example);
-        System.out.println(parser.month);
-        System.out.println(parser.day);
+        parser.tokenizeMessage(example);
+        ArrayList<String> message = parser.getMessages().get(parser.getLastMessageIndex());
+        for(String word : message){
+            System.out.println(word);
+        }
       
     }
+
 
 }
