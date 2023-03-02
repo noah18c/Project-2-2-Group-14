@@ -1,5 +1,6 @@
 package DigitalAssistant.skillLogic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ public class Skill {
 
     private String name;
     private String prototype;
-    private HashMap<String, String[]> placeholders;
+    private HashMap<String, ArrayList<String>> placeholders;
     private SkillAction action;
 
     public Skill(String name, String prototype) {
@@ -32,13 +33,15 @@ public class Skill {
         return prototype;
     }
 
-    public void setPlaceholderValue(String placeholder, String[] value) {
-        placeholders.put(placeholder, value);
+    public void setPlaceholderValue(String placeholder, ArrayList<String> values) {
+        placeholders.put(placeholder, values);
     }
 
-    public String[] getPlaceholderValue(String placeholder) {
-        return placeholders.get(placeholder);
-    }
+    // public String getPlaceholderValue(String placeholder) {
+    //     return placeholders.get(placeholder);
+    // }
+
+
 
     public void setAction(SkillAction action) {
         this.action = action;
@@ -48,30 +51,14 @@ public class Skill {
         return action;
     }
 
-    public void performAction(){
-        action.performAction(placeholders);
-    }
 
-    
-    public boolean matches(String input) {
-        String[] words = input.split(" ");
-        String[] prototypeWords = prototype.split(" ");
-        if (words.length != prototypeWords.length) {
-            return false;
-        }
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            String prototypeWord = prototypeWords[i];
-            if (prototypeWord.startsWith("¡") && prototypeWord.endsWith("¿")) {
-                String placeholder = prototypeWord.substring(1, prototypeWord.length() - 1);
-                //placeholders.put(placeholder, word);
-            } else if (!word.equals(prototypeWord)) {
-                return false;
-            }
-        }
-        return true;
+
+    public void performAction(){
+        // action.performAction(placeholders);
     }
     
+
+    //Converts this Skill to txt format of the skill.
     public String toSaveString() {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(":").append(prototype).append("\n");
@@ -80,19 +67,5 @@ public class Skill {
         }
         return sb.toString();
     }
-    
-    public static Skill fromSaveString(String saveString) {
-        String[] lines = saveString.split("\n");
-        String[] parts = lines[0].split(":");
-        String name = parts[0];
-        String prototype = parts[1];
-        Skill skill = new Skill(name, prototype);
-        for (int i = 1; i < lines.length; i++) {
-            String[] keyValue = lines[i].split("=");
-            String placeholder = keyValue[0];
-            String value = keyValue[1];
-            //skill.setPlaceholderValue(placeholder, value);
-        }
-        return skill;
-    }
+
 }

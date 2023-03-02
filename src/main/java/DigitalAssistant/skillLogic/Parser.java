@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Parser {
-    public ArrayList<ArrayList<String>> messages = new ArrayList();
+    public ArrayList<ArrayList<Word>> messages = new ArrayList();
     public int lastMessageIndex = -1;
     public String lastParsedString;
     public Time.Month month;
@@ -18,30 +18,20 @@ public class Parser {
     }
 
     public void tokenizeMessage(String stringToParse){
-        ArrayList<String> words = new ArrayList();
+        ArrayList<Word> words = new ArrayList();
         Scanner scanner = new Scanner(stringToParse);
         scanner.useDelimiter(" ");
         
         while(scanner.hasNext()){
-            String currentSring = scanner.next();
-            words.add(currentSring);
+            String currentString = scanner.next();
+            words.add(new Word(currentString));
         }
         scanner.close();
         messages.add(words);
         lastMessageIndex++;
     }
 
-    public boolean findDates(int messageIndex){
-        for(String phrase : messages.get(messageIndex)){
-            if(time.isMonth(phrase, this)){
-                //LOGIC TO LOOK FOR DAY OF MONTH
-
-                return true;
-            }//checks to see if the phrase is a month 
-
-        }
-        return false;
-    }
+   
 
     public static int getInt(String str){
         String strReg = str.replaceAll("[^0-9:]", "");
@@ -49,7 +39,7 @@ public class Parser {
         return Integer.valueOf(strReg);
     }
     
-    public ArrayList<ArrayList<String>> getMessages() {
+    public ArrayList<ArrayList<Word>> getMessages() {
         return messages;
     }
 
@@ -82,15 +72,20 @@ public class Parser {
     }
     
     public static void main(String[] args) {
-        Parser parser = new Parser();
-        String example = "Place a meeting on the 14th of February";
-        parser.tokenizeMessage(example);
-        ArrayList<String> message = parser.getMessages().get(parser.getLastMessageIndex());
-        for(String word : message){
-            System.out.println(word);
+        String str = "!DAY? - #weekDays||#numericDays||";
+        Scanner scanner = new Scanner(str);
+        scanner.useDelimiter(" ");
+        System.out.println(scanner.next());
+        scanner.next();
+        String nextPart = scanner.next();
+        scanner.close();
+        Scanner scanner2 = new Scanner(nextPart);
+        scanner2.useDelimiter("||");
+        System.out.println("Placeholders:");
+
+        while(scanner2.hasNext()){
+            System.out.println(scanner2.next());
         }
       
     }
-
-
 }

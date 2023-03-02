@@ -1,0 +1,23 @@
+TEMPLATE
+Skill name
+"Prototype Sentence"
+Placeholder 1
+Placeholder 2...
+
+*****
+distance_finder
+"How far from !CITY? to !CITY??"
+!CITY? - Maastricht||Chicago||...
+*****
+schedule_lookup
+"What lecture do I have on !DAY? at !TIME??"
+!DAY? - #weekDays||#numericDays||
+!TIME? - #clockTime 
+*****
+scheduler
+"Add an event on !DAY? at !TIME?."
+!DAY? - #weekDays||#numericDays||
+!TIME? - #clockTime
+*****
+.....
+

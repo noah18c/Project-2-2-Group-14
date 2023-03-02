@@ -25,10 +25,10 @@ public class Time {
         }
     }
 
-    public boolean isMonth(String str, Parser parser){
+    public boolean isMonth(Word word){
         for(Month month : months){
-            if(str.toLowerCase().equals(month.getName())){
-                parser.month = month;
+            if(word.getValue().toLowerCase().equals(month.getName())){
+                //TODO: SET IN CORRESPONDING CLASS THE DESIRED MONTH
                 return true;
             }
         }
@@ -82,5 +82,10 @@ public class Time {
         o DAYS, TIMES, INTERVALS (for alarm/stopwatch), LOCATION, EVENT
     - Boolean checks for each time-type
     - Getters/setters etc...
+
+    - on what day is holiday xy?
+    - what holiday is today?
+    - Who of my friends has birthday next?
+
      */
 }
