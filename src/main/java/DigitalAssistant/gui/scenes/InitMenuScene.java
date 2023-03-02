@@ -75,7 +75,7 @@ public class InitMenuScene implements SceneInterface {
         String content = introLabel.getText();
         final Animation animation = new Transition() {
             {
-                setCycleDuration(Duration.millis(6000));
+                setCycleDuration(Duration.millis(5000));
             }
 
             protected void interpolate(double frac) {

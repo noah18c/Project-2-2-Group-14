@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 
@@ -32,7 +33,7 @@ public class ChatScene implements SceneInterface, Initializable {
 
     @FXML
     private TextField textField;
-    ObservableList<String> observableItems = FXCollections.observableArrayList("");
+    ObservableList<String> observableItems = FXCollections.observableArrayList();
 
 
     public ChatScene(Handler handler){
@@ -60,13 +61,24 @@ public class ChatScene implements SceneInterface, Initializable {
 
     private void init() {
 
-        sendButton.setOnAction(e -> {
-            String writtenText = (String) textField.getText();
-            textField.clear();
-            listview.getItems().addAll(writtenText);
+        this.textField.setOnKeyPressed(e -> {
+            if(e.getCode().equals(KeyCode.ENTER)){
+                writeText(textField.getText());
+                textField.clear();
+            }
         });
 
 
+        sendButton.setOnAction(e -> {
+            writeText(textField.getText());
+            textField.clear();
+        });
+
+
+    }
+
+    private void writeText(String writtenText){
+        listview.getItems().addAll(writtenText);
     }
 
 
