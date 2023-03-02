@@ -18,17 +18,29 @@ public class Parser {
     }
 
     public void tokenizeMessage(String stringToParse){
-        ArrayList<String> phrases = new ArrayList();
+        ArrayList<String> words = new ArrayList();
         Scanner scanner = new Scanner(stringToParse);
-        String previousString = "";
         scanner.useDelimiter(" ");
+        
         while(scanner.hasNext()){
             String currentSring = scanner.next();
-            phrases.add(currentSring);
+            words.add(currentSring);
         }
         scanner.close();
-        messages.add(phrases);
+        messages.add(words);
         lastMessageIndex++;
+    }
+
+    public boolean findDates(int messageIndex){
+        for(String phrase : messages.get(messageIndex)){
+            if(time.isMonth(phrase, this)){
+                //LOGIC TO LOOK FOR DAY OF MONTH
+
+                return true;
+            }//checks to see if the phrase is a month 
+
+        }
+        return false;
     }
 
     public static int getInt(String str){
