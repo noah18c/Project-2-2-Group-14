@@ -10,18 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-/*
- * Phase 1 TODO:
- *  o Finish loadSkills method
- *  o Finish off chatbot functionality (GUI)
- *  o Add comments
- *  o Make saveSkill method: Add new Skill to the skills.txt text file in style of template
- *  o Test shit
- *  o Add functionality based on skill (eg. scheduler, scheduleLookup, timer, scheduleCanceller)
- *      - Make corresponding text files for pre-made meetings/lectures/etc...
- *  o Make GUI interface to edit skills we have made (ability to edit prototype sentences, placeholders, and name)
- *  o Ability to make new skills (Still not sure what that looks like)
- */
 
 public class SkillEditor {
     private List<Skill> skills;

@@ -18,6 +18,82 @@ scheduler
 "Add an event on !DAY? at !TIME?."
 !DAY? - #weekDays||#numericDays||
 !TIME? - #clockTime
+
+sportEvent_lookup
+"Is there a <EVENT> game on !DAY?"
+<EVENT> - basketball||baseball
+!DAY? - 
+
+sportEvent_scheduler
+
 *****
 .....
 
+scheduler
+update
+"Add an <EVENT> on !DAY? at !TIME?."
+!DAY? - #weekDays||#numericDays||
+!TIME? - #clockTime
+out: "Meeting has been scheduled on !DAY? at !TIME?"
+add: <EVENT>meeting(!DAY?, !TIME?)
+
+*****
+schedule_lookup
+query
+"What do I have scheduled on !DAY? at !TIME??"
+!DAY? - #weekDays||#numericDays||#clockTime||
+!TIME? - #clockTime 
+get: <EVENT>meeting(!DAY?, !TIME?)
+out-fail: "There are no scheduled events on this day"
+out-success: "There are 
+*****
+
+
+
+
+
+example input : "<EVENT>meeting(!DAY?, !TIME?)"
+
+    public add(String txtInput){
+        >Open skillReference.txt
+        >Read whatever is in "<>"
+            Start writing new lines under corresponding thing ("<EVENT>")
+        >Start scanner/reading from right after "<EVENT>"
+        eventName = everything before "()"
+        ArrayList<String> parameters = everything inside parentheses seperated by ","
+        
+        >Use filewriter to use eventName and parameters to add to skillReference.txt in this template:
+            >meeting
+            >   params = {friday, 13:20};
+
+    }
+    public readSkillReferences(){
+        Array allowedTypes = {<EVENT>, <OBJECT>, <ACTIVITY>}
+        >Read file skilleReferences.txt line by line
+            >if(currentLine = something in allowedTypes)
+                >Make object from each entry
+                Example:
+                        if(currentLine == "<EVENT>"){
+                            Event =  new Event(name)
+                        } 
+    }
+
+"Schedule meeting on 10th of February"
+"Schedule on February 10th a meeting"
+    public Event get()
+
+
+__skillReference.txt___
+<EVENTS>
+meeting
+    params = {friday, 13:20};
+meeting
+    params = {friday, 13:20};
+lecture
+movie
+    params = {"}
+
+
+
+
+____
