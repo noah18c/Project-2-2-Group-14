@@ -1,6 +1,8 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
+import javafx.animation.Animation;
+import javafx.animation.Transition;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +17,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import javax.swing.text.Document;
 import java.io.IOException;
@@ -41,6 +44,9 @@ public class ChatScene implements SceneInterface {
 
     @FXML
     private ChoiceBox<?> choiceBox;
+
+    @FXML
+    private Button clearButton;
 
     @FXML
     private ScrollPane scrollPane;
@@ -82,6 +88,28 @@ public class ChatScene implements SceneInterface {
         init();
 
     }
+    private String post(boolean isUser, String inputText){
+        String writtenText = inputText;
+        Label labelmsg = new Label(writtenText);
+
+        labelmsg.prefWidthProperty().bind(Bindings.divide(scrollPane.widthProperty(), 1.1));
+        labelmsg.setMinHeight(30);
+        messages.add(labelmsg);
+        int lastIndex = messages.size()-1;
+
+        if(isUser){
+
+            messages.get(lastIndex).setAlignment(Pos.CENTER_RIGHT);
+        } else {
+
+            messages.get(lastIndex).setAlignment(Pos.CENTER_LEFT);
+        }
+        textField.clear();
+
+        chatbox.getChildren().add(messages.get(lastIndex));
+
+        return writtenText;
+    }
 
     private String post(boolean isUser){
         String writtenText = (String) textField.getText();
@@ -106,17 +134,46 @@ public class ChatScene implements SceneInterface {
         return writtenText;
     }
 
+    private void botWriter(String inputText){
+        post(false, inputText);
+        String content = messages.get(0).getText();
+        final Animation animation = new Transition() {
+            {
+                setCycleDuration(Duration.millis(2000));
+            }
+
+            protected void interpolate(double frac) {
+                final int length = content.length();
+                final int n = Math.round(length * (float) frac);
+                messages.get(0).setText(content.substring(0, n));
+            }
+        };
+        animation.play();
+    }
+
     private void init() {
+        botWriter("Hello user, how can I help you today?");
+
+
+
         chatbox.setMinWidth(scrollPane.getMinWidth()-20);
         chatbox.setMinHeight(scrollPane.getMinHeight());
         chatbox.setAlignment(Pos.TOP_CENTER);
         scrollPane.vvalueProperty().bind(chatbox.heightProperty());
+
+
+        clearButton.setOnAction(e -> {
+            chatbox.getChildren().clear();
+            messages.clear();
+            botWriter("Hello user, how can I help you today?");
+        });
 
         textField.setOnKeyPressed(e ->{
             if(e.getCode() == KeyCode.ENTER){
                 post(true);
             }
         });
+
 
         sendButton.setOnAction(e -> {
             String writtenText = post(false);
