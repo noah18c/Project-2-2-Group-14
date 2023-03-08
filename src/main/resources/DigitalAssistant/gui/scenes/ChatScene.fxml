@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Bloom?>
@@ -21,14 +21,7 @@
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="452.0">
          <children>
-            <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutY="132.0" prefHeight="365.0" prefWidth="449.0">
-               <content>
-                  <ListView fx:id="listview" prefHeight="367.0" prefWidth="448.0" style="-fx-background-color: #ffffff; -fx-border-style: solid; -fx-border-color: #ffffff; -fx-border-image-width: 50px;">
-                     <effect>
-                        <Glow />
-                     </effect>
-                  </ListView>
-               </content>
+            <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutY="132.0" minHeight="365.0" minWidth="449.0" prefHeight="365.0" prefWidth="449.0">
                <effect>
                   <Lighting bumpInput="$null">
                      <light>
@@ -39,6 +32,12 @@
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
+               <content>
+                  <VBox fx:id="chatbox" spacing="5.0">
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding></VBox>
+               </content>
             </ScrollPane>
             <ImageView fitHeight="132.0" fitWidth="476.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -64,7 +63,7 @@
                   <Font name="System Bold" size="12.800000190734863" />
                </font>
             </TextField>
-            <Button fx:id="sendButton" layoutX="363.0" layoutY="498.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="86.0" style="-fx-background-color: black; -fx-effect: pan;" text="Send" textFill="#fcfbfb">
+            <Button fx:id="sendButton" layoutX="363.0" layoutY="498.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="86.0" style="-fx-background-color: black; -fx-effect: pan;" text="Google" textFill="#fcfbfb">
                <font>
                   <Font name="Lucida Console" size="12.800000190734863" />
                </font>

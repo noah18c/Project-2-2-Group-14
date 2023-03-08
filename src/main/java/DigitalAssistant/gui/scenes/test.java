@@ -26,7 +26,7 @@ public class test {
         Parent root = FXMLLoader.load(getClass().getResource("Test.fxml"));
 
         this.scene = new Scene(root, width, height);
-        this.scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        this.scene.getStylesheets().add(getClass().getResource("chatStyles.css").toExternalForm());
     }
 
     public Scene getScene(){

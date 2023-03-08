@@ -49,11 +49,11 @@ public class InitMenuScene implements SceneInterface {
 
 
         try {
-            this.scene = new Scene(loader.load(), width, height);
+            this.scene = new Scene(loader.load());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        this.scene.getStylesheets().add(getClass().getResource("defaultStyles.css").toExternalForm());
 
         proceedButton.setDisable(true);
         this.AnimateText();
@@ -75,7 +75,7 @@ public class InitMenuScene implements SceneInterface {
         String content = introLabel.getText();
         final Animation animation = new Transition() {
             {
-                setCycleDuration(Duration.millis(5000));
+                setCycleDuration(Duration.millis(1000));
             }
 
             protected void interpolate(double frac) {
