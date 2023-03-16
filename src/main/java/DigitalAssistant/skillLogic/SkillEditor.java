@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 public class SkillEditor {
     private List<Skill> skills;
     private String filename;
+    public static ArrayList<Event> events = new ArrayList<>();
     
     public SkillEditor(String filename) {
         skills = new ArrayList<>();
@@ -88,55 +90,141 @@ public class SkillEditor {
         }
     }
 
-    public static void main(String[] args) {
-    //  SkillEditor skillEditor = new SkillEditor("anan.txt");
-        
-        // Create a new skill with placeholders for day and time
-        //Skill skill = new Skill("Lecture","Which lectures are there on ¡DAY¿ at ¡TIME¿");
-        Skill skill = new Skill("Lecture","Schedule a meeting on ¡DAY¿ at ¡TIME¿");
-        //skill.setPlaceholderValue("¡DAY¿", new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
-        //skill.setPlaceholderValue("¡TIME¿", new String[]{"9", "11", "15"});
-        
-        // Define the action for the skill
-        SkillAction action = new SkillAction() {
-
-            @Override
-            public void performAction(HashMap<String, String> parameters) {
-                // TODO Auto-generated method stub
-                // store meetings in some data structure
-
-                System.out.println("Schedule a new event for tomorrow 9 AM.");
-                //parameters.put(day, time);
-                System.out.println("Success.");
-            }
-            
-        };
-
-        skill.setAction(action);
-        
-        // skill.setAction( new SkillAction() {
-
-        //     @Override
-        //     public void performAction(HashMap<String, String[]> arguments) {
-        //         String[] day = arguments.get("$DAY$");
-        //         String[] time = arguments.get("¡TIME¿");
+    public static void loadEvents(){
+        try (BufferedReader reader = new BufferedReader(new FileReader("src\\main\\java\\DigitalAssistant\\skillLogic\\Events.txt"))) {
+            String currentLine = "";
+            int i = 0;
+            while(currentLine != null){//While the file has not ended
+                //  System.out.println(currentLine);
                 
-        //         // Perform the action based on the day and time
-        //         if (day.equals("Monday") && time.equals("9")) {
-        //             System.out.println("There is a Math lecture at 9 AM on Monday.");
-        //         } else if (day.equals("Tuesday") && time.equals("11")) {
-        //             System.out.println("There is a Physics lecture at 11 AM on Tuesday.");
-        //         } else if (day.equals("Wednesday") && time.equals("15")) {
-        //             System.out.println("There is a Chemistry lecture at 3 PM on Wednesday.");
-        //         } else {
-        //             System.out.println("There are no lectures scheduled for that day and time.");
-        //         }
-        //     }
+                i++;
+                //System.out.println("Event " + i);
 
-        // });
+                currentLine = reader.readLine();
+                if(currentLine == null){break;}
+                String eventName = currentLine;
+                String parametersStr = reader.readLine();//string for scanner
+
+                ArrayList<String> parameters = new ArrayList<>();//list to append to
+                Scanner paraScanner = new Scanner(parametersStr);
+                paraScanner.useDelimiter("-");//seperates the parametersStr by the '-' character
+
+
+                while(paraScanner.hasNext()){
+                    parameters.add(paraScanner.next());//adds each parameter to the list
+                }
+                paraScanner.close();
+
+                Event temp = new Event(eventName, parameters);//creates event from read
+                // System.out.println("Adding " + eventName);
+                SkillEditor.events.add(temp);        
+                
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading skills from file: " + e.getMessage());
+        }
+    }
+
+    public static void addEventToFile(String eventName, ArrayList<String> parameters){
+        try {
+            FileWriter file = new FileWriter("src\\main\\java\\DigitalAssistant\\skillLogic\\Events.txt", true);
+            PrintWriter writer = new PrintWriter(file);
+            writer.println("\n"+eventName);
+            String paraStr = "";
+            for(String parameter : parameters){
+                if(parameters.indexOf(parameter) == parameters.size()-1){
+                    paraStr += parameter;
+                }else{
+                    paraStr += parameter+"-";
+                }
+                
+            }
+            writer.println(paraStr);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Before adding event");
+        loadEvents();
+        for(Event event : SkillEditor.events){
+            System.out.printf("Event: %s\nParameters: {", event.getEventName());
+            for(String para : event.getParameters()){
+                System.out.printf("%s, ", para);
+            }
+            System.out.printf("}\n\n");
+        }
+
+        System.out.println("After adding event");
+        ArrayList<String> tmpPara = new ArrayList<>();
+        tmpPara.add("monday");
+        tmpPara.add("15:00");
+        tmpPara.add("tuesday");
+        tmpPara.add("16:00");
+        addEventToFile("swimming", tmpPara);
+
+        loadEvents();
+        for(Event event : SkillEditor.events){
+            System.out.printf("Event: %s\nParameters: {", event.getEventName());
+            for(String para : event.getParameters()){
+                System.out.printf("%s, ", para);
+            }
+            System.out.printf("}\n\n");
+        }
+
+
+    // //  SkillEditor skillEditor = new SkillEditor("anan.txt");
         
-        // Test the skill
-        String input = "Which lectures are there on Monday at 9?";
-        skill.performAction();
-     }
+    //     // Create a new skill with placeholders for day and time
+    //     //Skill skill = new Skill("Lecture","Which lectures are there on ¡DAY¿ at ¡TIME¿");
+    //     Skill skill = new Skill("Lecture","Schedule a meeting on ¡DAY¿ at ¡TIME¿");
+    //     //skill.setPlaceholderValue("¡DAY¿", new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"});
+    //     //skill.setPlaceholderValue("¡TIME¿", new String[]{"9", "11", "15"});
+        
+    //     // Define the action for the skill
+    //     SkillAction action = new SkillAction() {
+
+    //         @Override
+    //         public void performAction(HashMap<String, String> parameters) {
+    //             // TODO Auto-generated method stub
+    //             // store meetings in some data structure
+
+    //             System.out.println("Schedule a new event for tomorrow 9 AM.");
+    //             //parameters.put(day, time);
+    //             System.out.println("Success.");
+    //         }
+            
+    //     };
+
+    //     skill.setAction(action);
+        
+    //     // skill.setAction( new SkillAction() {
+
+    //     //     @Override
+    //     //     public void performAction(HashMap<String, String[]> arguments) {
+    //     //         String[] day = arguments.get("$DAY$");
+    //     //         String[] time = arguments.get("¡TIME¿");
+                
+    //     //         // Perform the action based on the day and time
+    //     //         if (day.equals("Monday") && time.equals("9")) {
+    //     //             System.out.println("There is a Math lecture at 9 AM on Monday.");
+    //     //         } else if (day.equals("Tuesday") && time.equals("11")) {
+    //     //             System.out.println("There is a Physics lecture at 11 AM on Tuesday.");
+    //     //         } else if (day.equals("Wednesday") && time.equals("15")) {
+    //     //             System.out.println("There is a Chemistry lecture at 3 PM on Wednesday.");
+    //     //         } else {
+    //     //             System.out.println("There are no lectures scheduled for that day and time.");
+    //     //         }
+    //     //     }
+
+    //     // });
+        
+    //     // Test the skill
+    //     String input = "Which lectures are there on Monday at 9?";
+    //     skill.performAction();
+    }
 }
