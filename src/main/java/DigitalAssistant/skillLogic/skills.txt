@@ -1,23 +1,19 @@
-TEMPLATE
-Skill name
-"Prototype Sentence"
-Placeholder 1
-Placeholder 2...
-
-*****
-distance_finder
-"How far from !CITY? to !CITY??"
-!CITY? - Maastricht||Chicago||...
-*****
-schedule_lookup
-"What lecture do I have on !DAY? at !TIME??"
-!DAY? - #weekDays||#numericDays||
-!TIME? - #clockTime 
-*****
-scheduler
-"Add an event on !DAY? at !TIME?."
-!DAY? - #weekDays||#numericDays||
-!TIME? - #clockTime
-*****
-.....
-
+-----
+Name LectureTime
+Question Which lectures are there on <DAY> at <TIME>?
+Slot <DAY> Monday Tuesday Wednesday Thursday Friday Saturday
+Slot <TIME> 9 11 13 15
+--
+Action <DAY> Saturday |Print| There are no lectures on Saturday
+Action <DAY> Monday <TIME> 9 |Print| We start the week with math
+Action <DAY> Monday <TIME> 11 |Print| On Monday noon we have Theoratical Computer Science
+Action <DAY> Monday <TIME> 8 |Search| monday 8 am
++++++
+-----
+Name DistanceFinder
+Question What is the distance between <CITY1> TO <CITY2>?
+Slot <CITY1> @INPUT
+Slot <CITY2> @INPUT
+--
+Action <CITY1> @INPUT <CITY2> @INPUT |Search| What is the distance between @INPUT to @INPUT?
++++++
