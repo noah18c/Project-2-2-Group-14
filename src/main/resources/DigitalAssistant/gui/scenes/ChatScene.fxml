@@ -44,25 +44,29 @@
                   <Image url="@../../img/banner.gif" />
                </image>
             </ImageView>
-            <TextField fx:id="textField" layoutX="35.0" layoutY="498.0" prefHeight="38.0" prefWidth="328.0" promptText="Type here" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #ffffff;">
-               <effect>
-                  <Glow level="0.4">
-                     <input>
-                        <Lighting diffuseConstant="0.91" specularConstant="0.0" specularExponent="11.84" surfaceScale="2.71">
-                           <bumpInput>
-                              <Shadow />
-                           </bumpInput>
-                           <light>
-                              <Light.Distant />
-                           </light>
-                        </Lighting>
-                     </input>
-                  </Glow>
-               </effect>
-               <font>
-                  <Font name="System Bold" size="12.800000190734863" />
-               </font>
-            </TextField>
+            <ScrollPane layoutX="35.0" layoutY="498.0">
+               <content>
+                  <TextField fx:id="textField" prefHeight="38.0" prefWidth="328.0" promptText="Type here" style="-fx-background-color: #A9A9A9; -fx-border-style: solid; -fx-border-color: #ffffff;">
+                     <effect>
+                        <Glow level="0.4">
+                           <input>
+                              <Lighting diffuseConstant="0.91" specularConstant="0.0" specularExponent="11.84" surfaceScale="2.71">
+                                 <bumpInput>
+                                    <Shadow />
+                                 </bumpInput>
+                                 <light>
+                                    <Light.Distant />
+                                 </light>
+                              </Lighting>
+                           </input>
+                        </Glow>
+                     </effect>
+                     <font>
+                        <Font name="System Bold" size="12.800000190734863" />
+                     </font>
+                  </TextField>
+               </content>
+            </ScrollPane>
             <Button fx:id="sendButton" layoutX="363.0" layoutY="498.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="86.0" style="-fx-background-color: black; -fx-effect: pan;" text="Google" textFill="#fcfbfb">
                <font>
                   <Font name="Lucida Console" size="12.800000190734863" />
