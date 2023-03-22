@@ -44,8 +44,8 @@ public class SkillEditor {
                     String prototype = scanner.nextLine().trim();
                     prototype = prototype.replace("Question ", ""); // Prototype Sentence
 
-                    Skill skill = new Skill(name, prototype);
 
+                    Skill skill = new Skill(name, prototype);
                     ArrayList<String> placeholders = new ArrayList<>(); //We will assign placeholder keys to the arraylist in order to use later with creation of Actions.
                     
                     // Read slots (placeholders key value)
@@ -87,7 +87,7 @@ public class SkillEditor {
                         }
 
                         String[] actionLineString = actionLine.split(" "); // Split every word of line and add every word to array
-                       
+
                         /*  
                          * Example Line: "Action <DAY> Monday <TIME>  9 |Print| We start the week with math"
                          * Already deleted the "Action " part so we have: "<DAY> Monday <TIME>  9 |Print| We start the week with math".
@@ -100,11 +100,16 @@ public class SkillEditor {
                         String actionType = new String();
                         String actionInput = new String();
 
+                        int counter = 0;// assign the value for corresponding key just one time, so ignore the placholder if there is in the action sentence
                         for (int i = 0; i < actionLineString.length; i++) {
                             for (int j = 0; j < placeholders.size(); j++) {
                                 if(actionLineString[i].equals(placeholders.get(j))){
+                                    counter++;
                                     actionValues.put(placeholders.get(j), actionLineString[i+1]);
                                 }
+                            }
+                            if(counter == placeholders.size()){
+                                break;
                             }
                         }
 
@@ -117,8 +122,8 @@ public class SkillEditor {
                             }
                         }
 
-                        // System.out.println(actionType + " " + actionInput);
-                        // System.out.println(actionValues);
+                        //System.out.println(actionType + " " + actionInput);
+                        //System.out.println(actionValues);
 
                         Action action = new Action(actionType, actionInput, actionValues);
                         skill.addAction(action);
@@ -133,7 +138,7 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
-        String input = "Which lectures are there on Monday at 8?";
+        String input = "What is the distance between Ankara to Paris?";
         System.out.println(input);
         for (int i = 0; i < skillEditor.skills.size(); i++) {
             skillEditor.skills.get(i).match(input);

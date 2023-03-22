@@ -19,10 +19,7 @@ public class Action {
     }
 
     public void loadAction(){
-        if (actionType.equals(null)) {
-            UnknownAction();
-        }
-        else if(actionType.equals("|Search|")){
+        if(actionType.equals("|Search|")){
             GoogleSearchAction();
         }
         else if(actionType.equals("|Print|")){
@@ -30,16 +27,8 @@ public class Action {
         }
     }
 
-    private void UnknownAction() {
-        System.out.println("I'm sorry, there is no action");
-    }
-
     private void GoogleSearchAction() {
-        System.out.println("Searching Google for ...");
-    }
-
-    private void CalendarAction() {
-        System.out.println("Calender Action");
+        System.out.println("Searching Google for ..." + actionValues);
     }
 
     private void PrintAction(){

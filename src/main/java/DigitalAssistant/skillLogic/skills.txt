@@ -11,9 +11,9 @@ Action <DAY> Monday <TIME> 8 |Search| monday 8 am
 +++++
 -----
 Name DistanceFinder
-Question What is the distance between <CITY1> TO <CITY2>?
+Question What is the distance between <CITY1> to <CITY2>?
 Slot <CITY1> @INPUT
 Slot <CITY2> @INPUT
 --
-Action <CITY1> @INPUT <CITY2> @INPUT |Search| What is the distance between @INPUT to @INPUT?
+Action <CITY1> @INPUT <CITY2> @INPUT |Search| The distance between <CITY1> to <CITY2>.
 +++++

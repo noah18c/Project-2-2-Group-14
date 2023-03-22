@@ -19,16 +19,15 @@ public class Skill {
         this.actions = new ArrayList<>();
     }
 
-    // The method that checks whether it is correspoding skill to the input or not
+    // The method that checks whether it is corresponding skill to the input or not
     // if it is the corresponding skill saves the placeholder values to hashmap in order call proper action
     public boolean match(String input){
-
+        
         Set<String> keySet = placeholders.keySet();
-        ArrayList<String> keyList = new ArrayList<>(keySet);// get the key values of placeholders into arraylist like <DAY> <TIME>
+        ArrayList<String> keyList = new ArrayList<>(keySet); //get the key values of placeholders into arraylist like <DAY> <TIME>
         
         String regex = prototype.substring(0, prototype.length() - 1) + " " + prototype.charAt(prototype.length() - 1); // To spearate last char from the sentence for the case there is "?" at the end of the sentence
         String[] words = regex.split(" ");//assign every word to array
-        
 
         String regexInput = input.substring(0, input.length() - 1) + " " + input.charAt(input.length() - 1); // To spearate last char from the sentence for the case there is "?" at the end of the sentence
         String[] wordsInput = regexInput.split(" ");//assign every word to array  
@@ -39,6 +38,7 @@ public class Skill {
             return false;
         }
         else{
+            //FIND THE INDEX OF PLACEHOLDERS IN PROTOTYPE SENTENCE
             for (int i = 0; i < words.length; i++) {
                 for (int j = 0; j < keyList.size(); j++) {
                     if(words[i].equals(keyList.get(j))){
@@ -46,6 +46,7 @@ public class Skill {
                     }
                 }
             }
+            //MATCHING LOOP
             for (int i = 0; i < wordsInput.length; i++) {
                 if(!indexOfPlaceholders.contains(i)){
                     if(!wordsInput[i].equals(words[i])){
@@ -53,6 +54,7 @@ public class Skill {
                     }
                 }
             }
+            // IF IT MATCHES, GET THE INPUT VALUES FROM INPUT SENTENCE
             inputValues = new HashMap<>();
             for (int i = 0; i < keyList.size(); i++) {
                 for (int j = 0; j < indexOfPlaceholders.size(); j++) {
@@ -66,26 +68,46 @@ public class Skill {
         return true;
     }
 
-    public void performAction(){
-        //Find Corresponding action for given input then trigger the action
 
+    public void performAction(){
+
+        boolean actionFound = false;
+        //Find Corresponding action for given input then trigger the action
         for (int i = 0; i < actions.size(); i++) {
-            ArrayList<String> keyList = new ArrayList<>(actions.get(i).getActionValues().keySet());
-            int checker = 0;
-            for (int j = 0; j < keyList.size(); j++) {
-                if(actions.get(i).getActionValues().get(keyList.get(j)).equals(inputValues.get(keyList.get(j)))){
-                    checker++;
-                }
-            }
-            if(checker == keyList.size()){
+            
+            Action currentAction = actions.get(i);
+            ArrayList<String> actionKeyList = new ArrayList<>(currentAction.getActionValues().keySet());
+            ArrayList<String> inputValuesKeyList = new ArrayList<>(inputValues.keySet());
+
+            if(currentAction.getActionValues() == inputValues){
                 actions.get(i).triggerAction();
                 break;
             }
-            else{
-                if(i == actions.size()-1){
-                    System.out.println("Missing Input!!");
+
+            int counter = 0;
+            for (int j = 0; j < actionKeyList.size(); j++) {
+                for (int j2 = 0; j2 < inputValuesKeyList.size(); j2++) {
+                    if(actionKeyList.get(j) == inputValuesKeyList.get(j2)){
+                        if(currentAction.getActionValues().get(actionKeyList.get(j)).equals(inputValues.get(inputValuesKeyList.get(j2)))){
+                            counter++;
+                        }
+                        else if(currentAction.getActionValues().get(actionKeyList.get(j)).equals("@INPUT")){
+                            counter++;
+                        }
+                    }
                 }
             }
+
+
+            if(counter == actionKeyList.size()){
+                currentAction.setActionValues(inputValues);
+                currentAction.triggerAction();
+                actionFound = true;
+                break;
+            }
+        }
+        if(!actionFound){
+            System.out.println("No Action Found for given values!");
         }
     }
 
