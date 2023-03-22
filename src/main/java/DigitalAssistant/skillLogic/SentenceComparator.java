@@ -187,14 +187,14 @@ public class SentenceComparator {
 
         if(stringSimilarity(simSentences.get(rank),input)>80){
             return out;
-            //TODO: Call class with template sentence
-            //Sentence: simSentences.get(rank)      (rank=0 by default)
+            //TODO: do as normal
         }
 
         if(stringSimilarity(simSentences.get(rank),input)<=80){
             return out;
-            //TODO: Call tunnel class
-            //tunnel question: simTemplates.get  (rank=0 by default)
+            //TODO: Call tunnel class with a question based on similar template sentence ?
+            // * Sentence: simSentences.get(rank)      (rank=0 by default)
+            // * Tunnel: simTemplates.get  (rank=0 by default)
         }
 
         return "";
