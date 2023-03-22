@@ -15,7 +15,7 @@ public class SkillEditorScene {
 
     public SkillEditorScene(Handler handler){
         this.handler = handler;
-        this.title = "Go ahead... ask!";
+        this.title = "Skill Editor Window";
         this.width = handler.getScreen().getWidth()/3;
         this.height = handler.getScreen().getHeight()/2;
     }
@@ -23,7 +23,7 @@ public class SkillEditorScene {
     public void display() {
         handler.getWindow().setTitle(this.title);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SkillEditorStage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SkillEditorScene.fxml"));
         loader.setController(this);
 
         try {
