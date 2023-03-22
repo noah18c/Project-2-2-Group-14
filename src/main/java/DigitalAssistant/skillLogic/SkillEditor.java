@@ -14,10 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 2355ce325f46de977ba0d04c30cf0884415a19b0
 public class SkillEditor {
     private List<Skill> skills;
     private String filename;
