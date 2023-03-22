@@ -7,26 +7,25 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class SentenceComparator {
+
     //private static ArrayList<ArrayList<String>> CommonPlaceholder =  new ArrayList<>();
     private static ArrayList<String> CommonSentences=new ArrayList<String>();
     private static ArrayList<String> TunnelSentences=new ArrayList<String>();
-    private static String input=null;
+    private static String input="Which lectures are there on Monday at 5PM?";
 
 
     //INTIALIZE
     //Need template sentences without placeholders
     //Need Tunnel sentences (Questions to give user for each template sentences)
-    public SentenceComparator(ArrayList<String>CommonSentences, ArrayList<String>TunnelSentences, String input){
+    /*public SentenceComparator(ArrayList<String>CommonSentences, ArrayList<String>TunnelSentences, String input){
         this.input=input;
         this.CommonSentences=CommonSentences;
         this.TunnelSentences=TunnelSentences;
-    }
+    }*/
 
     public static void main(String[] args){
         //Input
         FillArrays();
-        input="Which lectures are there on Monday at 5PM?";
-        //String NoPlaceholderSentence= RemovePlaceHolder(input);
 
         //Similar sentences with associated templates in order
         ArrayList<String> simSentences= GetSimillarSentences(input);
@@ -192,4 +191,6 @@ public class SentenceComparator {
         return input;
     }
 
+
 }
+
