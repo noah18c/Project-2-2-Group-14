@@ -1,7 +1,7 @@
 #scrollPane .label{
     -fx-background-color: rgba(161, 161, 161, 0.44);
     -fx-text-fill:white;
-    -fx-padding: 0 0 0 5;
+    -fx-padding: 0 5 0 5;
     -fx-background-radius: 5 5 5 5;
 }
 

@@ -26,5 +26,9 @@ public class Handler {
         return this.screen;
     }
 
+    public LoadImages getLoadImages(){
+        return this.menuStage.getLoadImages();
+    }
+
 
 }

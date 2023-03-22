@@ -1,9 +1,15 @@
 package DigitalAssistant.gui.scenes;
 
+import DigitalAssistant.Utilities.AddSkill;
+import DigitalAssistant.Utilities.GetSkill;
 import DigitalAssistant.Utilities.Handler;
+import DigitalAssistant.gui.stages.SkillEditorStage;
 import javafx.animation.Animation;
+import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -13,6 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -29,7 +36,7 @@ public class ChatScene implements SceneInterface {
     private int width, height;
 
     @FXML
-    private ChoiceBox<?> choiceBox;
+    private Button skillButton;
 
     @FXML
     private Button clearButton;
@@ -58,6 +65,9 @@ public class ChatScene implements SceneInterface {
         this.height = handler.getScreen().getHeight()/2;
     }
 
+    /**
+     * Method that displays this scene
+     */
     public void display() {
         handler.getWindow().setTitle(this.title);
 
@@ -74,11 +84,19 @@ public class ChatScene implements SceneInterface {
         init();
 
     }
-    private String post(boolean isUser, String inputText){
+
+    /**
+     * Method for posting a string on side of the chatbox
+     * @param isUser    if its a user, post on right, if not, post on left side
+     * @param inputText the input text
+     * @return the string that has been put in
+     */
+    public String post(boolean isUser, String inputText){
         String writtenText = inputText;
 
         Text textBlock = new Text(writtenText);
         textBlock.wrappingWidthProperty().bind(Bindings.divide(scrollPane.widthProperty(), 1.1));
+
         Label labelmsg = new Label("", textBlock);
 
         labelmsg.prefWidthProperty().bind(Bindings.divide(scrollPane.widthProperty(), 1.1));
@@ -87,12 +105,11 @@ public class ChatScene implements SceneInterface {
         int lastIndex = messages.size()-1;
 
         if(isUser){
-
-            messages.get(lastIndex).setAlignment(Pos.CENTER_RIGHT);
+            textBlock.setTextAlignment(TextAlignment.RIGHT);
             textField.clear();
         } else {
 
-            messages.get(lastIndex).setAlignment(Pos.CENTER_LEFT);
+            textBlock.setTextAlignment(TextAlignment.LEFT);
         }
 
         chatbox.getChildren().add(messages.get(lastIndex));
@@ -100,7 +117,13 @@ public class ChatScene implements SceneInterface {
         return writtenText;
     }
 
-    private String post(boolean isUser){
+    /**
+     * Method for posting a string from the textfield on one side of the chatbox
+     * @param isUser    if its a user, post on right, if not, post on left side
+     * @return the string that has been put in
+     */
+
+    public String post(boolean isUser){
         String writtenText = (String) textField.getText();
         Text textBlock = new Text(writtenText);
         textBlock.wrappingWidthProperty().bind(Bindings.divide(scrollPane.widthProperty(), 1.1));
@@ -114,12 +137,12 @@ public class ChatScene implements SceneInterface {
         int lastIndex = messages.size()-1;
 
         if(isUser){
-
+            textBlock.setTextAlignment(TextAlignment.RIGHT);
             messages.get(lastIndex).setAlignment(Pos.CENTER_RIGHT);
             textField.clear();
         } else {
-
-           messages.get(lastIndex).setAlignment(Pos.CENTER_LEFT);
+            textBlock.setTextAlignment(TextAlignment.LEFT);
+            messages.get(lastIndex).setAlignment(Pos.CENTER_LEFT);
         }
 
 
@@ -128,28 +151,41 @@ public class ChatScene implements SceneInterface {
         return writtenText;
     }
 
-    private void postAddGet(){
-        FlowPane fp = new FlowPane();
-        fp.getStyleClass().add("flowpane");
-        fp.prefWidthProperty().bind(Bindings.divide(scrollPane.widthProperty(), 1.1));
 
-        Button buttonAdd = new Button("ADD");
-        buttonAdd.setAlignment(Pos.CENTER);
-        Button buttonGet = new Button("GET");
-        buttonAdd.setMinHeight(30);
-        buttonGet.setMinHeight(30);
+    /**
+     * method that posts two buttons "add" and "get" for making choices
+     * Can be edited for different choices
+     */
+    public void postButtons(){
+            FlowPane fp = new FlowPane();
+            fp.getStyleClass().add("flowpane");
+            fp.prefWidthProperty().bind(Bindings.divide(scrollPane.widthProperty(), 1.1));
 
-        buttonAdd.setOnAction(e -> {
-            botWriter("You have chosen to "+buttonAdd.getText()+" a new skill.");
-            buttonAdd.setDisable(true);
-            buttonGet.setDisable(true);
-        });
+            Button buttonAdd = new Button("ADD");
+            buttonAdd.setAlignment(Pos.CENTER);
+            Button buttonGet = new Button("GET");
+            buttonAdd.setMinHeight(30);
+            buttonGet.setMinHeight(30);
 
-        buttonGet.setOnAction(e -> {
-            botWriter("You have chosen to "+buttonGet.getText()+" an existing skill.");
-            buttonAdd.setDisable(true);
-            buttonGet.setDisable(true);
-        });
+            buttonAdd.setOnAction(e -> {
+                botWriter("You have chosen to "+buttonAdd.getText()+" a new skill.");
+                buttonAdd.setDisable(true);
+                buttonGet.setDisable(true);
+                AddSkill addSkill = new AddSkill(this);
+
+
+
+            });
+
+            buttonGet.setOnAction(e -> {
+                botWriter("You have chosen to "+buttonGet.getText()+" an existing skill.");
+                buttonAdd.setDisable(true);
+                buttonGet.setDisable(true);
+                GetSkill getSkill = new GetSkill(this);
+
+
+
+            });
 
 
 
@@ -159,7 +195,11 @@ public class ChatScene implements SceneInterface {
     }
 
 
-    private void botWriter(String inputText){
+    /**
+     * Use this method if you want the bot to write something. It will do it on the left side and with an animation
+     * @param inputText the input text
+     */
+    public void botWriter(String inputText){
         post(false, inputText);
         int lastIndex = messages.size()-1;
 
@@ -167,7 +207,34 @@ public class ChatScene implements SceneInterface {
         String content = textObject.getText();
 
 
-        final Animation animation = new Transition() {
+        Animation animation = new Transition() {
+            {
+                setCycleDuration(Duration.millis(2000));
+            }
+
+            protected void interpolate(double frac) {
+                final int length = content.length();
+                final int n = Math.round(length * (float) frac);
+                textObject.setText(content.substring(0, n));
+                //messages.get(lastIndex).setText(content.substring(0, n));
+
+            }
+        };
+        animation.play();
+    }
+    /**
+     * Use this method if you want the bot to write something. It will do it on the left side and with an animation
+     * @param inputText the input text
+     */
+    public void botWriter(Animation newAnimation, String inputText){
+        post(false, inputText);
+        int lastIndex = messages.size()-1;
+
+        Text textObject = (Text) messages.get(lastIndex).getGraphic();
+        String content = textObject.getText();
+
+
+        Animation animation = new Transition() {
             {
                 setCycleDuration(Duration.millis(2000));
             }
@@ -183,11 +250,12 @@ public class ChatScene implements SceneInterface {
         animation.play();
     }
 
-
-
+    /**
+     * initial method that starts the sequence of chats
+     */
     private void init() {
-        botWriter("Hello user, would you like to add a skill or get an existing one?");
-        postAddGet();
+        botWriter("Hello user, what would you like to do?");
+        //postButtons();
 
         chatbox.setMinWidth(scrollPane.getMinWidth()-20);
         chatbox.setMinHeight(scrollPane.getMinHeight());
@@ -195,10 +263,16 @@ public class ChatScene implements SceneInterface {
         scrollPane.vvalueProperty().bind(chatbox.heightProperty());
 
 
+        skillButton.setOnAction(e -> {
+            SkillEditorStage ses = new SkillEditorStage(handler);
+            ses.display();
+        });
+
         clearButton.setOnAction(e -> {
             chatbox.getChildren().clear();
             messages.clear();
-            botWriter("Hello user, how can I help you today?");
+            botWriter("Hello user, would you like to add a skill or get an existing one?");
+            postButtons();
         });
 
         textField.setOnKeyPressed(e ->{
@@ -210,7 +284,6 @@ public class ChatScene implements SceneInterface {
 
         sendButton.setOnAction(e -> {
             String writtenText = post(false);
-
             try
             {
                 URL url=new URL("https://google.co.in");
@@ -223,9 +296,10 @@ public class ChatScene implements SceneInterface {
             {
                 System.out.println("shit");
             }
-
         });
+    }
 
+    public void addMessageBot(String input){
 
     }
 
@@ -234,5 +308,48 @@ public class ChatScene implements SceneInterface {
         return this.scene;
     }
 
+    public Handler getHandler() {
+        return handler;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+
+    public Button getClearButton() {
+        return clearButton;
+    }
+
+    public ScrollPane getScrollPane() {
+        return scrollPane;
+    }
+
+    public Button getSendButton() {
+        return sendButton;
+    }
+
+    public VBox getvBox() {
+        return vBox;
+    }
+
+    public TextField getTextField() {
+        return textField;
+    }
+
+    public List<Label> getMessages() {
+        return messages;
+    }
+
+    public VBox getChatbox() {
+        return chatbox;
+    }
 }
