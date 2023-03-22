@@ -11,22 +11,27 @@ public class SentenceComparator {
     //private static ArrayList<ArrayList<String>> CommonPlaceholder =  new ArrayList<>();
     private static ArrayList<String> CommonSentences=new ArrayList<String>();
     private static ArrayList<String> TunnelSentences=new ArrayList<String>();
-    private static String input="Which lectures are there on Monday at 5PM?";
+    private static String input;
 
 
     //INTIALIZE
     //Need template sentences without placeholders
     //Need Tunnel sentences (Questions to give user for each template sentences)
-    /*public SentenceComparator(ArrayList<String>CommonSentences, ArrayList<String>TunnelSentences, String input){
+    //TODO: Provide:
+    // * Sentences without placeholders
+    // * Tunnel Questions
+    // * input of user (without placeholders if possible)
+    public SentenceComparator(ArrayList<String>CommonSentences, ArrayList<String>TunnelSentences, String input){
         this.input=input;
         this.CommonSentences=CommonSentences;
         this.TunnelSentences=TunnelSentences;
-    }*/
+    }
 
     public static void main(String[] args){
 
         //Input
         FillArrays();
+        input = "Whats the lecture on monday bro ?";
 
         //Similar sentences with associated templates in order
         ArrayList<String> simSentences= GetSimillarSentences(input);
@@ -34,7 +39,7 @@ public class SentenceComparator {
         ArrayList<Double> ratingArray= GetRatingSentences(input,simSentences);
 
         //Manage Outputs
-        System.out.println(ManageOutput(simSentences,simTemplates,ratingArray));
+        System.out.println(ManageOutput(3,simSentences,simTemplates,ratingArray));
 
     }
 
@@ -176,16 +181,20 @@ public class SentenceComparator {
     }
 
     //What to answer to the user ?
-    private static String ManageOutput(ArrayList<String> simSentences, ArrayList<String> simTemplates, ArrayList<Double> ratingArray){
-        int rank= 0;
+    private static String ManageOutput(int rank,ArrayList<String> simSentences, ArrayList<String> simTemplates, ArrayList<Double> ratingArray){
+        rank = rank-1;
         String out= simSentences.get(rank)+ " "+Math.round(ratingArray.get(rank))+"% \n"+simTemplates.get(rank);
 
         if(stringSimilarity(simSentences.get(rank),input)>80){
-            return "Answer Approprietely";
+            return out;
+            //TODO: Call class with template sentence
+            //Sentence: simSentences.get(rank)      (rank=0 by default)
         }
 
         if(stringSimilarity(simSentences.get(rank),input)<=80){
             return out;
+            //TODO: Call tunnel class
+            //tunnel question: simTemplates.get  (rank=0 by default)
         }
 
         return "";
