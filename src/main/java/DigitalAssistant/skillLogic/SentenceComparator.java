@@ -24,17 +24,20 @@ public class SentenceComparator {
     }*/
 
     public static void main(String[] args){
+
         //Input
         FillArrays();
 
         //Similar sentences with associated templates in order
         ArrayList<String> simSentences= GetSimillarSentences(input);
         ArrayList<String> simTemplates= GetSimillarTunnels(input);
-        ArrayList<String> ratingArray= GetRatingSentences(input,simSentences);
+        ArrayList<Double> ratingArray= GetRatingSentences(input,simSentences);
 
         //Manage Outputs
         System.out.println(ManageOutput(simSentences,simTemplates,ratingArray));
+
     }
+
 
 
     //Returns similarity rating between 2 sentences using edit distance
@@ -102,12 +105,13 @@ public class SentenceComparator {
     }
 
     //return arraylists of most similar sentences
-    private static ArrayList<String> GetRatingSentences(String sentence, ArrayList<String> OrderedSentence){
+    private static ArrayList<Double> GetRatingSentences(String sentence, ArrayList<String> OrderedSentence){
         ArrayList<Double> ratingSentences=new ArrayList<Double>();
+
         for (int i=0;i<OrderedSentence.size();i++){
             ratingSentences.add(stringSimilarity(sentence,OrderedSentence.get(i)));
         }
-        return null;
+        return ratingSentences;
     }
 
     //Same as above but returns tunnels, not sentences
@@ -119,8 +123,8 @@ public class SentenceComparator {
         ArrayList<Double> ratingSentences=new ArrayList<Double>();
 
         //Copy Sentences
-        for (int i=0; i< CommonSentences.size();i++){
-            simTunnels.add(CommonSentences.get(i));
+        for (int i=0; i< TunnelSentences.size();i++){
+            simTunnels.add(TunnelSentences.get(i));
         }
         //Get SimRating for each sentences
         for (int i=0;i<CommonSentences.size();i++){
@@ -172,15 +176,16 @@ public class SentenceComparator {
     }
 
     //What to answer to the user ?
-    private static String ManageOutput(ArrayList<String> simSentences, ArrayList<String> simTemplates, ArrayList<String> ratingArray){
+    private static String ManageOutput(ArrayList<String> simSentences, ArrayList<String> simTemplates, ArrayList<Double> ratingArray){
         int rank= 0;
+        String out= simSentences.get(rank)+ " "+Math.round(ratingArray.get(rank))+"% \n"+simTemplates.get(rank);
 
         if(stringSimilarity(simSentences.get(rank),input)>80){
             return "Answer Approprietely";
         }
 
         if(stringSimilarity(simSentences.get(rank),input)<=80){
-            return "Do you mean: "+simTemplates.get(rank)+ " " +ratingArray.get(rank)+"%"+simSentences.get(rank);
+            return out;
         }
 
         return "";
@@ -190,7 +195,5 @@ public class SentenceComparator {
 
         return input;
     }
-
-
 }
 
