@@ -1,0 +1,20 @@
+/*
+ * Phase 1 TODO:
+ *  o Finish loadSkills method
+ *  o Finish off chatbot functionality (GUI)
+ *  o Add comments
+ *  o Make saveSkill method: Add new Skill to the skills.txt text file in style of template
+ *  o Test shit
+ *  o Make classes:
+        - skillReference.txt
+
+        - Event.java
+            String name;
+            ArrayList<String> parameters;
+
+        - skillData.java
+            method: get(String eventName, ArrayList<String> parameters) // check to see if event-parameter pair
+                                                                            exists and return, otherwise return fail
+
+
+ */

@@ -1,0 +1,30 @@
+-----
+Name LectureTime
+Question Which lectures are there on <DAY> at <TIME>?
+Slot <DAY> Monday Tuesday Wednesday Thursday Friday Saturday
+Slot <TIME> 9 11 13 15
+--
+Action <DAY> Saturday |Print| There are no lectures on Saturday
+Action <DAY> Monday <TIME> 9 |Print| We start the week with math
+Action <DAY> Monday <TIME> 11 |Print| On Monday noon we have Theoratical Computer Science
+Action <DAY> Monday <TIME> 8 |Search| monday 8 am
++++++
+-----
+Name DistanceFinder
+Question What is the distance between <CITY1> to <CITY2>?
+Slot <CITY1> @INPUT
+Slot <CITY2> @INPUT
+--
+Action <CITY1> @INPUT <CITY2> @INPUT |Search| The distance between <CITY1> to <CITY2>.
++++++
+-----
+Name MariekeSkill
+Question How do I get from <CITY> to <CITY> at <TIME>?
+Slot <CITY> Maastricht Heerlen Den-Hague New-York
+Slot <TIME> 9 11
+--
+Action <CITY> Maastricht <CITY> Heerlen <TIME> 9 |Print| By train 
+Action <CITY> Maastricht <CITY> Heerlen <TIME> 11 |Print| By car
+Action <CITY> Maastricht <CITY> Sittard <TIME> 11 |Print| By bike
++++++
+
