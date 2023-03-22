@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 TEMPLATE
 Skill name
 "Prototype Sentence"
@@ -97,3 +98,24 @@ movie
 
 
 ____
+=======
+-----
+Name LectureTime
+Question Which lectures are there on <DAY> at <TIME>?
+Slot <DAY> Monday Tuesday Wednesday Thursday Friday Saturday
+Slot <TIME> 9 11 13 15
+--
+Action <DAY> Saturday |Print| There are no lectures on Saturday
+Action <DAY> Monday <TIME> 9 |Print| We start the week with math
+Action <DAY> Monday <TIME> 11 |Print| On Monday noon we have Theoratical Computer Science
+Action <DAY> Monday <TIME> 8 |Search| monday 8 am
++++++
+-----
+Name DistanceFinder
+Question What is the distance between <CITY1> to <CITY2>?
+Slot <CITY1> @INPUT
+Slot <CITY2> @INPUT
+--
+Action <CITY1> @INPUT <CITY2> @INPUT |Search| The distance between <CITY1> to <CITY2>.
++++++
+>>>>>>> 2355ce325f46de977ba0d04c30cf0884415a19b0

@@ -19,10 +19,14 @@ public class Action {
     }
 
     public void loadAction(){
+<<<<<<< HEAD
         if (actionType.equals(null)) {
             UnknownAction();
         }
         else if(actionType.equals("|Search|")){
+=======
+        if(actionType.equals("|Search|")){
+>>>>>>> 2355ce325f46de977ba0d04c30cf0884415a19b0
             GoogleSearchAction();
         }
         else if(actionType.equals("|Print|")){
@@ -30,6 +34,7 @@ public class Action {
         }
     }
 
+<<<<<<< HEAD
     private void UnknownAction() {
         System.out.println("I'm sorry, there is no action");
     }
@@ -40,6 +45,10 @@ public class Action {
 
     private void CalendarAction() {
         System.out.println("Calender Action");
+=======
+    private void GoogleSearchAction() {
+        System.out.println("Searching Google for ..." + actionValues);
+>>>>>>> 2355ce325f46de977ba0d04c30cf0884415a19b0
     }
 
     private void PrintAction(){
