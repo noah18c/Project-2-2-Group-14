@@ -31,7 +31,14 @@ public class Action {
         System.out.println("Searching Google for ..." + actionValues);
     }
 
+    private void distanceFinderAction(HashMap<String,String> inputValues){
+
+        String search = "How far is " + actionValues.get("CITY1") + " to " + actionValues.get("CITY2") + " by " + actionValues.get("METHOD");
+        
+    }
+
     private void PrintAction(){
+        
         System.out.println(actionInput);
     }
 

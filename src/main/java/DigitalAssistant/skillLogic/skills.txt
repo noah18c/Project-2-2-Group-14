@@ -1,104 +1,3 @@
-<<<<<<< HEAD
-TEMPLATE
-Skill name
-"Prototype Sentence"
-Placeholder 1
-Placeholder 2...
-
-*****
-distance_finder
-"How far from !CITY? to !CITY??"
-!CITY? - Maastricht||Chicago||...
-*****
-schedule_lookup
-"What lecture do I have on !DAY? at !TIME??"
-!DAY? - #weekDays||#numericDays||
-!TIME? - #clockTime 
-*****
-scheduler
-"Add an event on !DAY? at !TIME?."
-!DAY? - #weekDays||#numericDays||
-!TIME? - #clockTime
-
-sportEvent_lookup
-"Is there a <EVENT> game on !DAY?"
-<EVENT> - basketball||baseball
-!DAY? - 
-
-sportEvent_scheduler
-
-*****
-.....
-
-scheduler
-update
-"Add an <EVENT> on !DAY? at !TIME?."
-!DAY? - #weekDays||#numericDays||
-!TIME? - #clockTime
-out: "Meeting has been scheduled on !DAY? at !TIME?"
-add: <EVENT>meeting(!DAY?, !TIME?)
-
-*****
-schedule_lookup
-query
-"What do I have scheduled on !DAY? at !TIME??"
-!DAY? - #weekDays||#numericDays||#clockTime||
-!TIME? - #clockTime 
-get: <EVENT>meeting(!DAY?, !TIME?)
-out-fail: "There are no scheduled events on this day"
-out-success: "There are 
-*****
-
-
-
-
-
-example input : "<EVENT>meeting(!DAY?, !TIME?)"
-
-    public add(String txtInput){
-        >Open skillReference.txt
-        >Read whatever is in "<>"
-            Start writing new lines under corresponding thing ("<EVENT>")
-        >Start scanner/reading from right after "<EVENT>"
-        eventName = everything before "()"
-        ArrayList<String> parameters = everything inside parentheses seperated by ","
-        
-        >Use filewriter to use eventName and parameters to add to skillReference.txt in this template:
-            >meeting
-            >   params = {friday, 13:20};
-
-    }
-    public readSkillReferences(){
-        Array allowedTypes = {<EVENT>, <OBJECT>, <ACTIVITY>}
-        >Read file skilleReferences.txt line by line
-            >if(currentLine = something in allowedTypes)
-                >Make object from each entry
-                Example:
-                        if(currentLine == "<EVENT>"){
-                            Event =  new Event(name)
-                        } 
-    }
-
-"Schedule meeting on 10th of February"
-"Schedule on February 10th a meeting"
-    public Event get()
-
-
-__skillReference.txt___
-<EVENTS>
-meeting
-    params = {friday, 13:20};
-meeting
-    params = {friday, 13:20};
-lecture
-movie
-    params = {"}
-
-
-
-
-____
-=======
 -----
 Name LectureTime
 Question Which lectures are there on <DAY> at <TIME>?
@@ -118,4 +17,14 @@ Slot <CITY2> @INPUT
 --
 Action <CITY1> @INPUT <CITY2> @INPUT |Search| The distance between <CITY1> to <CITY2>.
 +++++
->>>>>>> 2355ce325f46de977ba0d04c30cf0884415a19b0
+-----
+Name MariekeSkill
+Question How do I get from <CITY> to <CITY> at <TIME>?
+Slot <CITY> Maastricht Heerlen Den-Hague New-York
+Slot <TIME> 9 11
+--
+Action <CITY> Maastricht <CITY> Heerlen <TIME> 9 |Print| By train 
+Action <CITY> Maastricht <CITY> Heerlen <TIME> 11 |Print| By car
+Action <CITY> Maastricht <CITY> Sittard <TIME> 11 |Print| By bike
++++++
+

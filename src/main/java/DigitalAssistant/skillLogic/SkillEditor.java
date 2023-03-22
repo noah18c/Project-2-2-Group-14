@@ -293,8 +293,9 @@ public class SkillEditor {
     }
 
     public static void main(String[] args) {
-        SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
-        String input = "What is the distance between Ankara to Paris?";
+        SkillEditor skillEditor = new SkillEditor("src\\main\\java\\DigitalAssistant\\skillLogic\\skills.txt");
+        //String input = "What is the distance between Ankara to Paris?";
+        String input = "How do I get from Maastricht to Heerlen at 11?";
         System.out.println(input);
         for (int i = 0; i < skillEditor.skills.size(); i++) {
             skillEditor.skills.get(i).match(input);
