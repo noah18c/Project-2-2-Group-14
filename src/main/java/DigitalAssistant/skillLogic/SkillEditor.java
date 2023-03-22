@@ -28,6 +28,10 @@ public class SkillEditor {
     public List<Skill> getSkills() {
         return skills;
     }
+
+    public void addSkill(Skill skill) {
+        skills.add(skill);
+    }
   
     public void saveSkill(Skill skill) {
     }
@@ -135,6 +139,136 @@ public class SkillEditor {
         } catch (FileNotFoundException e) {
             System.err.println("Error: File not found");
         }
+    }
+
+    public static void loadEvents(){
+        try (BufferedReader reader = new BufferedReader(new FileReader("src\\main\\java\\DigitalAssistant\\skillLogic\\Events.txt"))) {
+            String currentLine = "";
+            int i = 0;
+            while(currentLine != null){//While the file has not ended
+                //  System.out.println(currentLine);
+                
+                i++;
+                //System.out.println("Event " + i);
+
+                currentLine = reader.readLine();
+                if(currentLine == null){break;}
+                String eventName = currentLine;
+                String parametersStr = reader.readLine();//string for scanner
+
+                ArrayList<String> parameters = new ArrayList<>();//list to append to
+                Scanner paraScanner = new Scanner(parametersStr);
+                paraScanner.useDelimiter("-");//seperates the parametersStr by the '-' character
+
+
+                while(paraScanner.hasNext()){
+                    parameters.add(paraScanner.next());//adds each parameter to the list
+                }
+                paraScanner.close();
+
+                Event temp = new Event(eventName, parameters);//creates event from read
+                // System.out.println("Adding " + eventName);
+                SkillEditor.events.add(temp);        
+                
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading skills from file: " + e.getMessage());
+        }
+    }
+
+        /**
+     * Method to extract info from user input when asking him to define an unknown skill!
+     * Needed ONLY when the assistant recognizes unfamiliar skill -> gets stuck
+     * if skill (prototype or placeholder) unknown then do questionnaire & store answers; if info complete then declareSKill(input)
+     * Dynamic Questionnaire implemented in front end !?
+     * extraction of answers in back end in this method !
+     * 
+     * input: the stored user answers
+     * method creates a skill object which is added to skills list and can be written to the skills.txt file
+     * @param ArrayList of strings
+     * ---------------------------
+     * Questions to tunnel him:
+     * I don't get this. Would you like to define a new skill? I'd be happy to learn more to help you with your needs.
+     *  A: Yes / No 
+     * Perfect! What would you like to call the skill? 
+     *  A0: ¡skillname¿
+     * Provide a list of placeholders formatted with ¡¿ and seperated by commas
+     *  A1: ¡sports¿, ¡cook timer¿ etc.
+     * Enter a prototype sentence for the skill ¡skillname¿. It must include the placeholders!
+     *  A2: ¡This is a prototype sentence with ¡placeholder¿ . 
+     * Provide values for the placeholder(s)! separated by commas
+     *  A3: Volleyball, Handball, Windsurfing
+     * Your new skill ¡skillName¿ has been defined!
+     *
+     */
+
+     public void declareSkill(ArrayList<String> input){
+        String skillName = "";
+        String prototype = "";
+        String phName = "";
+        ArrayList<String> values = new ArrayList<String>(); // placeholder values
+
+        // extract skill name, prototype sentence, placeholder and its values if specified
+        skillName = input.get(0);
+        prototype = input.get(2);
+        phName = input.get(1);
+        String temp = input.get(3);
+        Scanner scan = new Scanner(temp);
+        scan.useDelimiter(",");
+        while (scan.hasNext()){
+            values.add(scan.next());
+        }
+        scan.close();
+
+        // create skill object with that stuff
+        Skill skill = new Skill(skillName, prototype);
+        addSkill(skill);
+        skill.setPlaceholderValue(phName, values);          // placeholders is a hashmap of String and ArrayList
+        saveSkill(skill);           // write the new skill to skills.txt
+        loadSkills();           // !? creates a loaded skill again!?
+        /** 
+        if (in.toLowerCase().equals("yes")){
+            // post next response to the chat --> "Perfect! What would you like to call the skill?"
+            // botWriter(false, "Perfect! What would you like to call the skill?")
+
+            skillName = in.toLowerCase();
+            // post next response to the chat --> "Enter a prototype sentence to use the skill ¡skillname¿ with."
+            // botWriter(false, "Enter a prototype sentence to use the skill ¡skillname¿ with.")
+            // get new input
+            prototype = in;
+
+        }
+        if (in.toLowerCase().equals("no")){
+            System.out.println("Try a different skill command. Here is a list of skills I understand.");
+        }
+        */
+    }
+
+    /**
+     * Used when user wants to add new values to existing placeholders of defined skills
+     * @param prototype
+     * @param input
+     * user prompt:
+     * Add values to this skill ¡skillName¿ / this prototype ¡prototype¿
+     * or when bot gets stuck:
+     * Would you like to define a new skill / prototype or add new values to an existing skill / prototype?
+     * A: add values to existing prototype
+     * Specify the prototype in the following format: ¡prototype¿
+     * A: ¡prototype¿ // use as input!
+     * Specify new values you would like to add to this prototype // use as input!
+     */
+    public void addValue(String prototype, String input){
+        ArrayList<String> values = new ArrayList<String>();
+        Scanner scan = new Scanner(input);
+        scan.useDelimiter(",");
+        while (scan.hasNext()){
+            values.add(scan.next());
+        }
+        scan.close();
+        // save values
+        // updateSkills();
     }
 
     public static void addEventToFile(String eventName, ArrayList<String> parameters){
