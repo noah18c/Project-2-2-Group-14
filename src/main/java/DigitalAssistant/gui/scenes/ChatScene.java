@@ -1,15 +1,10 @@
 package DigitalAssistant.gui.scenes;
 
-import DigitalAssistant.Utilities.AddSkill;
-import DigitalAssistant.Utilities.GetSkill;
 import DigitalAssistant.Utilities.Handler;
 import DigitalAssistant.gui.stages.SkillEditorStage;
 import javafx.animation.Animation;
-import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -171,7 +166,6 @@ public class ChatScene implements SceneInterface {
                 botWriter("You have chosen to "+buttonAdd.getText()+" a new skill.");
                 buttonAdd.setDisable(true);
                 buttonGet.setDisable(true);
-                AddSkill addSkill = new AddSkill(this);
 
 
 
@@ -181,8 +175,6 @@ public class ChatScene implements SceneInterface {
                 botWriter("You have chosen to "+buttonGet.getText()+" an existing skill.");
                 buttonAdd.setDisable(true);
                 buttonGet.setDisable(true);
-                GetSkill getSkill = new GetSkill(this);
-
 
 
             });
