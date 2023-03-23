@@ -4,6 +4,7 @@ import DigitalAssistant.Utilities.AddSkill;
 import DigitalAssistant.Utilities.GetSkill;
 import DigitalAssistant.Utilities.Handler;
 import DigitalAssistant.gui.stages.SkillEditorStage;
+import DigitalAssistant.skillLogic.SkillEditor;
 import javafx.animation.Animation;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Transition;
@@ -34,6 +35,7 @@ public class ChatScene implements SceneInterface {
     private Scene scene;
     private String title;
     private int width, height;
+    private SkillEditor skillEditor;
 
     @FXML
     private Button skillButton;
@@ -63,6 +65,7 @@ public class ChatScene implements SceneInterface {
         this.title = "Go ahead... ask!";
         this.width = handler.getScreen().getWidth()/3;
         this.height = handler.getScreen().getHeight()/2;
+        skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
     }
 
     /**
@@ -278,7 +281,11 @@ public class ChatScene implements SceneInterface {
         textField.setOnKeyPressed(e ->{
             if(e.getCode() == KeyCode.ENTER){
                 post(true);
+                Text latestMessage = (Text) messages.get(messages.size()-1).getGraphic(); // Input from the user
+                String result = skillEditor.findSkill(latestMessage.getText()); // output based on the input
+                botWriter(result); // prints the output
             }
+            
         });
 
 
