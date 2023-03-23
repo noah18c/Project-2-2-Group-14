@@ -80,6 +80,7 @@ public class ChatScene implements SceneInterface {
         }
         this.scene.getStylesheets().add(getClass().getResource("chatStyles.css").toExternalForm());
         init();
+        initActions();
 
     }
 
@@ -250,8 +251,9 @@ public class ChatScene implements SceneInterface {
      */
     private void init() {
         botWriter("Hello user, what would you like to do?");
-        //postButtons();
+    }
 
+    private void initActions(){
         chatbox.setMinWidth(scrollPane.getMinWidth()-20);
         chatbox.setMinHeight(scrollPane.getMinHeight());
         chatbox.setAlignment(Pos.TOP_CENTER);
@@ -267,7 +269,6 @@ public class ChatScene implements SceneInterface {
             chatbox.getChildren().clear();
             messages.clear();
             botWriter("Hello user, would you like to add a skill or get an existing one?");
-            postButtons();
         });
 
         textField.setOnKeyPressed(e ->{
@@ -277,7 +278,7 @@ public class ChatScene implements SceneInterface {
                 String result = skillEditor.findSkill(latestMessage.getText()); // output based on the input
                 botWriter(result); // prints the output
             }
-            
+
         });
 
 
@@ -296,10 +297,6 @@ public class ChatScene implements SceneInterface {
                 System.out.println("shit");
             }
         });
-    }
-
-    public void addMessageBot(String input){
-
     }
 
 

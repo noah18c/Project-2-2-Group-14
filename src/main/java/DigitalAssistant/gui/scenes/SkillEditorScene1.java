@@ -1,6 +1,7 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
+import DigitalAssistant.Utilities.SkillsVariables;
 import DigitalAssistant.Utilities.SlotValuePair;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,7 +20,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class SkillEditorScene implements Initializable {
+public class SkillEditorScene1 implements Initializable {
 
     private Handler handler;
     private Scene scene;
@@ -62,7 +64,7 @@ public class SkillEditorScene implements Initializable {
     private TextField slotValueText;
 
     @FXML
-    private Button submitButton;
+    private Button nextButton;
 
     @FXML
     private Button removeSlotValuePairButton;
@@ -73,7 +75,7 @@ public class SkillEditorScene implements Initializable {
     private ObservableList<SlotValuePair> slotValuePairs = FXCollections.observableArrayList();
     private HashMap<String, Boolean> inputHashmap = new HashMap<>();
 
-    public SkillEditorScene(Handler handler){
+    public SkillEditorScene1(Handler handler){
         this.handler = handler;
         this.title = "Skill Editor Window";
         this.width = handler.getScreen().getWidth()/3;
@@ -84,7 +86,7 @@ public class SkillEditorScene implements Initializable {
 
         handler.getWindow().setTitle(this.title);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SkillEditorScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SkillEditorScene1.fxml"));
         loader.setController(this);
 
         try {
@@ -100,7 +102,7 @@ public class SkillEditorScene implements Initializable {
     private void init(){
 
         addSlotButton.setDisable(true);
-        submitButton.setDisable(true);
+        nextButton.setDisable(true);
         removeSlotValuePairButton.setDisable(true);
 
         insertSkillbutton.setOnAction(e -> {
@@ -117,34 +119,68 @@ public class SkillEditorScene implements Initializable {
                slotList.add(slots.get(i));
                inputHashmap.put(slots.get(i), false);
            }
-            slotChoiceBox.getSelectionModel().selectFirst();
-            addSlotButton.setDisable(false);
-            submitButton.setDisable(false);
-            removeSlotValuePairButton.setDisable(false);
+
+
+           slotChoiceBox.getSelectionModel().selectFirst();
+           addSlotButton.setDisable(false);
+           nextButton.setDisable(false);
+           removeSlotValuePairButton.setDisable(false);
 
         });
 
         this.addSlotButton.setOnAction(e -> {
 
-            if(inputHashmap.get(slotChoiceBox.getValue()) == false){
+            if(inputHashmap.get(slotChoiceBox.getValue()) == false && !slotValueText.getText().isEmpty()){
                 slotValuePairs.add(new SlotValuePair(slotChoiceBox.getValue(), slotValueText.getText()));
+
+            } else if (inputHashmap.get(slotChoiceBox.getValue()) == false && slotValueText.getText().isEmpty()){
                 inputHashmap.put(slotChoiceBox.getValue(), true);
+                slotValuePairs.add(new SlotValuePair(slotChoiceBox.getValue(), "INPUT-SLOT"));
             } else {
 
             }
 
+            System.out.println(slotValuePairs.size());
             slotValueText.clear();
         });
 
-        this.submitButton.setOnAction(e -> {
+        this.nextButton.setOnAction(e -> {
 
         });
 
         this.removeSlotValuePairButton.setOnAction(e -> {
-            slotValuePairs.remove(tableView.getSelectionModel().getSelectedItem());
+
+            SlotValuePair selectedItem = tableView.getSelectionModel().getSelectedItem();
+
+            if(inputHashmap.get(selectedItem.getSlot()) == true && selectedItem.getValue() == "INPUT-SLOT"){
+                inputHashmap.put(selectedItem.getSlot(), false);
+            }
+            slotValuePairs.remove(selectedItem);
+
         });
 
+        this.slotValueText.setOnKeyPressed(e ->{
+            if(e.getCode() == KeyCode.ENTER){
+                this.addSlotButton.fire();
+            }
+        });
 
+        this.protoSentenceText.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER){
+                this.insertSkillbutton.fire();
+            }
+        });
+
+        this.nextButton.setOnAction(e -> {
+            SkillsVariables skillsVariables = new SkillsVariables(skillNameString, protoSentenceString, slotValuePairs, inputHashmap);
+
+        });
+
+        this.tableView.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.DELETE){
+                this.removeSlotValuePairButton.fire();
+            }
+        });
     }
 
 
@@ -164,7 +200,13 @@ public class SkillEditorScene implements Initializable {
             temp.add(in.next());
             char c = '<';
             if (temp.get(i).charAt(0) == c){
-                phList.add(temp.get(i));
+                String slot = temp.get(i);
+                while(temp.get(i).charAt(temp.get(i).length()-1) != '>'){
+                    i++;
+                    temp.add(in.next());
+                    slot += " "+temp.get(i);
+                }
+                phList.add(slot);
             }
             i++;
         }

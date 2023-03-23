@@ -1,14 +1,14 @@
 package DigitalAssistant.gui.stages;
 
 import DigitalAssistant.Utilities.Handler;
-import DigitalAssistant.gui.scenes.SkillEditorScene;
+import DigitalAssistant.gui.scenes.SkillEditorScene1;
 import javafx.stage.Stage;
 
 public class SkillEditorStage {
 
     private Stage window;
 
-    private SkillEditorScene scene;
+    private SkillEditorScene1 scene;
 
     private Handler handler;
 
@@ -18,7 +18,7 @@ public class SkillEditorStage {
     }
 
     public void display(){
-        scene = new SkillEditorScene(handler);
+        scene = new SkillEditorScene1(handler);
         scene.display();
 
 
