@@ -19,12 +19,13 @@ Action <CITY1> @INPUT <CITY2> @INPUT |Search| The distance between <CITY1> to <C
 +++++
 -----
 Name MariekeSkill
-Question How do I get from <CITY> to <CITY> at <TIME>?
-Slot <CITY> Maastricht Heerlen Den-Hague New-York
+Question How do I get from <CITY1> to <CITY2> at <TIME>?
+Slot <CITY1> Maastricht Heerlen Den-Hague New-York
+Slot <CITY2> Maastricht Heerlen Den-Hague New-York
 Slot <TIME> 9 11
 --
-Action <CITY> Maastricht <CITY> Heerlen <TIME> 9 |Print| By train 
-Action <CITY> Maastricht <CITY> Heerlen <TIME> 11 |Print| By car
-Action <CITY> Maastricht <CITY> Sittard <TIME> 11 |Print| By bike
+Action <CITY1> Maastricht <CITY2> Heerlen <TIME> 9 |Print| By train 
+Action <CITY1> Maastricht <CITY2> Heerlen <TIME> 11 |Print| By car
+Action <CITY1> Maastricht <CITY2> Sittard <TIME> 11 |Print| By bike
 +++++
 

@@ -152,4 +152,60 @@ public class Skill {
     public ArrayList<Action> getActions() {
         return actions;
     }
+    /*
+     * Creates a string in the format of the skills.txt template for saving skills as plain text.
+     */
+    public String toFileFormatString(){
+        StringBuilder builder = new StringBuilder();
+
+        //Main info and start of Skill
+        builder.append("-----\n");
+        builder.append("Name " + this.getName() + "\n");
+        builder.append("Question " + this.getPrototype() + "\n");
+
+        //Slots
+        Set<String> keySet = this.getPlaceholders().keySet();//Making the hashMap iterable
+        ArrayList<String> keyList = new ArrayList<>(keySet);
+        
+        for(String key : keyList){//Iterates through each slot type. (eg. "<CITY>, <DAY>, <TIME>, etc...")
+            builder.append("Slot " + key + " ");
+
+            //Adds placeholders to the line for the current slot.
+            for(String placeholder : this.getPlaceholders().get(key)){
+                //Check if we have reached the end of the list so no uneccessary spaces are added.
+                if(this.getPlaceholders().get(key).indexOf(placeholder) == this.getPlaceholders().get(key).size()-1){
+                    builder.append(placeholder);
+                }else{
+                    builder.append(placeholder + " ");
+                }
+            }
+
+            builder.append("\n");
+        }
+
+        builder.append("--\n");
+        //Actions
+
+        for(Action action : this.getActions()){//Uses same structure as slots.
+            builder.append("Action ");
+            Set<String> keys = action.getActionValues().keySet();
+            ArrayList<String> keyListorino = new ArrayList<>(keys);
+            //Action permutations
+            for(String key : keyListorino){
+                //Check if we have reached the end of the list so no uneccessary spaces are added.
+                if(keyListorino.indexOf(key) == keyListorino.size()-1){
+                    builder.append(key + " " + action.getActionValues().get(key));
+                }else{
+                    builder.append(key + " " + action.getActionValues().get(key) + " ");
+                }
+            }
+            //Actiontype and Action output string
+            builder.append(action.getActionType() + " " + action.getActionInput() + "\n");
+        }
+        
+        builder.append("+++++");
+        //End
+        return builder.toString();
+    }
+
 }

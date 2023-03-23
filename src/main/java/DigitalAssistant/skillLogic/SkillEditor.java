@@ -8,11 +8,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class SkillEditor {
     private List<Skill> skills;
@@ -32,13 +34,54 @@ public class SkillEditor {
     public void addSkill(Skill skill) {
         skills.add(skill);
     }
-  
-    public void saveSkill(Skill skill) {
+    /*
+     *This method goes through the skills from first added to last added skill and deletes a skill object if it's name matches another skill further down the list.
+     */
+    public void deleteDuplicateSkills(){
+        ArrayList<Skill> skillsToRemove = new ArrayList<>();
+      
+        for(int i = 0; i < skills.size(); i++){
+            for(int j = i; j < skills.size(); j++){
+                if(i != j && skills.get(i).getName().equals(skills.get(j).getName())){
+                    skillsToRemove.add(skills.get(i));
+                    System.out.println("Removing " + skills.get(i).getName());
+                }
+            }
+        }
+
+
+        skills.removeAll(skillsToRemove);
+    }
+    
+    /**
+     * This method takes all defined skill objects and overwrites the skills.txt file with all newly saved skills by printing each object in the correct format.
+     */
+    public void saveSkills() {
+        loadSkills();//Loads the skills again just in case.
+        deleteDuplicateSkills();//Gets rid of duplicate skills before saving new file
+        try {
+            FileWriter file = new FileWriter("src\\main\\java\\DigitalAssistant\\skillLogic\\skillsTest.txt", false);
+            PrintWriter writer = new PrintWriter(file);
+            //Prints to file the skill object in loadSkill() readable format 
+            for(Skill skill : skills){
+                if(skills.indexOf(skill) == skills.size()-1){
+                    writer.print(skill.toFileFormatString());
+                }else{
+                    writer.println(skill.toFileFormatString());
+                }
+            }
+            
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadSkills() {//Reads skills.txt and makes skill objects from each skill already contained in the file
+        this.skills = new ArrayList<>();//Resets list for use outside of constructor
         try (Scanner scanner = new Scanner(new File(filename))) {
             while (scanner.hasNextLine()) {
+
                 String line = scanner.nextLine().trim();
 
                 if (line.equals("-----")) {
@@ -226,8 +269,8 @@ public class SkillEditor {
         Skill skill = new Skill(skillName, prototype);
         addSkill(skill);
         skill.setPlaceholderValue(phName, values);          // placeholders is a hashmap of String and ArrayList
-        saveSkill(skill);           // write the new skill to skills.txt
-        loadSkills();           // !? creates a loaded skill again!?
+        saveSkills();           // write the new skill to skills.txt
+        //loadSkills();           // !? creates a loaded skill again!?
         /** 
         if (in.toLowerCase().equals("yes")){
             // post next response to the chat --> "Perfect! What would you like to call the skill?"
@@ -303,12 +346,18 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor("src\\main\\java\\DigitalAssistant\\skillLogic\\skills.txt");
-        //String input = "What is the distance between Ankara to Paris?";
-        String input = "How do I get from Maastricht to Heerlen at 11?";
-        System.out.println(input);
-        for (int i = 0; i < skillEditor.skills.size(); i++) {
-            skillEditor.skills.get(i).match(input);
-        }
+        // //String input = "What is the distance between Ankara to Paris?";
+        // String input = "How do I get from Maastricht to Heerlen at 11?";
+        // System.out.println(input);
+        // for (int i = 0; i < skillEditor.skills.size(); i++) {
+        //     skillEditor.skills.get(i).match(input);
+        // }
+       
+        skillEditor.saveSkills();
+        // for(Skill skill : skillEditor.getSkills()){
+        //     System.out.println(skill.toFileFormatString());
+        // }  
+        
     }
     
 }
