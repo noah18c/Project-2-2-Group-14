@@ -173,7 +173,6 @@ public class SkillEditorScene1 implements Initializable {
 
         this.nextButton.setOnAction(e -> {
             SkillsVariables skillsVariables = new SkillsVariables(skillNameString, protoSentenceString, slotValuePairs, inputHashmap);
-
         });
 
         this.tableView.setOnKeyPressed(e -> {

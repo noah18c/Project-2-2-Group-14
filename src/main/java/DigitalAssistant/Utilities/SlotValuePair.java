@@ -4,9 +4,11 @@ public class SlotValuePair {
 
     private String slot, value;
 
+
     public SlotValuePair(String slot, String value){
         this.slot = slot;
         this.value = value;
+
     }
 
     public String getSlot() {
@@ -16,5 +18,7 @@ public class SlotValuePair {
     public String getValue() {
         return value;
     }
+
+
 
 }

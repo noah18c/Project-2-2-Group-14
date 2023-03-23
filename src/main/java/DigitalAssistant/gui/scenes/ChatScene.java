@@ -268,7 +268,7 @@ public class ChatScene implements SceneInterface {
         clearButton.setOnAction(e -> {
             chatbox.getChildren().clear();
             messages.clear();
-            botWriter("Hello user, would you like to add a skill or get an existing one?");
+            init();
         });
 
         textField.setOnKeyPressed(e ->{
@@ -283,7 +283,7 @@ public class ChatScene implements SceneInterface {
 
 
         sendButton.setOnAction(e -> {
-            String writtenText = post(false);
+            String writtenText = post(true);
             try
             {
                 URL url=new URL("https://google.co.in");
