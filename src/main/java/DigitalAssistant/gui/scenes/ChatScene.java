@@ -290,7 +290,6 @@ public class ChatScene implements SceneInterface {
                 URLConnection connection=url.openConnection();
                 connection.connect();
                 java.awt.Desktop.getDesktop().browse(java.net.URI.create("http://www.google.com/search?hl=en&q="+writtenText.replace(" ", "+")+"&btnG=Google+Search"));
-
             }
             catch(Exception ee)
             {
@@ -298,7 +297,6 @@ public class ChatScene implements SceneInterface {
             }
         });
     }
-
 
     public Scene getScene(){
         return this.scene;

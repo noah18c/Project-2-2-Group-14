@@ -3,6 +3,8 @@ package DigitalAssistant.gui.scenes;
 import DigitalAssistant.Utilities.Handler;
 import DigitalAssistant.Utilities.SkillsVariables;
 import DigitalAssistant.Utilities.SlotValuePair;
+import DigitalAssistant.gui.stages.SkillEditorStage;
+import DigitalAssistant.gui.stages.SkillEditorStage2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,6 +46,9 @@ public class SkillEditorScene1 implements Initializable {
 
     @FXML
     private Button inputSlotButton;
+
+    @FXML
+    private Button addAction;
 
     @FXML
     private Button inputSlotButton1;
@@ -104,6 +109,15 @@ public class SkillEditorScene1 implements Initializable {
         addSlotButton.setDisable(true);
         nextButton.setDisable(true);
         removeSlotValuePairButton.setDisable(true);
+
+        nextButton.setOnAction(e -> {
+            SkillEditorStage ses = new SkillEditorStage(handler);
+            ses.display();
+        });
+        addAction.setOnAction(e -> {
+            SkillEditorStage2 ses = new SkillEditorStage2(handler);
+            ses.display();
+        });
 
         insertSkillbutton.setOnAction(e -> {
             slotValuePairs.clear();

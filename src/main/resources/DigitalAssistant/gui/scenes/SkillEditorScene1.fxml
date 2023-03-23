@@ -29,5 +29,6 @@
           <TableColumn fx:id="columnValue" prefWidth="123.20001220703125" text="Value" />
         </columns>
       </TableView>
+      <Button id="addAction" layoutX="413.0" layoutY="437.0" mnemonicParsing="false" text="add Action" />
    </children>
 </AnchorPane>
