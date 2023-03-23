@@ -10,7 +10,7 @@ Action <DAY> Monday <TIME> 11 |Print| On Monday noon we have Theoratical Compute
 Action <DAY> Monday <TIME> 8 |Search| monday 8 am
 +++++
 -----
-Name DistanceFinder
+Name DistanceFinderSearch
 Question What is the distance between <CITY1> to <CITY2>?
 Slot <CITY1> @INPUT
 Slot <CITY2> @INPUT

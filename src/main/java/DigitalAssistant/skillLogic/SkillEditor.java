@@ -292,6 +292,15 @@ public class SkillEditor {
         }
     }
 
+    public String findSkill(String input){
+        for (int i = 0; i <this.skills.size(); i++) {
+            this.skills.get(i).match(input);
+            return "Marieke"; 
+        }
+        return "No skill found";
+    }
+
+
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor("src\\main\\java\\DigitalAssistant\\skillLogic\\skills.txt");
         //String input = "What is the distance between Ankara to Paris?";
