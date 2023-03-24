@@ -34,6 +34,24 @@ public class SkillEditor {
     public void addSkill(Skill skill) {
         skills.add(skill);
     }
+
+    public static void main(String[] args) {
+        SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        String input = "What is the distance between maastricht to adasd?";
+        System.out.println(input);
+        System.out.println(skillEditor.search(input));
+    }
+
+    public String search(String input){
+        for (int i = 0; i <skills.size(); i++) {
+            if(skills.get(i).match(input)){
+                return skills.get(i).performAction();
+            }
+        }
+        return "NO SKILLS FOUND FOR GIVEN INPUT";
+    }
+
+
     /*
      *This method goes through the skills from first added to last added skill and deletes a skill object if it's name matches another skill further down the list.
      */
@@ -120,7 +138,7 @@ public class SkillEditor {
 
                         skill.setPlaceholderValue(slotKey, slotValues); // For each slot we created a key and the arraylist of values for corresponding key, then assigned the key value pair to the hashmap of skill.
                     }                    
-                    //System.out.println(skill.getPlaceholders().keySet());
+                
 
                     // Read actions
                     while (scanner.hasNextLine()) {
@@ -144,34 +162,46 @@ public class SkillEditor {
                          * actionType is the "|Print|" which means we will use print action for the "MONDAY" and "9"
                          * actionInput is the line  "We start the week with math" ,so this is the sentence we will print.
                          */
-                        HashMap<String,String> actionValues = new HashMap<>(); 
+                        HashMap<String,ArrayList<String>> actionValues = new HashMap<>(); 
                         String actionType = new String();
                         String actionInput = new String();
-
-                        int counter = 0;// assign the value for corresponding key just one time, so ignore the placholder if there is in the action sentence
-                        for (int i = 0; i < actionLineString.length; i++) {
-                            for (int j = 0; j < placeholders.size(); j++) {
-                                if(actionLineString[i].equals(placeholders.get(j))){
-                                    counter++;
-                                    actionValues.put(placeholders.get(j), actionLineString[i+1]);
-                                }
-                            }
-                            if(counter == placeholders.size()){
-                                break;
-                            }
-                        }
+                        
 
                         for (int i = 0; i < actionLineString.length; i++) {
                             if(actionLineString[i].startsWith("|") && actionLineString[i].endsWith("|")){
                                 actionType = actionLineString[i];
                                 for (int j = i+1; j < actionLineString.length; j++) {
-                                    actionInput += actionLineString[j] + " ";
+                                    if(j == actionLineString.length-1){
+                                        actionInput += actionLineString[j];
+                                    }
+                                    else{
+                                        actionInput += actionLineString[j] + " ";
+                                    }
+                                    
                                 }
-                            }
+                            }   
                         }
 
+                        actionLine = actionLine.replace(actionType, "");  //delete the actionType part to reach actionValues
+                        actionLine = actionLine.replace(actionInput, ""); //delete the actionInput part to reach actionValues
+                        actionLineString = actionLine.split(" "); // Split every word of line and add every word to array
+
+                        for (int j = 0; j < placeholders.size(); j++) { 
+                            ArrayList<String> valuesForPlaceholder = new ArrayList<>();
+                            
+                            for (int i = 0; i < actionLineString.length; i++) {
+                                if(actionLineString[i].equals(placeholders.get(j))){
+                                    valuesForPlaceholder.add(actionLineString[i+1]);
+                                }
+                            }
+
+                            actionValues.put(placeholders.get(j), valuesForPlaceholder);
+                        }
+
+
                         //System.out.println(actionType + " " + actionInput);
-                        //System.out.println(actionValues);
+                        // System.out.println(actionValues);
+                        // System.out.println(" -------- ");
 
                         Action action = new Action(actionType, actionInput, actionValues);
                         skill.addAction(action);
@@ -252,7 +282,7 @@ public class SkillEditor {
         String prototype = "";
         String phName = "";
         ArrayList<String> values = new ArrayList<String>(); // placeholder values
-
+        
         // extract skill name, prototype sentence, placeholder and its values if specified
         skillName = input.get(0);
         prototype = input.get(2);
@@ -341,23 +371,5 @@ public class SkillEditor {
             return "Marieke"; 
         }
         return "No skill found";
-    }
-
-
-    public static void main(String[] args) {
-        SkillEditor skillEditor = new SkillEditor("src\\main\\java\\DigitalAssistant\\skillLogic\\skills.txt");
-        // //String input = "What is the distance between Ankara to Paris?";
-        // String input = "How do I get from Maastricht to Heerlen at 11?";
-        // System.out.println(input);
-        // for (int i = 0; i < skillEditor.skills.size(); i++) {
-        //     skillEditor.skills.get(i).match(input);
-        // }
-       
-        skillEditor.saveSkills();
-        // for(Skill skill : skillEditor.getSkills()){
-        //     System.out.println(skill.toFileFormatString());
-        // }  
-        
-    }
-    
+    }    
 }
