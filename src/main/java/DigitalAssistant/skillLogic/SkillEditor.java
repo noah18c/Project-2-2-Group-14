@@ -37,7 +37,7 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
-        String input = "What is the distance between maastricht to adasd?";
+        String input = "How do I get from Maastricht to Heerlen at 11?";
         System.out.println(input);
         System.out.println(skillEditor.search(input));
     }
@@ -50,7 +50,6 @@ public class SkillEditor {
         }
         return "NO SKILLS FOUND FOR GIVEN INPUT";
     }
-
 
     /*
      *This method goes through the skills from first added to last added skill and deletes a skill object if it's name matches another skill further down the list.
@@ -67,7 +66,7 @@ public class SkillEditor {
             }
         }
 
-
+        
         skills.removeAll(skillsToRemove);
     }
     
@@ -363,13 +362,5 @@ public class SkillEditor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public String findSkill(String input){
-        for (int i = 0; i <this.skills.size(); i++) {
-            this.skills.get(i).match(input);
-            return "Marieke"; 
-        }
-        return "No skill found";
-    }    
+    }  
 }

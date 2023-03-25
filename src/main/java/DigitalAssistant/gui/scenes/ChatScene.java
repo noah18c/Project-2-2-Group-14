@@ -275,7 +275,7 @@ public class ChatScene implements SceneInterface {
             if(e.getCode() == KeyCode.ENTER){
                 post(true);
                 Text latestMessage = (Text) messages.get(messages.size()-1).getGraphic(); // Input from the user
-                String result = skillEditor.findSkill(latestMessage.getText()); // output based on the input
+                String result = skillEditor.search(latestMessage.getText()); // output based on the input
                 botWriter(result); // prints the output
             }
 

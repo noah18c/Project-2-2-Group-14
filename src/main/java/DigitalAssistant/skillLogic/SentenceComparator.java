@@ -1,8 +1,8 @@
 package DigitalAssistant.skillLogic;
 
 import javafx.util.Pair;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -12,7 +12,6 @@ public class SentenceComparator {
     private static ArrayList<String> CommonSentences=new ArrayList<String>();
     private static ArrayList<String> TunnelSentences=new ArrayList<String>();
     private static String input;
-
 
     //INTIALIZE
     //Need template sentences without placeholders
@@ -28,7 +27,6 @@ public class SentenceComparator {
     }
 
     public static void main(String[] args){
-
         //Input
         FillArrays();
         input = "Whats the lecture on monday bro ?";
@@ -40,10 +38,7 @@ public class SentenceComparator {
 
         //Manage Outputs
         System.out.println(ManageOutput(3,simSentences,simTemplates,ratingArray));
-
     }
-
-
 
     //Returns similarity rating between 2 sentences using edit distance
     private static double stringSimilarity(String s1, String s2){
@@ -65,11 +60,13 @@ public class SentenceComparator {
                 }
             }
         }
+       
         int distance = dp[len1][len2];
         double maxLen = Math.max(len1, len2);
         double similarityPercentage = (maxLen - distance) / maxLen * 100;
         return similarityPercentage;
     }
+
 
     //return arraylists of most similar sentences
     private static ArrayList<String> GetSimillarSentences(String sentence){
@@ -89,7 +86,7 @@ public class SentenceComparator {
         }
 
         //Sort the Arrays
-        // Sort the simSentences ArrayList based on the sorted ratingSentences ArrayList
+        //Sort the simSentences ArrayList based on the sorted ratingSentences ArrayList
         ArrayList<String> sortedSimSentences = new ArrayList<String>();
         ArrayList<Pair<String, Double>> pairs = new ArrayList<Pair<String, Double>>();
         for (int i = 0; i < simSentences.size(); i++) {
@@ -105,7 +102,6 @@ public class SentenceComparator {
         for (Pair<String, Double> pair : pairs) {
             sortedSimSentences.add(pair.getKey());
         }
-
         return sortedSimSentences;
     }
 
@@ -185,13 +181,22 @@ public class SentenceComparator {
         rank = rank-1;
         String out= simSentences.get(rank)+ " "+Math.round(ratingArray.get(rank))+"% \n"+simTemplates.get(rank);
 
-        if(stringSimilarity(simSentences.get(rank),input)>80){
+        if(stringSimilarity(simSentences.get(rank),input)>50){
             return out;
+            
+            //is there any lecture on saturday? 
+            //What lecture do i have on at?
+            //What is the distance between to
+            //<DAY> Monday Tuesday Wednesday Thursday Friday Saturday
+            //What lecture do ihave on saturday?
+
             //TODO: do as normal
         }
 
         if(stringSimilarity(simSentences.get(rank),input)<=80){
             return out;
+
+        //print : "Retype"
             //TODO: Call tunnel class with a question based on similar template sentence ?
             // * Sentence: simSentences.get(rank)      (rank=0 by default)
             // * Tunnel: simTemplates.get  (rank=0 by default)
@@ -205,4 +210,3 @@ public class SentenceComparator {
         return input;
     }
 }
-
