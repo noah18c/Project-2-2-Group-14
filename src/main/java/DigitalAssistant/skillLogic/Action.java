@@ -18,7 +18,7 @@ public class Action {
         this.actionSentence = actionSentence;
         this.actionType = actionType;
         this.actionValues = actionValues;
-        //System.out.println(actionType + " " + actionInput + " " + actionValues);
+        // System.out.println(actionType + " " + actionSentence + " " + actionValues);
     }
 
     public String triggerAction(){
@@ -32,8 +32,7 @@ public class Action {
 
     public void changeActionSentence(){
         temporaryActionSentence = actionSentence;
-
-        actionSentence = actionSentence.substring(0, actionSentence.length() - 1) + " " + actionSentence.charAt(actionSentence.length() - 1); // To spearate last char from the sentence for the case there is "?" at the end of the sentence
+        actionSentence = separateLastCharIfPunctuation(actionSentence);
         String[] words = actionSentence.split(" ");
 
         Set<String> key = inputValues.keySet();
@@ -55,7 +54,6 @@ public class Action {
         actionSentence.trim();
     }
 
-
     public void loadAction(){
         changeActionSentence();
 
@@ -65,7 +63,9 @@ public class Action {
         else if(actionType.equals("|Print|")){
             PrintAction();
         }
+        //TODO : More action types ,API's...
 
+        
         actionSentence = temporaryActionSentence;
     }
 
@@ -84,6 +84,15 @@ public class Action {
         output = "Searching Google for ..." + actionSentence;
     }
 
+    public static String separateLastCharIfPunctuation(String sentence) {
+        String lastChar = sentence.substring(sentence.length() - 1);
+        if (lastChar.matches("\\p{Punct}")) {
+            String sentenceWithoutLastChar = sentence.substring(0, sentence.length() - 1);
+            return sentenceWithoutLastChar + " " + lastChar;
+        }
+        return sentence;
+    }
+    
     private void PrintAction(){
         output = actionSentence;
     }

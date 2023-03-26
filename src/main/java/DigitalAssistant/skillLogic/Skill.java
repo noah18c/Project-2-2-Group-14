@@ -138,7 +138,7 @@ public class Skill {
                 return currentAction.triggerAction();
             }
         }
-        return "No Action Found for given values!";
+        return "I couldn't find the response for the given value(s), please be more precise.";
     }
 
     //If the input matches with current Skill, that method assigns key value pair.
