@@ -249,72 +249,65 @@ public class SkillEditor {
         }
     }
 
-        /**
+    /**
      * Method to extract info from user input when asking him to define an unknown skill!
      * Needed ONLY when the assistant recognizes unfamiliar skill -> gets stuck
      * if skill (prototype or placeholder) unknown then do questionnaire & store answers; if info complete then declareSKill(input)
-     * Dynamic Questionnaire implemented in front end !?
-     * extraction of answers in back end in this method !
      * 
      * input: the stored user answers
      * method creates a skill object which is added to skills list and can be written to the skills.txt file
      * @param ArrayList of strings
-     * ---------------------------
-     * Questions to tunnel him:
-     * I don't get this. Would you like to define a new skill? I'd be happy to learn more to help you with your needs.
-     *  A: Yes / No 
-     * Perfect! What would you like to call the skill? 
-     *  A0: ¡skillname¿
-     * Provide a list of placeholders formatted with ¡¿ and seperated by commas
-     *  A1: ¡sports¿, ¡cook timer¿ etc.
-     * Enter a prototype sentence for the skill ¡skillname¿. It must include the placeholders!
-     *  A2: ¡This is a prototype sentence with ¡placeholder¿ . 
-     * Provide values for the placeholder(s)! separated by commas
-     *  A3: Volleyball, Handball, Windsurfing
-     * Your new skill ¡skillName¿ has been defined!
-     *
      */
 
-     public void declareSkill(ArrayList<String> input){
+    public void declareSkill(ArrayList<String> input){
         String skillName = "";
         String prototype = "";
         String phName = "";
+        ArrayList <String> phList = new ArrayList<String>();
+        ArrayList<String> temp = new ArrayList<String>();
         ArrayList<String> values = new ArrayList<String>(); // placeholder values
-        
-        // extract skill name, prototype sentence, placeholder and its values if specified
-        skillName = input.get(0);
-        prototype = input.get(2);
-        phName = input.get(1);
-        String temp = input.get(3);
-        Scanner scan = new Scanner(temp);
-        scan.useDelimiter(",");
-        while (scan.hasNext()){
-            values.add(scan.next());
-        }
-        scan.close();
 
+        // extract skill name, prototype sentence, placeholder(s) and its value(s) if specified
+        skillName = input.get(0);
+        prototype = input.get(1);
         // create skill object with that stuff
         Skill skill = new Skill(skillName, prototype);
         addSkill(skill);
-        skill.setPlaceholderValue(phName, values);          // placeholders is a hashmap of String and ArrayList
-        saveSkills();           // write the new skill to skills.txt
-        //loadSkills();           // !? creates a loaded skill again!?
-        /** 
-        if (in.toLowerCase().equals("yes")){
-            // post next response to the chat --> "Perfect! What would you like to call the skill?"
-            // botWriter(false, "Perfect! What would you like to call the skill?")
 
-            skillName = in.toLowerCase();
-            // post next response to the chat --> "Enter a prototype sentence to use the skill ¡skillname¿ with."
-            // botWriter(false, "Enter a prototype sentence to use the skill ¡skillname¿ with.")
-            // get new input
-            prototype = in;
+        Scanner in = new Scanner(prototype);
+        in.useDelimiter(" ");
+        int i = 0;
 
+        // make the list of slot / placeholder keys (i.e. <Time>, <Day>, <City>, etc.)
+        while(in.hasNext()){
+            temp.add(in.next());
+            char c = '<';
+            if (temp.get(i).charAt(0) == c){
+                phList.add(temp.get(i));
+            }
+            i++;
         }
-        if (in.toLowerCase().equals("no")){
-            System.out.println("Try a different skill command. Here is a list of skills I understand.");
+        in.close();
+        
+        int d = 0;
+        int max = phList.size();
+        
+        // put together the pairs of placeholder keys and their corresponding values
+        while (d<max){
+            String tempStr = input.get(d+2);
+            Scanner scan = new Scanner(tempStr);
+            scan.useDelimiter(",");
+            phName = phList.get(d);
+            while (scan.hasNext()){
+                values.add(scan.next());
+            }
+            skill.setPlaceholderValue(phName, values);   // this is a hashmap of placeholder keys (Strings) and their corresponding values (ArrayList)
+            d++;
+            scan.close();
         }
-        */
+       
+        saveSkills();         
+        loadSkills();               
     }
 
     /**
