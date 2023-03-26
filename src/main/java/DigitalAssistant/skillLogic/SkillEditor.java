@@ -73,8 +73,12 @@ public class SkillEditor {
     public void saveSkills() {
         loadSkills();//Loads the skills again just in case.
         deleteDuplicateSkills();//Gets rid of duplicate skills before saving new file
+        String directoryPath = System.getProperty("user.dir");
+        String fileName = "skillsTest.txt";
+        String filePath = directoryPath + "/" + fileName;
+
         try {
-            FileWriter file = new FileWriter("skillsTest.txt", false);
+            FileWriter file = new FileWriter(filePath, false);
             PrintWriter writer = new PrintWriter(file);
             //Prints to file the skill object in loadSkill() readable format 
             for(Skill skill : skills){
