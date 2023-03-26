@@ -182,8 +182,6 @@ public class SkillEditor {
      * Method to extract info from user input when asking him to define an unknown skill!
      * Needed ONLY when the assistant recognizes unfamiliar skill -> gets stuck
      * if skill (prototype or placeholder) unknown then do questionnaire & store answers; if info complete then declareSKill(input)
-     * Dynamic Questionnaire implemented in front end !?
-     * extraction of answers in back end in this method !
      * 
      * input: the stored user answers
      * method creates a skill object which is added to skills list and can be written to the skills.txt file
@@ -194,14 +192,11 @@ public class SkillEditor {
      *  A: Yes / No 
      * Perfect! What would you like to call the skill? 
      *  A0: ¡skillname¿
-     * Provide a list of placeholders formatted with ¡¿ and seperated by commas
-     *  A1: ¡sports¿, ¡cook timer¿ etc.
      * Enter a prototype sentence for the skill ¡skillname¿. It must include the placeholders!
-     *  A2: ¡This is a prototype sentence with ¡placeholder¿ . 
-     * Provide values for the placeholder(s)! separated by commas
+     *  A1: ¡This is a prototype sentence with ¡placeholder¿ . 
+     * Provide values for the defined placeholder(s)! separated by commas. 
      *  A3: Volleyball, Handball, Windsurfing
      * Your new skill ¡skillName¿ has been defined!
-
      */
 
      public void declareSkill(ArrayList<String> input){
