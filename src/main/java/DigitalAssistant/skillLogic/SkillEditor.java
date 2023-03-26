@@ -18,12 +18,10 @@ import java.util.Set;
 
 public class SkillEditor {
     private List<Skill> skills;
-    private String filename;
     public static ArrayList<Event> events = new ArrayList<>();
     
-    public SkillEditor(String filename) {
+    public SkillEditor() {
         skills = new ArrayList<>();
-        this.filename = filename;
         loadSkills();
     }
 
@@ -36,13 +34,10 @@ public class SkillEditor {
     }
 
     public static void main(String[] args) {
-        // SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
-        // String input = "How do I get from Maastricht to Heerlen at 11?";
-        // System.out.println(input);
-        // System.out.println(skillEditor.search(input));
-        SkillEditor skillEditor = new SkillEditor("src\\main\\java\\DigitalAssistant\\skillLogic\\skills.txt");
-
-        skillEditor.saveSkills();
+        SkillEditor skillEditor = new SkillEditor();
+        String input = "What is the distance between ankara to maastricht?";
+        System.out.println(input);
+        System.out.println(skillEditor.search(input));
     }
 
     public String search(String input){
@@ -79,7 +74,7 @@ public class SkillEditor {
         loadSkills();//Loads the skills again just in case.
         deleteDuplicateSkills();//Gets rid of duplicate skills before saving new file
         try {
-            FileWriter file = new FileWriter("src\\main\\java\\DigitalAssistant\\skillLogic\\skillsTest.txt", false);
+            FileWriter file = new FileWriter("skillsTest.txt", false);
             PrintWriter writer = new PrintWriter(file);
             //Prints to file the skill object in loadSkill() readable format 
             for(Skill skill : skills){
@@ -98,7 +93,12 @@ public class SkillEditor {
 
     private void loadSkills() {//Reads skills.txt and makes skill objects from each skill already contained in the file
         this.skills = new ArrayList<>();//Resets list for use outside of constructor
-        try (Scanner scanner = new Scanner(new File(filename))) {
+        
+        String directoryPath = System.getProperty("user.dir");
+        String fileName = "skills.txt";
+        String filePath = directoryPath + "/" + fileName;
+
+        try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
 
                 String line = scanner.nextLine().trim();
@@ -211,6 +211,7 @@ public class SkillEditor {
                 
             }
         } catch (FileNotFoundException e) {
+            System.out.println("LoadEvents");
             System.err.println("Error: File not found");
         }
     }

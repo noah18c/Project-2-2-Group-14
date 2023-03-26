@@ -60,7 +60,7 @@ public class ChatScene implements SceneInterface {
         this.title = "Go ahead... ask!";
         this.width = handler.getScreen().getWidth()/3;
         this.height = handler.getScreen().getHeight()/2;
-        skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        skillEditor = new SkillEditor();
     }
 
     /**

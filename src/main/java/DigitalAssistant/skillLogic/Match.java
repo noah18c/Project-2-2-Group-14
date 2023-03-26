@@ -25,7 +25,7 @@ public class Match {
     public static void main(String[] args) {
         //SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
         // TODO: Pick right path
-        SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        SkillEditor skillEditor = new SkillEditor();
         String input = "How do I get from Maastricht to Herleen ?";
         
         //System.out.println(input);

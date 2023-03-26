@@ -27,4 +27,3 @@ Action <CITY> Maastricht <CITY> Heerlen <TIME> 11 |Print| By car
 Action <CITY> Maastricht <CITY> Sittard <TIME> 11 |Print| By bike
 Action <CITY> Maastricht <CITY> Maastricht |Print| teleportation
 +++++
-
