@@ -23,22 +23,30 @@ public class Match {
     }
 
     public static void main(String[] args) {
-        SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
-        String input = "How do I get from Maastricht to Heerlen at 11?";
-        System.out.println(input);
-
+        //SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        // TODO: Pick right path
+        SkillEditor skillEditor = new SkillEditor("C:/Users/rrube/IdeaProjects/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        String input = "How to get from ?";
+        //System.out.println(input);
         Match match = new Match(input, skillEditor.getSkills());
-        System.out.println(match.searchSkill().getPrototype());
-        
+        Skill simSkill= match.searchSkill();
+        //TODO: beware... skill=null gives errors
+        System.out.println(simSkill.getPrototype());
     }
 
-    public Skill searchSkill(){
+    public Skill searchSkill() {
+        Skill maxSimilaritySkill = null;
+        double maxSimilarity = 0.0;
         for (int i = 0; i < skills.size(); i++) {
-            if(skills.get(i).getPrototype().equals(GetSimillarSentences(input).get(0))){
-                return skills.get(i);
+            String skillproto = skills.get(i).getPrototype();
+            double simrating = Math.round(stringSimilarity(input, skillproto));
+            System.out.println("("+skillproto + " " + simrating + "%)");
+            if ((simrating > maxSimilarity)&&(simrating > 30)) {
+                maxSimilarity = simrating;
+                maxSimilaritySkill = skills.get(i);
             }
         }
-        return null;
+        return maxSimilaritySkill;
     }
 
     private String setPlaceHolders(String input , Skill skill) {
@@ -46,7 +54,7 @@ public class Match {
     }
 
     //Returns similarity rating between 2 sentences using edit distance
-    private static double stringSimilarity(String s1, String s2){
+    private double stringSimilarity(String s1, String s2){
         s1 = s1.toLowerCase();
         s2 = s2.toLowerCase();
         int len1 = s1.length();
