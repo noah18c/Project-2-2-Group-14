@@ -20,8 +20,8 @@ public class Skill {
 
     // The method that checks whether it is corresponding skill to the input or not
     // if it is the corresponding skill saves the placeholder values to hashmap in order call proper action
-    public boolean match(String input){
-        
+    public String match(String input){
+        inputValues = new HashMap<>();
         Set<String> keySet = placeholders.keySet();
         ArrayList<String> keyList = new ArrayList<>(keySet); //get the key values of placeholders into arraylist like <DAY> <TIME>
         
@@ -34,43 +34,68 @@ public class Skill {
         HashMap<String, ArrayList<Integer>> indexOfPlaceholders = new HashMap<>();
         ArrayList<Integer> allIndexes = new ArrayList<>();
 
-        if(words.length != wordsInput.length){
-            return false;
-        }
-        else{
-            //FIND THE INDEX OF PLACEHOLDERS IN PROTOTYPE SENTENCE
-            for (int i = 0; i < keyList.size(); i++) {
-                ArrayList<Integer> indexesForKey = new ArrayList<>();
-                for (int j = 0; j < words.length; j++) {
-                    if(words[j].equals(keyList.get(i))){
-                        allIndexes.add(j);
-                        indexesForKey.add(j);
-                    }
-                }
-                indexOfPlaceholders.put(keyList.get(i), indexesForKey);
-            }
-            
-            //MATCHING LOOP
-            for (int i = 0; i < wordsInput.length; i++) {
-                if(!allIndexes.contains(i)){
-                    if(!wordsInput[i].equals(words[i])){
-                        return false;
-                    }
-                }
-            }
-            // IF IT MATCHES, GET THE INPUT VALUES FROM INPUT SENTENCE
-            inputValues = new HashMap<>();
-            ArrayList<String> keySetIndex = new ArrayList<>(indexOfPlaceholders.keySet());
 
-            for (int i = 0; i < keySetIndex.size(); i++) {
-                ArrayList<String> values = new ArrayList<>();
-                for (int j = 0; j < indexOfPlaceholders.get(keySetIndex.get(i)).size(); j++) {
-                    values.add(wordsInput[indexOfPlaceholders.get(keySetIndex.get(i)).get(j)]);
+        // for (int i = 0; i < actions.size(); i++) {
+        //     Action currentAction = actions.get(i); 
+        //     HashMap<String,ArrayList<String>> currentValues = currentAction.getActionValues();
+        //     ArrayList<String> keySetCurrentValues = new ArrayList<>(currentValues.keySet());
+
+        //     for (int j = 0; j < keySetCurrentValues.size(); j++) {
+        //         ArrayList<String> values = currentValues.get(keySetCurrentValues.get(j));
+        //         ArrayList<String> Valuesinput = new ArrayList<>();
+        //         for (int j2 = 0; j2 < values.size(); j2++) {
+        //             for (int k = 0; k < wordsInput.length; k++) {
+        //                 if(wordsInput[k].equals(values.get(j2))){
+        //                     Valuesinput.add(values.get(j2));
+        //                     //inputValues.get(keySetCurrentValues.get(j)).add(values.get(j2));
+        //                 }
+        //             }
+        //         }
+        //         inputValues.put(keySetCurrentValues.get(j), Valuesinput);
+                
+        //     }
+        // }
+
+        // String result = performAction();
+        // if(!result.equals("No Action Found for given values!")){
+        //     return result;
+        // }
+        // else{
+        //     inputValues = new HashMap<>();
+        // }
+
+
+        //FIND THE INDEX OF PLACEHOLDERS IN PROTOTYPE SENTENCE
+        for (int i = 0; i < keyList.size(); i++) {
+            ArrayList<Integer> indexesForKey = new ArrayList<>();
+            for (int j = 0; j < words.length; j++) {
+                if(words[j].equals(keyList.get(i))){
+                    allIndexes.add(j);
+                    indexesForKey.add(j);
                 }
-                inputValues.put(keySetIndex.get(i), values);
             }
+            indexOfPlaceholders.put(keyList.get(i), indexesForKey);
         }
-        return true;
+        // //MATCHING LOOP
+        // for (int i = 0; i < wordsInput.length; i++) {
+        //     if(!allIndexes.contains(i)){
+        //         if(!wordsInput[i].equals(words[i])){
+        //             return false;
+        //         }
+        //     }
+        // }
+        // IF IT MATCHES, GET THE INPUT VALUES FROM INPUT SENTENCE
+        
+        ArrayList<String> keySetIndex = new ArrayList<>(indexOfPlaceholders.keySet());
+
+        for (int i = 0; i < keySetIndex.size(); i++) {
+            ArrayList<String> values = new ArrayList<>();
+            for (int j = 0; j < indexOfPlaceholders.get(keySetIndex.get(i)).size(); j++) {
+                values.add(wordsInput[indexOfPlaceholders.get(keySetIndex.get(i)).get(j)]);
+            }
+            inputValues.put(keySetIndex.get(i), values);
+        }
+        return performAction();
     }
 
 

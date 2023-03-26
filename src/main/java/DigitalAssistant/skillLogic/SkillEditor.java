@@ -43,12 +43,13 @@ public class SkillEditor {
     }
 
     public String search(String input){
-        for (int i = 0; i <skills.size(); i++) {
-            if(skills.get(i).match(input)){
-                return skills.get(i).performAction();
-            }
+        Match match = new Match(input, getSkills());
+        if(match.searchSkill() == null){
+            return "Sorry! I didnt understand.";
         }
-        return "NO SKILLS FOUND FOR GIVEN INPUT";
+        else{
+            return match.searchSkill().match(input);
+        }
     }
 
     /*
@@ -65,8 +66,6 @@ public class SkillEditor {
                 }
             }
         }
-
-        
         skills.removeAll(skillsToRemove);
     }
     

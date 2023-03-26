@@ -25,8 +25,9 @@ public class Match {
     public static void main(String[] args) {
         //SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
         // TODO: Pick right path
-        SkillEditor skillEditor = new SkillEditor("C:/Users/rrube/IdeaProjects/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
         String input = "How do I get from Maastricht to Herleen ?";
+        
         //System.out.println(input);
         Match match = new Match(input, skillEditor.getSkills());
         Skill simSkill= match.searchSkill();
@@ -40,7 +41,6 @@ public class Match {
         for (int i = 0; i < skills.size(); i++) {
             String skillproto = skills.get(i).getPrototype();
             double simrating = Math.round(stringSimilarity(input, skillproto));
-            System.out.println("("+skillproto + " " + simrating + "%)");
             // TODO: adjust sensitivity (simrating)
             if ((simrating > maxSimilarity)&&(simrating > 30)) {
                 maxSimilarity = simrating;
@@ -48,10 +48,6 @@ public class Match {
             }
         }
         return maxSimilaritySkill;
-    }
-
-    private String setPlaceHolders(String input , Skill skill) {
-        return null;
     }
 
     //Returns similarity rating between 2 sentences using edit distance

@@ -1,5 +1,7 @@
 package DigitalAssistant.skillLogic;
 
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -68,6 +70,17 @@ public class Action {
     }
 
     private void GoogleSearchAction() {
+        try
+            {
+                URL url=new URL("https://google.co.in");
+                URLConnection connection=url.openConnection();
+                connection.connect();
+                java.awt.Desktop.getDesktop().browse(java.net.URI.create("http://www.google.com/search?hl=en&q="+actionSentence.replace(" ", "+")+"&btnG=Google+Search"));
+            }
+            catch(Exception ee)
+            {
+                System.out.println("Google Error!");
+            }
         output = "Searching Google for ..." + actionSentence;
     }
 
