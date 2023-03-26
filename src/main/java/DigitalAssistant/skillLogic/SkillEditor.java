@@ -36,10 +36,13 @@ public class SkillEditor {
     }
 
     public static void main(String[] args) {
-        SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
-        String input = "How do I get from Maastricht to Heerlen at 11?";
-        System.out.println(input);
-        System.out.println(skillEditor.search(input));
+        // SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        // String input = "How do I get from Maastricht to Heerlen at 11?";
+        // System.out.println(input);
+        // System.out.println(skillEditor.search(input));
+        SkillEditor skillEditor = new SkillEditor("src\\main\\java\\DigitalAssistant\\skillLogic\\skills.txt");
+
+        skillEditor.saveSkills();
     }
 
     public String search(String input){

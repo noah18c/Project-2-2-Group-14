@@ -111,4 +111,15 @@ public class Action {
     public void setActionValues(HashMap<String, ArrayList<String>> actionValues) {
         this.actionValues = actionValues;
     }
+
+    public String getValuesAsString(String key){
+        ArrayList<String> values = inputValues.get(key);
+        String result = "";
+        
+        for (int index = 0; index < values.size(); index++) {
+            result += key + " " + values.get(index);
+        }
+
+        return result;
+    }
 }

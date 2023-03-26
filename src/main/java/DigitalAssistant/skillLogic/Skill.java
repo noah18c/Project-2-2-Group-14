@@ -224,14 +224,22 @@ public class Skill {
             //Action permutations
             for(String key : keyListorino){
                 //Check if we have reached the end of the list so no uneccessary spaces are added.
-                if(keyListorino.indexOf(key) == keyListorino.size()-1){
-                    builder.append(key + " " + action.getActionValues().get(key));
+                if(keyListorino.indexOf(key) == keyListorino.size()-1){//If it's the last Action key, we need to not print an extra space.
+                    for(String keyStr : action.getActionValues().get(key)){//For each Action x Slot pair inside the ArrayList for each Action slot (eg: <CITY>) we append the pair
+                        if(action.getActionValues().get(key).indexOf(keyStr) == action.getActionValues().get(key).size()-1){//If it's the last inner pair we omit a space
+                            builder.append(key + " " + keyStr);
+                        }else{
+                            builder.append(key + " " + keyStr + " ");
+                        }
+                    }        
                 }else{
-                    builder.append(key + " " + action.getActionValues().get(key) + " ");
+                    for(String keyStr : action.getActionValues().get(key)){
+                        builder.append(key + " " + keyStr + " ");
+                    } 
                 }
             }
             //Actiontype and Action output string
-            builder.append(action.getActionType() + " " + action.getActionSentence() + "\n");
+            builder.append(" " + action.getActionType() + " " + action.getActionSentence() + "\n");
         }
         
         builder.append("+++++");
