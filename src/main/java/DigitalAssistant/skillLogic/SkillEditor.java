@@ -201,49 +201,58 @@ public class SkillEditor {
      * Provide values for the placeholder(s)! separated by commas
      *  A3: Volleyball, Handball, Windsurfing
      * Your new skill ¡skillName¿ has been defined!
-     *
+
      */
 
      public void declareSkill(ArrayList<String> input){
         String skillName = "";
         String prototype = "";
         String phName = "";
+        ArrayList <String> phList = new ArrayList<String>();
+        ArrayList<String> temp = new ArrayList<String>();
         ArrayList<String> values = new ArrayList<String>(); // placeholder values
 
-        // extract skill name, prototype sentence, placeholder and its values if specified
+        // extract skill name, prototype sentence, placeholder(s) and its value(s) if specified
         skillName = input.get(0);
-        prototype = input.get(2);
-        phName = input.get(1);
-        String temp = input.get(3);
-        Scanner scan = new Scanner(temp);
-        scan.useDelimiter(",");
-        while (scan.hasNext()){
-            values.add(scan.next());
-        }
-        scan.close();
-
+        prototype = input.get(1);
         // create skill object with that stuff
         Skill skill = new Skill(skillName, prototype);
         addSkill(skill);
-        skill.setPlaceholderValue(phName, values);          // placeholders is a hashmap of String and ArrayList
-        saveSkill(skill);           // write the new skill to skills.txt
-        loadSkills();           // !? creates a loaded skill again!?
-        /** 
-        if (in.toLowerCase().equals("yes")){
-            // post next response to the chat --> "Perfect! What would you like to call the skill?"
-            // botWriter(false, "Perfect! What would you like to call the skill?")
 
-            skillName = in.toLowerCase();
-            // post next response to the chat --> "Enter a prototype sentence to use the skill ¡skillname¿ with."
-            // botWriter(false, "Enter a prototype sentence to use the skill ¡skillname¿ with.")
-            // get new input
-            prototype = in;
+        Scanner in = new Scanner(prototype);
+        in.useDelimiter(" ");
+        int i = 0;
 
+        // make the list of slot / placeholder keys (i.e. <Time>, <Day>, <City>, etc.)
+        while(in.hasNext()){
+            temp.add(in.next());
+            char c = '<';
+            if (temp.get(i).charAt(0) == c){
+                phList.add(temp.get(i));
+            }
+            i++;
         }
-        if (in.toLowerCase().equals("no")){
-            System.out.println("Try a different skill command. Here is a list of skills I understand.");
+        in.close();
+        
+        int d = 0;
+        int max = phList.size();
+        
+        // put together the pairs of placeholder keys and their corresponding values
+        while (d<max){
+            String tempStr = input.get(d+2);
+            Scanner scan = new Scanner(tempStr);
+            scan.useDelimiter(",");
+            phName = phList.get(d);
+            while (scan.hasNext()){
+                values.add(scan.next());
+            }
+            skill.setPlaceholderValue(phName, values);   // this is a hashmap of placeholder keys (Strings) and their corresponding values (ArrayList)
+            d++;
+            scan.close();
         }
-        */
+       
+        saveSkill(skill);         
+        loadSkills();               
     }
 
     /**
@@ -293,9 +302,8 @@ public class SkillEditor {
     }
 
     public static void main(String[] args) {
-        SkillEditor skillEditor = new SkillEditor("src\\main\\java\\DigitalAssistant\\skillLogic\\skills.txt");
-        //String input = "What is the distance between Ankara to Paris?";
-        String input = "How do I get from Maastricht to Heerlen at 11?";
+        SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
+        String input = "What is the distance between Ankara to Paris?";
         System.out.println(input);
         for (int i = 0; i < skillEditor.skills.size(); i++) {
             skillEditor.skills.get(i).match(input);
