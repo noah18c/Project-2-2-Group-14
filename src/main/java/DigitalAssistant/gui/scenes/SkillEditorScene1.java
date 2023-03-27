@@ -177,7 +177,16 @@ public class SkillEditorScene1 implements Initializable {
 
             } else if (inputHashmap.get(slotChoiceBox.getValue()) == false && slotValueText.getText().isEmpty()){
                 inputHashmap.put(slotChoiceBox.getValue(), true);
+
+                for(int i = 0; i < slotValuePairs.size(); i++){
+                    if(slotValuePairs.get(i).getSlot() == slotChoiceBox.getValue()){
+                        slotValuePairs.remove(i);
+                        i--;
+                    }
+                }
+
                 slotValuePairs.add(new SlotValuePair(slotChoiceBox.getValue(), "INPUT-SLOT"));
+
             } else {
 
             }
