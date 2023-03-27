@@ -1,10 +1,8 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
-import DigitalAssistant.Utilities.SkillsVariables;
+import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.Utilities.SlotValuePair;
-import DigitalAssistant.gui.stages.SkillEditorStage;
-import DigitalAssistant.gui.stages.SkillEditorStage2;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -77,17 +76,48 @@ public class SkillEditorScene1 implements Initializable {
     @FXML
     private TableView<SlotValuePair> tableView;
 
-    private ObservableList<SlotValuePair> slotValuePairs = FXCollections.observableArrayList();
-    private HashMap<String, Boolean> inputHashmap = new HashMap<>();
+    private Stage window;
 
-    public SkillEditorScene1(Handler handler){
+    private ObservableList<SlotValuePair> slotValuePairs;
+    private HashMap<String, Boolean> inputHashmap;
+    private static SkillsUserInput skillsUserInput;
+
+    private boolean firstVisit;
+
+    public SkillEditorScene1(Handler handler, Stage window){
         this.handler = handler;
         this.title = "Skill Editor Window";
         this.width = handler.getScreen().getWidth()/3;
         this.height = handler.getScreen().getHeight()/2;
+        this.window = window;
+        skillsUserInput = new SkillsUserInput("", "", FXCollections.observableArrayList(), new HashMap<>(), FXCollections.observableArrayList());
+        slotValuePairs = skillsUserInput.getSlotValuePairs();
+        inputHashmap = skillsUserInput.getInputHashMap();
+        slotList = skillsUserInput.getSlotList();
+        skillNameString = skillsUserInput.getSkillName();
+        protoSentenceString = skillsUserInput.getProtoSentence();
+        this.firstVisit = true;
+
     }
 
-    public void display() {
+    public SkillEditorScene1(Handler handler, Stage window, SkillsUserInput skillsUserInput){
+        this.handler = handler;
+        this.title = "Skill Editor Window";
+        this.width = handler.getScreen().getWidth()/3;
+        this.height = handler.getScreen().getHeight()/2;
+        this.window = window;
+        SkillEditorScene1.skillsUserInput = skillsUserInput;
+        slotValuePairs = skillsUserInput.getSlotValuePairs();
+        inputHashmap = skillsUserInput.getInputHashMap();
+        slotList = skillsUserInput.getSlotList();
+        skillNameString = skillsUserInput.getSkillName();
+        protoSentenceString = skillsUserInput.getProtoSentence();
+
+        //enable buttons if there already is user input
+        this.firstVisit = false;
+    }
+
+    public SkillsUserInput display() {
 
         handler.getWindow().setTitle(this.title);
 
@@ -102,22 +132,20 @@ public class SkillEditorScene1 implements Initializable {
 
         this.scene.getStylesheets().add(getClass().getResource("SkillEditorStyles.css").toExternalForm());
         init();
+        return skillsUserInput;
+    }
+
+    private void setDisableButtons(boolean disableButtons){
+        addSlotButton.setDisable(disableButtons);
+        nextButton.setDisable(disableButtons);
+        removeSlotValuePairButton.setDisable(disableButtons);
     }
 
     private void init(){
 
-        addSlotButton.setDisable(true);
-        nextButton.setDisable(true);
-        removeSlotValuePairButton.setDisable(true);
+        if(firstVisit)
+            setDisableButtons(true);
 
-        nextButton.setOnAction(e -> {
-            SkillEditorStage ses = new SkillEditorStage(handler);
-            ses.display();
-        });
-        addAction.setOnAction(e -> {
-            SkillEditorStage2 ses = new SkillEditorStage2(handler);
-            ses.display();
-        });
 
         insertSkillbutton.setOnAction(e -> {
             slotValuePairs.clear();
@@ -136,9 +164,9 @@ public class SkillEditorScene1 implements Initializable {
 
 
            slotChoiceBox.getSelectionModel().selectFirst();
-           addSlotButton.setDisable(false);
-           nextButton.setDisable(false);
-           removeSlotValuePairButton.setDisable(false);
+
+           if(firstVisit)
+               setDisableButtons(false);
 
         });
 
@@ -156,10 +184,6 @@ public class SkillEditorScene1 implements Initializable {
 
             System.out.println(slotValuePairs.size());
             slotValueText.clear();
-        });
-
-        this.nextButton.setOnAction(e -> {
-
         });
 
         this.removeSlotValuePairButton.setOnAction(e -> {
@@ -186,7 +210,11 @@ public class SkillEditorScene1 implements Initializable {
         });
 
         this.nextButton.setOnAction(e -> {
-            SkillsVariables skillsVariables = new SkillsVariables(skillNameString, protoSentenceString, slotValuePairs, inputHashmap);
+            SkillEditorScene2 ses2 = new SkillEditorScene2(handler, window, new SkillsUserInput(skillNameString, protoSentenceString, slotValuePairs, inputHashmap, slotList));
+            skillsUserInput = ses2.display();
+
+            window.setScene(ses2.getScene());
+            window.show();
         });
 
         this.tableView.setOnKeyPressed(e -> {
@@ -259,7 +287,7 @@ public class SkillEditorScene1 implements Initializable {
         this.tableView.setItems(this.slotValuePairs);
         this.tableView.setEditable(true);
 
-        columnSlot.setCellValueFactory(new PropertyValueFactory<SlotValuePair, String>("Slot"));
-        columnValue.setCellValueFactory(new PropertyValueFactory<SlotValuePair, String>("Value"));
+        columnSlot.setCellValueFactory(new PropertyValueFactory<SlotValuePair, String>("slot"));
+        columnValue.setCellValueFactory(new PropertyValueFactory<SlotValuePair, String>("value"));
     }
 }

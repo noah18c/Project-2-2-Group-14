@@ -7,28 +7,46 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="477.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="240.0" layoutY="14.0" prefHeight="18.0" prefWidth="120.0" text="Part 1: skill prototype" />
-      <Label layoutX="76.0" layoutY="57.0" text="Skill name" />
+      <Label layoutX="205.0" layoutY="14.0" prefHeight="27.0" prefWidth="192.0" text="Part 1: skill prototype">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="76.0" layoutY="57.0" text="Skill name">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Label>
       <TextField fx:id="skillNameText" layoutX="225.0" layoutY="53.0" />
-      <Label layoutX="76.0" layoutY="92.0" text="Skill prototype sentence" />
+      <Label layoutX="76.0" layoutY="92.0" text="Skill prototype sentence">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Label>
       <TextField fx:id="protoSentenceText" layoutX="225.0" layoutY="88.0" prefHeight="26.0" prefWidth="322.0" />
       <Button fx:id="insertSkillbutton" layoutX="266.0" layoutY="122.0" mnemonicParsing="false" text="Insert skill" />
-      <Label layoutX="175.0" layoutY="155.0" prefHeight="18.0" prefWidth="278.0" text="Part 2: Define possible values for each placeholder" />
-      <Label layoutX="79.0" layoutY="185.0" text="For slot" />
-      <TextField fx:id="slotValueText" layoutX="225.0" layoutY="181.0" />
-      <ChoiceBox fx:id="slotChoiceBox" layoutX="127.0" layoutY="180.0" prefHeight="26.0" prefWidth="81.0" />
-      <Button fx:id="addSlotButton" layoutX="401.0" layoutY="181.0" mnemonicParsing="false" text="Add" />
-      <Button fx:id="nextButton" layoutX="273.0" layoutY="437.0" mnemonicParsing="false" text="Next" />
-      <Button fx:id="removeSlotValuePairButton" layoutX="417.0" layoutY="309.0" mnemonicParsing="false" text="Remove value" />
-      <TableView fx:id="tableView" layoutX="200.0" layoutY="222.0" prefHeight="200.0" prefWidth="200.0">
+      <Label layoutX="82.0" layoutY="158.0" prefHeight="27.0" prefWidth="439.0" text="Part 2: Define possible values for each placeholder">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label layoutX="76.0" layoutY="215.0" text="For slot">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Label>
+      <TextField fx:id="slotValueText" layoutX="226.0" layoutY="211.0" prefHeight="25.0" prefWidth="268.0" />
+      <ChoiceBox fx:id="slotChoiceBox" layoutX="130.0" layoutY="211.0" prefHeight="26.0" prefWidth="81.0" />
+      <Button fx:id="addSlotButton" layoutX="508.0" layoutY="211.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="nextButton" layoutX="527.0" layoutY="429.0" mnemonicParsing="false" text="Next">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Button>
+      <Button fx:id="removeSlotValuePairButton" layoutX="42.0" layoutY="340.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Remove" />
+      <TableView fx:id="tableView" layoutX="132.0" layoutY="252.0" prefHeight="200.0" prefWidth="360.0">
         <columns>
-          <TableColumn fx:id="columnSlot" prefWidth="76.79998779296875" text="Slot" />
-          <TableColumn fx:id="columnValue" prefWidth="123.20001220703125" text="Value" />
+          <TableColumn fx:id="columnSlot" prefWidth="95.0" text="Slot" />
+          <TableColumn fx:id="columnValue" prefWidth="264.0" text="Value" />
         </columns>
       </TableView>
-      <Button id="addAction" layoutX="413.0" layoutY="437.0" mnemonicParsing="false" text="add Action" />
    </children>
 </AnchorPane>
