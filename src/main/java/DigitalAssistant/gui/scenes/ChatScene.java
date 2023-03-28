@@ -261,7 +261,7 @@ public class ChatScene implements SceneInterface {
 
 
         skillButton.setOnAction(e -> {
-            SkillEditorStage ses = new SkillEditorStage(handler);
+            SkillEditorStage ses = new SkillEditorStage(handler, skillEditor);
             ses.display();
         });
 

@@ -63,7 +63,7 @@
                   <Font name="System Bold" size="12.800000190734863" />
                </font>
             </TextField>
-            <Button fx:id="sendButton" layoutX="363.0" layoutY="498.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="86.0" style="-fx-background-color: black; -fx-effect: pan;" text="Google" textFill="#fcfbfb">
+            <Button fx:id="sendButton" layoutX="363.0" layoutY="498.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="86.0" style="-fx-background-color: black;" text="Google" textFill="#fcfbfb">
                <font>
                   <Font name="Lucida Console" size="12.800000190734863" />
                </font>
