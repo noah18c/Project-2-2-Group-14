@@ -22,19 +22,6 @@ public class Match {
         }
     }
 
-    public static void main(String[] args) {
-        //SkillEditor skillEditor = new SkillEditor("/Users/user/Documents/GitHub/Project-2-2-Group-14/src/main/java/DigitalAssistant/skillLogic/skills.txt");
-        // TODO: Pick right path
-        SkillEditor skillEditor = new SkillEditor();
-        String input = "How do I get from Maastricht to Herleen ?";
-        
-        //System.out.println(input);
-        Match match = new Match(input, skillEditor.getSkills());
-        Skill simSkill= match.searchSkill();
-        //TODO: beware... skill=null gives errors
-        System.out.println(simSkill.getPrototype());
-    }
-
     public Skill searchSkill() {
         Skill maxSimilaritySkill = null;
         double maxSimilarity = 0.0;
@@ -51,7 +38,7 @@ public class Match {
     }
 
     //Returns similarity rating between 2 sentences using edit distance
-    private double stringSimilarity(String s1, String s2){
+    public static double stringSimilarity(String s1, String s2){
         s1 = s1.toLowerCase();
         s2 = s2.toLowerCase();
         int len1 = s1.length();

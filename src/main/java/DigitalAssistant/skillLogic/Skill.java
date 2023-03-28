@@ -2,6 +2,7 @@ package DigitalAssistant.skillLogic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
 public class Skill {
@@ -19,7 +20,7 @@ public class Skill {
     }
 
     // The method that checks whether it is corresponding skill to the input or not
-    // if it is the corresponding skill saves the placeholder values to hashmap in order call proper action
+    // If it is the corresponding skill saves the placeholder values to hashmap in order call proper action
     public String match(String input){
         inputValues = new HashMap<>();
         Set<String> keySet = placeholders.keySet();
@@ -29,41 +30,36 @@ public class Skill {
         String[] words = regex.split(" ");//assign every word to array
 
         String regexInput = input.substring(0, input.length() - 1) + " " + input.charAt(input.length() - 1); // To separate last char from the sentence for the case there is "?" at the end of the sentence
-        String[] wordsInput = regexInput.split(" ");//assign every word to array  
-        
+        String[] preWordsInput = regexInput.split(" ");//assign every word to array
+
+        int numberOfSpace = 0;
+        for (int i = 0; i < preWordsInput.length; i++) {
+            if(preWordsInput[i].length() == 0){
+                numberOfSpace++;
+            }
+        }
+    
+        String[] wordsInput  = new String[preWordsInput.length-numberOfSpace];
+        int index = 0;
+        for (int i = 0; i < preWordsInput.length; i++) {
+            if(!(preWordsInput[i].length() == 0)){
+                wordsInput[index] = preWordsInput[i];
+                index++;
+            }
+        }
+
         HashMap<String, ArrayList<Integer>> indexOfPlaceholders = new HashMap<>();
         ArrayList<Integer> allIndexes = new ArrayList<>();
 
+        inputValues = matchHashMap(placeholders, input);
 
-        // for (int i = 0; i < actions.size(); i++) {
-        //     Action currentAction = actions.get(i); 
-        //     HashMap<String,ArrayList<String>> currentValues = currentAction.getActionValues();
-        //     ArrayList<String> keySetCurrentValues = new ArrayList<>(currentValues.keySet());
+        for (int i = 0; i < actions.size(); i++) {
+            if(checkEquality(actions.get(i).getActionValues(), inputValues)){
+                performAction();
+            }
+        }
 
-        //     for (int j = 0; j < keySetCurrentValues.size(); j++) {
-        //         ArrayList<String> values = currentValues.get(keySetCurrentValues.get(j));
-        //         ArrayList<String> Valuesinput = new ArrayList<>();
-        //         for (int j2 = 0; j2 < values.size(); j2++) {
-        //             for (int k = 0; k < wordsInput.length; k++) {
-        //                 if(wordsInput[k].equals(values.get(j2))){
-        //                     Valuesinput.add(values.get(j2));
-        //                     //inputValues.get(keySetCurrentValues.get(j)).add(values.get(j2));
-        //                 }
-        //             }
-        //         }
-        //         inputValues.put(keySetCurrentValues.get(j), Valuesinput);
-                
-        //     }
-        // }
-
-        // String result = performAction();
-        // if(!result.equals("No Action Found for given values!")){
-        //     return result;
-        // }
-        // else{
-        //     inputValues = new HashMap<>();
-        // }
-
+        inputValues = new HashMap<>();
 
         //FIND THE INDEX OF PLACEHOLDERS IN PROTOTYPE SENTENCE
         for (int i = 0; i < keyList.size(); i++) {
@@ -76,16 +72,8 @@ public class Skill {
             }
             indexOfPlaceholders.put(keyList.get(i), indexesForKey);
         }
-        // //MATCHING LOOP
-        // for (int i = 0; i < wordsInput.length; i++) {
-        //     if(!allIndexes.contains(i)){
-        //         if(!wordsInput[i].equals(words[i])){
-        //             return false;
-        //         }
-        //     }
-        // }
-        // IF IT MATCHES, GET THE INPUT VALUES FROM INPUT SENTENCE
-        
+
+        // GET THE INPUT VALUES FROM INPUT SENTENCE
         ArrayList<String> keySetIndex = new ArrayList<>(indexOfPlaceholders.keySet());
 
         for (int i = 0; i < keySetIndex.size(); i++) {
@@ -95,6 +83,7 @@ public class Skill {
             }
             inputValues.put(keySetIndex.get(i), values);
         }
+        //System.out.println(inputValues);
         return performAction();
     }
 
@@ -107,8 +96,6 @@ public class Skill {
             ArrayList<String> actionKeyList = new ArrayList<>(currentAction.getActionValues().keySet());
             ArrayList<String> inputValuesKeyList = new ArrayList<>(inputValues.keySet());
             
-            //System.out.println(inputValuesKeyList + "  " + inputValues + " " + actionKeyList + " " + currentAction.getActionValues());
-
             int counter = 0;
             for (int j = 0; j < actionKeyList.size(); j++) {
                 for (int j2 = 0; j2 < inputValuesKeyList.size(); j2++) {
@@ -245,5 +232,59 @@ public class Skill {
         builder.append("+++++");
         //End
         return builder.toString();
+    }
+
+
+    public static HashMap<String, ArrayList<String>> matchHashMap(HashMap<String, ArrayList<String>> inputHashMap, String inputSentence) {
+        HashMap<String, ArrayList<String>> matchedHashMap = new HashMap<>();
+
+        // loop through each key in the inputHashMap
+        for (String key : inputHashMap.keySet()) {
+            ArrayList<String> values = inputHashMap.get(key);
+
+            // create a new ArrayList to hold the matching values from the inputSentence
+            ArrayList<String> matchedValues = new ArrayList<>();
+
+            // loop through each value in the values ArrayList for the current key
+            for (String value : values) {
+
+                // check if the inputSentence contains the current value
+                if (inputSentence.contains(value)) {
+
+                    // if it does, add the value to the matchedValues ArrayList
+                    matchedValues.add(value);
+                }
+            }
+
+            // add the key and matchedValues ArrayList to the matchedHashMap
+            matchedHashMap.put(key, matchedValues);
+        }
+
+        return matchedHashMap;
+    }
+
+
+    public static boolean checkEquality(HashMap<String, ArrayList<String>> hashMap1, HashMap<String, ArrayList<String>> hashMap2) {
+        // check if the hashMaps are the same instance or both null
+        if (hashMap1 == hashMap2) {
+            return true;
+        }
+
+        // check if either hashMap is null or their sizes are different
+        if (hashMap1 == null || hashMap2 == null || hashMap1.size() != hashMap2.size()) {
+            return false;
+        }
+
+        // loop through each key in the hashMap1
+        for (String key : hashMap1.keySet()) {
+            ArrayList<String> values1 = hashMap1.get(key);
+            ArrayList<String> values2 = hashMap2.get(key);
+
+            // check if the corresponding key exists in hashMap2 and if the values are the same
+            if (!hashMap2.containsKey(key) || !Objects.equals(values1, values2)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
