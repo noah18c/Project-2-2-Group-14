@@ -3,6 +3,8 @@ package DigitalAssistant.gui.scenes;
 import DigitalAssistant.Utilities.Handler;
 import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.Utilities.SlotValuePair;
+import DigitalAssistant.gui.stages.Alert;
+import DigitalAssistant.skillLogic.SkillEditor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -83,13 +85,15 @@ public class SkillEditorScene1 implements Initializable {
     private static SkillsUserInput skillsUserInput;
 
     private boolean firstVisit;
+    private SkillEditor skillEditor;
 
-    public SkillEditorScene1(Handler handler, Stage window){
+    public SkillEditorScene1(Handler handler, Stage window, SkillEditor skillEditor){
         this.handler = handler;
         this.title = "Skill Editor Window";
         this.width = handler.getScreen().getWidth()/3;
         this.height = handler.getScreen().getHeight()/2;
         this.window = window;
+        this.skillEditor = skillEditor;
         skillsUserInput = new SkillsUserInput("", "", FXCollections.observableArrayList(), new HashMap<>(), FXCollections.observableArrayList());
         slotValuePairs = skillsUserInput.getSlotValuePairs();
         inputHashmap = skillsUserInput.getInputHashMap();
@@ -100,12 +104,13 @@ public class SkillEditorScene1 implements Initializable {
 
     }
 
-    public SkillEditorScene1(Handler handler, Stage window, SkillsUserInput skillsUserInput){
+    public SkillEditorScene1(Handler handler, Stage window, SkillsUserInput skillsUserInput, SkillEditor skillEditor){
         this.handler = handler;
         this.title = "Skill Editor Window";
         this.width = handler.getScreen().getWidth()/3;
         this.height = handler.getScreen().getHeight()/2;
         this.window = window;
+        this.skillEditor = skillEditor;
         SkillEditorScene1.skillsUserInput = skillsUserInput;
         slotValuePairs = skillsUserInput.getSlotValuePairs();
         inputHashmap = skillsUserInput.getInputHashMap();
@@ -118,8 +123,7 @@ public class SkillEditorScene1 implements Initializable {
     }
 
     public SkillsUserInput display() {
-
-        handler.getWindow().setTitle(this.title);
+        window.setTitle(this.title);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SkillEditorScene1.fxml"));
         loader.setController(this);
@@ -219,17 +223,27 @@ public class SkillEditorScene1 implements Initializable {
         });
 
         this.nextButton.setOnAction(e -> {
-            SkillEditorScene2 ses2 = new SkillEditorScene2(handler, window, new SkillsUserInput(skillNameString, protoSentenceString, slotValuePairs, inputHashmap, slotList));
-            skillsUserInput = ses2.display();
+            if(!slotValuePairs.isEmpty()){
+                SkillEditorScene2 ses2 = new SkillEditorScene2(handler, window, new SkillsUserInput(skillNameString, protoSentenceString, slotValuePairs, inputHashmap, slotList), skillEditor);
+                skillsUserInput = ses2.display();
 
-            window.setScene(ses2.getScene());
-            window.show();
+                window.setScene(ses2.getScene());
+                window.show();
+            } else {
+                //Alert alert = new Alert(handler, "You have not populated the slot value table!");
+                //alert.display();
+
+            }
         });
 
         this.tableView.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.DELETE){
                 this.removeSlotValuePairButton.fire();
             }
+        });
+
+        window.setOnCloseRequest(e -> {
+            skillsUserInput = null;
         });
     }
 

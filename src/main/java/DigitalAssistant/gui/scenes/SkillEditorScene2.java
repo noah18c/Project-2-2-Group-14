@@ -4,6 +4,8 @@ import DigitalAssistant.Utilities.Handler;
 import DigitalAssistant.Utilities.Rule;
 import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.Utilities.SlotValuePair;
+import DigitalAssistant.skillLogic.Skill;
+import DigitalAssistant.skillLogic.SkillEditor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -100,24 +102,21 @@ public class SkillEditorScene2 implements Initializable {
     private ObservableList<Rule> rules = FXCollections.observableArrayList();
 
     private Stage window;
+    private SkillEditor skillEditor;
 
 
-    public SkillEditorScene2(Handler handler, Stage window, SkillsUserInput skillsUserInput){
+    public SkillEditorScene2(Handler handler, Stage window, SkillsUserInput skillsUserInput, SkillEditor skillEditor){
         this.handler = handler;
         this.window = window;
         this.title = "Skill Editor Window";
         this.width = handler.getScreen().getWidth()/3;
         this.height = handler.getScreen().getHeight()/2;
         this.skillsUserInput = skillsUserInput;
-
-
-
-
+        this.skillEditor = skillEditor;
     }
 
     public SkillsUserInput display() {
-
-        handler.getWindow().setTitle(this.title);
+        window.setTitle(this.title);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SkillEditorScene2.fxml"));
         loader.setController(this);
@@ -152,6 +151,12 @@ public class SkillEditorScene2 implements Initializable {
         this.submitSkillButton.setOnAction(e -> {
            skillsUserInput.setRules(rules);
            window.close();
+
+           Skill newSkill = skillEditor.convertToSkill(skillsUserInput);
+           skillEditor.addSkill(newSkill);
+
+           //TODO insert user input for skill here into the backend
+
         });
         this.removeRuleButton.setOnAction(e -> {
             rules.remove(tableView.getSelectionModel().getSelectedItem());
@@ -162,14 +167,18 @@ public class SkillEditorScene2 implements Initializable {
             outputTextfield.clear();
         });
         this.goBackButton.setOnAction(e -> {
-            SkillEditorScene1 ses1 = new SkillEditorScene1(handler, window, skillsUserInput);
+            SkillEditorScene1 ses1 = new SkillEditorScene1(handler, window, skillsUserInput, skillEditor);
             ses1.display();
 
             window.setScene(ses1.getScene());
             window.show();
         });
         this.cancelButton.setOnAction(e -> {
+            skillsUserInput = null;
             window.close();
+        });
+        window.setOnCloseRequest(e->{
+            skillsUserInput = null;
         });
 
 
@@ -229,6 +238,7 @@ public class SkillEditorScene2 implements Initializable {
 
         this.actionSelector.getItems().add("|Search|");
         this.actionSelector.getItems().add("|Print|");
+        this.actionSelector.getSelectionModel().selectFirst();
 
         this.tableView.setItems(this.rules);
         this.columnSlotValuePairs.setCellValueFactory(new PropertyValueFactory<Rule, String>("slotValueString"));

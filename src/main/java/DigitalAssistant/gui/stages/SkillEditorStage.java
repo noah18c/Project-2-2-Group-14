@@ -1,9 +1,7 @@
 package DigitalAssistant.gui.stages;
 
 import DigitalAssistant.Utilities.Handler;
-import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.gui.scenes.SkillEditorScene1;
-import DigitalAssistant.skillLogic.Skill;
 import DigitalAssistant.skillLogic.SkillEditor;
 import javafx.stage.Stage;
 
@@ -22,22 +20,16 @@ public class SkillEditorStage {
         this.skillEditor = skillEditor;
     }
 
-    public SkillsUserInput display(){
-        scene = new SkillEditorScene1(handler, window);
+    public void display(){
+        scene = new SkillEditorScene1(handler, window, skillEditor);
 
-        SkillsUserInput skillsUserInput = scene.display();
-        if(skillsUserInput!=null){
-            Skill newSkill = skillEditor.convertToSkill(skillsUserInput);
-            skillEditor.addSkill(newSkill);
-        }
-        
+        scene.display();
 
 
         this.window.getIcons().add(handler.getLoadImages().getIcon());
 
         window.setScene(scene.getScene());
         window.show();
-        return skillsUserInput;
 
     }
 
