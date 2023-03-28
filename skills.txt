@@ -27,3 +27,34 @@ Action <CITY> Maastricht <CITY> Heerlen <TIME> 11 |Print| By car
 Action <CITY> Maastricht <CITY> Sittard <TIME> 11 |Print| By bike
 Action <CITY> Maastricht <CITY> Maastricht |Print| teleportation
 +++++
+-----
+Name Exams
+Question When is the <EXAM> exam?
+Slot <EXAM> Theoretical-Computer-Science Mathematical-Modelling Human-Computer-Interaction-&-Affective-Compution
+--
+Action <EXAM> Theoretical-Computer-Science |Print| The exam is from 9 to 11 on Tuesday April 4th
+Action <EXAM> Mathematical-Modelling |Print| The exam is from 13 to 15 on Thursday April 6th
+Action <EXAM> Human-Computer-Interaction-&-Affective-Compution |Print| There is no exams for Human Computer Interaction & Affective Compution 
++++++
+-----
+Name Subjects
+Question Which subjects are in period <PERIOD>?
+Slot <PERIOD> 1 2 3 4 5 6
+--
+Action <PERIOD> 1 |Print| The subjects are Databases, Probability and Statistics, Graph Theory and the project
+Action <PERIOD> 2 |Print| The subjects are Machine Learning, Simulation and Statistical Analysis, Reasoning Techniques and the project
+Action <PERIOD> 3 |Print| There is only the project
+Action <PERIOD> 4 |Print| The subjects are Theoretical Computer Science, Mathematical Modelling, Human Computer Interaction & Affective Compution and the project
+Action <PERIOD> 5 |Print| The subjects are Philosophy and Artificial Intelligence, Linear Programming, one elective of Natural Language processing or Introduction to Image and Video Processing and the project
+Action <PERIOD> 6 |Print| There is only the project
++++++
+-----
+Name Timer
+Question Set a timer for <AMOUNT> <UNIT>.
+Slot <AMOUNT> @INPUT
+Slot <UNIT> seconds minutes hours
+--
+Action <UNIT> seconds <AMOUNT> @INPUT |Search| Set a timer for <AMOUNT> seconds
+Action <UNIT> minutes <AMOUNT> @INPUT |Search| Set a timer for <AMOUNT> minutes
+Action <UNIT> hours <AMOUNT> @INPUT |Search| Set a timer for <AMOUNT> hour(s)
++++++
