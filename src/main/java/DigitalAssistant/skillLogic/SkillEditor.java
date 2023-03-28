@@ -35,7 +35,7 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor();
-        String input = "What is the distance between ankara to maastricht?";
+        String input = "Ho d I get frm Maastricht to Sittard at 11?";
         System.out.println(input);
         System.out.println(skillEditor.search(input));
     }

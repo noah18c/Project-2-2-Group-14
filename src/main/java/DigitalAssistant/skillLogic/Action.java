@@ -121,14 +121,31 @@ public class Action {
         this.actionValues = actionValues;
     }
 
+    public boolean equalHashmap(HashMap<String, ArrayList<String>> hashmapToCheck){
+        ArrayList<String> keySet = new ArrayList<>(actionValues.keySet());
+        ArrayList<String> keySetInput = new ArrayList<>(hashmapToCheck.keySet());
+
+        if(keySet.equals(keySetInput)){
+            return false;
+        }
+
+        for (int i = 0; i < keySet.size(); i++) {
+            if(!(actionValues.get(keySet.get(i)).equals(hashmapToCheck.get(keySet.get(i))))){
+                return false;
+            }            
+        }
+        
+        return true;
+    }
+
     public String getValuesAsString(String key){
         ArrayList<String> values = inputValues.get(key);
         String result = "";
-        
+
         for (int index = 0; index < values.size(); index++) {
             result += key + " " + values.get(index);
         }
-
+        
         return result;
     }
 }
