@@ -52,12 +52,10 @@ public class Skill {
         ArrayList<Integer> allIndexes = new ArrayList<>();
 
         inputValues = matchHashMap(placeholders, input);
-        System.out.println(inputValues);
-        System.out.println(placeholders);
+        
 
         for (int i = 0; i < actions.size(); i++) {
             if(checkEquality(actions.get(i).getActionValues(), inputValues)){
-                System.out.println(actions.get(i).getActionValues());
                 return performAction();
             }
         }
