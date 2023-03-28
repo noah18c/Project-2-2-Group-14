@@ -7,10 +7,19 @@ import java.util.HashMap;
 public class SkillsUserInput {
 
     private String skillName, protoSentence;
+
     private ObservableList<SlotValuePair> slotValuePairs;
-    private ObservableList<String> slotList;
-    private HashMap<String, Boolean> inputHashMap;
     private ObservableList<Rule> rules;
+    private HashMap<String, Boolean> inputHashMap;
+
+
+
+
+
+    //not needed for backend
+    private ObservableList<String> slotList;
+
+
     public SkillsUserInput(String skillName, String protoSentence, ObservableList<SlotValuePair> slotValuePairs, HashMap<String, Boolean> inputHashMap, ObservableList<String> slotList){
         this.skillName = skillName;
         this.protoSentence = protoSentence;

@@ -25,8 +25,7 @@ public class SkillEditorStage {
         scene = new SkillEditorScene1(handler, window);
 
         SkillsUserInput skillsUserInput = scene.display();
-
-
+        //skillEditor.retrieveSkil(scene.display());
 
         this.window.getIcons().add(handler.getLoadImages().getIcon());
 
