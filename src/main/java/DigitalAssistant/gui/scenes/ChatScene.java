@@ -6,8 +6,11 @@ import DigitalAssistant.skillLogic.SkillEditor;
 import javafx.animation.Animation;
 import javafx.animation.Transition;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,20 +26,15 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ChatScene implements SceneInterface {
+public class ChatScene implements SceneInterface, Initializable {
 
     private Handler handler;
     private Scene scene;
     private String title;
     private int width, height;
     private SkillEditor skillEditor;
-
-    @FXML
-    private Button skillButton;
-
-    @FXML
-    private Button clearButton;
 
     @FXML
     private ScrollPane scrollPane;
@@ -54,6 +52,10 @@ public class ChatScene implements SceneInterface {
     @FXML
     private VBox chatbox;
 
+    @FXML
+    private ChoiceBox<String> choiceBox;
+
+    private ObservableList<String> choiceBoxOptions = FXCollections.observableArrayList();
 
     public ChatScene(Handler handler){
         this.handler = handler;
@@ -260,16 +262,43 @@ public class ChatScene implements SceneInterface {
         scrollPane.vvalueProperty().bind(chatbox.heightProperty());
 
 
+        /*
         skillButton.setOnAction(e -> {
             SkillEditorStage ses = new SkillEditorStage(handler, skillEditor);
             ses.display();
         });
 
+         */
+
+        choiceBox.setOnAction(e -> {
+           switch(choiceBox.getSelectionModel().getSelectedItem()){
+               case "Open skills editor":
+                   SkillEditorStage ses = new SkillEditorStage(handler, skillEditor);
+                   ses.display();
+                   choiceBox.getSelectionModel().selectFirst();
+                   break;
+               case "View current skills":
+                   SkillsList skillsList = new SkillsList(handler);
+                   skillsList.display();
+                   choiceBox.getSelectionModel().selectFirst();
+                   break;
+               case "Restart chat":
+                   chatbox.getChildren().clear();
+                   messages.clear();
+                   init();
+                   choiceBox.getSelectionModel().selectFirst();
+                   break;
+           }
+        });
+
+        /*
         clearButton.setOnAction(e -> {
             chatbox.getChildren().clear();
             messages.clear();
             init();
         });
+
+         */
 
         textField.setOnKeyPressed(e ->{
             if(e.getCode() == KeyCode.ENTER){
@@ -319,10 +348,6 @@ public class ChatScene implements SceneInterface {
     }
 
 
-    public Button getClearButton() {
-        return clearButton;
-    }
-
     public ScrollPane getScrollPane() {
         return scrollPane;
     }
@@ -345,5 +370,17 @@ public class ChatScene implements SceneInterface {
 
     public VBox getChatbox() {
         return chatbox;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        choiceBoxOptions.add("Select option");
+        choiceBoxOptions.add("Open skills editor");
+        choiceBoxOptions.add("View current skills");
+        choiceBoxOptions.add("Restart chat");
+
+
+        choiceBox.setItems(choiceBoxOptions);
+        choiceBox.getSelectionModel().selectFirst();
     }
 }

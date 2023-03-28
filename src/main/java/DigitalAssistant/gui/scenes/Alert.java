@@ -1,4 +1,4 @@
-package DigitalAssistant.gui.stages;
+package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
 import javafx.fxml.FXML;
@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Alert {
-
-
     private String input;
     private Stage window;
     private Scene scene;
@@ -23,13 +21,14 @@ public class Alert {
     private Button okButton;
 
     public Alert(Handler handler, String input){
-        this.input = input;
         this.handler = handler;
+        this.input = input;
     }
 
     public void display(){
         window = new Stage();
         window.getIcons().add(handler.getLoadImages().getIcon());
+        window.setTitle("Warning!");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Alert.fxml"));
         loader.setController(this);
@@ -43,6 +42,10 @@ public class Alert {
         this.scene.getStylesheets().add(getClass().getResource("defaultStyles.css").toExternalForm());
 
         message.setText(input);
+
+        okButton.setOnAction(e -> {
+            window.close();
+        });
 
 
 

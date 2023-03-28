@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -175,11 +176,26 @@ public class SkillEditorScene2 implements Initializable {
             window.show();
         });
         this.cancelButton.setOnAction(e -> {
-            skillsUserInput = null;
             window.close();
         });
-        window.setOnCloseRequest(e->{
-            skillsUserInput = null;
+
+        this.slotValueTable.setOnMouseClicked(e -> {
+
+
+            if(e.getButton().equals(MouseButton.PRIMARY)){
+                if(e.getClickCount() == 2){
+                    SlotValuePair temp = this.slotValueTable.getSelectionModel().getSelectedItem();
+                    checkUnique(temp);
+                    slotValuePairRule.add(temp);
+                }
+            }
+        });
+        this.slotValueTableRule.setOnMouseClicked(e -> {
+            if(e.getButton().equals(MouseButton.PRIMARY)){
+                if(e.getClickCount() == 2){
+                    slotValuePairRule.remove(slotValueTableRule.getSelectionModel().getSelectedItem());
+                }
+            }
         });
 
 

@@ -3,7 +3,6 @@ package DigitalAssistant.gui.scenes;
 import DigitalAssistant.Utilities.Handler;
 import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.Utilities.SlotValuePair;
-import DigitalAssistant.gui.stages.Alert;
 import DigitalAssistant.skillLogic.SkillEditor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -147,30 +146,42 @@ public class SkillEditorScene1 implements Initializable {
 
     private void init(){
 
-        if(firstVisit)
+        if(firstVisit){
             setDisableButtons(true);
+        } else{
+            slotChoiceBox.getSelectionModel().selectFirst();
+        }
 
 
         insertSkillbutton.setOnAction(e -> {
-            slotValuePairs.clear();
 
-            this.protoSentenceString = this.protoSentenceText.getText();
-            this.skillNameString = this.skillNameText.getText();
-           this.protoSentenceText.clear();
-           this.skillNameText.clear();
-           this.slotList.clear();
 
+           this.protoSentenceString = this.protoSentenceText.getText();
            this.slots = readSlots(this.protoSentenceString);
-           for(int i = 0; i < slots.size(); i++){
-               slotList.add(slots.get(i));
-               inputHashmap.put(slots.get(i), false);
+
+           if(!slots.isEmpty()){
+               slotValuePairs.clear();
+               this.skillNameString = this.skillNameText.getText();
+               this.protoSentenceText.clear();
+               this.skillNameText.clear();
+               this.slotList.clear();
+
+
+               for(int i = 0; i < slots.size(); i++){
+                   slotList.add(slots.get(i));
+                   inputHashmap.put(slots.get(i), false);
+               }
+
+
+               slotChoiceBox.getSelectionModel().selectFirst();
+
+               if(firstVisit)
+                   setDisableButtons(false);
+           } else {
+               Alert alert = new Alert(handler,"Please insert atleast one <SLOT> in the prototype sentence.");
+               alert.display();
            }
 
-
-           slotChoiceBox.getSelectionModel().selectFirst();
-
-           if(firstVisit)
-               setDisableButtons(false);
 
         });
 
@@ -189,13 +200,11 @@ public class SkillEditorScene1 implements Initializable {
                     }
                 }
 
-                slotValuePairs.add(new SlotValuePair(slotChoiceBox.getValue(), "INPUT-SLOT"));
+                slotValuePairs.add(new SlotValuePair(slotChoiceBox.getValue(), "@INPUT"));
 
             } else {
 
             }
-
-            System.out.println(slotValuePairs.size());
             slotValueText.clear();
         });
 
@@ -203,7 +212,7 @@ public class SkillEditorScene1 implements Initializable {
 
             SlotValuePair selectedItem = tableView.getSelectionModel().getSelectedItem();
 
-            if(inputHashmap.get(selectedItem.getSlot()) == true && selectedItem.getValue() == "INPUT-SLOT"){
+            if(inputHashmap.get(selectedItem.getSlot()) == true && selectedItem.getValue() == "@INPUT"){
                 inputHashmap.put(selectedItem.getSlot(), false);
             }
             slotValuePairs.remove(selectedItem);
@@ -230,8 +239,8 @@ public class SkillEditorScene1 implements Initializable {
                 window.setScene(ses2.getScene());
                 window.show();
             } else {
-                //Alert alert = new Alert(handler, "You have not populated the slot value table!");
-                //alert.display();
+                Alert alert = new Alert(handler, "You have not populated the slot value table!");
+                alert.display();
 
             }
         });
@@ -245,11 +254,6 @@ public class SkillEditorScene1 implements Initializable {
         window.setOnCloseRequest(e -> {
             skillsUserInput = null;
         });
-    }
-
-
-    private void insertSlotValue(String value){
-        //slotHashMap.get(slotChoiceBox.getValue()).
     }
 
 
@@ -279,28 +283,6 @@ public class SkillEditorScene1 implements Initializable {
 
     public Scene getScene(){
         return this.scene;
-    }
-
-    public static void main(String[] args){
-        String prototype = "";
-        ArrayList <String> phList = new ArrayList<String>();
-        ArrayList<String> temp = new ArrayList<String>();
-
-
-        prototype = "hello <nope> what <yehaw>";
-        Scanner in = new Scanner(prototype);
-        in.useDelimiter(" ");
-        int i = 0;
-        while(in.hasNext()){
-            temp.add(in.next());
-            char c = '<';
-            if (temp.get(i).charAt(0) == c){
-                phList.add(temp.get(i));
-            }
-            i++;
-        }
-
-
     }
 
 
