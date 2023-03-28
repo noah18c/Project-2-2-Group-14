@@ -153,6 +153,7 @@ public class SkillEditorScene2 implements Initializable {
            window.close();
 
            Skill newSkill = skillEditor.convertToSkill(skillsUserInput);
+        //    System.out.println(newSkill.toFileFormatString());
            skillEditor.addSkill(newSkill);
 
            //TODO insert user input for skill here into the backend

@@ -25,7 +25,7 @@ public class SkillEditorStage {
 
         scene.display();
 
-
+        
         this.window.getIcons().add(handler.getLoadImages().getIcon());
 
         window.setScene(scene.getScene());

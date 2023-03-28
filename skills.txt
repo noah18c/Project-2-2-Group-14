@@ -1,31 +1,31 @@
 -----
 Name LectureTime
 Question Which lectures are there on <DAY> at <TIME>?
-Slot <DAY> Monday Tuesday Wednesday Thursday Friday Saturday
 Slot <TIME> 9 11 13 15
+Slot <DAY> Monday Tuesday Wednesday Thursday Friday Saturday
 --
 Action <DAY> Saturday |Print| There are no lectures on Saturday
-Action <DAY> Monday <TIME> 9 |Print| We start the week with math
-Action <DAY> Monday <TIME> 11 |Print| On Monday noon we have Theoratical Computer Science
-Action <DAY> Monday <TIME> 8 |Search| monday 8 am
+Action <TIME> 9 <DAY> Monday |Print| We start the week with math
+Action <TIME> 11 <DAY> Monday |Print| On Monday noon we have Theoratical Computer Science
+Action <TIME> 8 <DAY> Monday |Search| monday 8 am
 +++++
 -----
 Name DistanceFinderSearch
 Question What is the distance between <CITY> to <CITY>?
 Slot <CITY> @INPUT
 --
-Action <CITY> @INPUT <CITY> @INPUT |Search| The distance between <CITY> to <CITY>.
+Action <CITY> @INPUT <CITY> @INPUT  |Search| The distance between <CITY> to <CITY>.
 +++++
 -----
 Name MariekeSkill
 Question How do I get from <CITY> to <CITY> at <TIME>?
-Slot <CITY> Maastricht Heerlen Den-Hague New-York
 Slot <TIME> 9 11
+Slot <CITY> Maastricht Heerlen Den-Hague New-York
 --
-Action <CITY> Maastricht <CITY> Heerlen <TIME> 9 |Print| By train 
-Action <CITY> Maastricht <CITY> Heerlen <TIME> 11 |Print| By car
-Action <CITY> Maastricht <CITY> Sittard <TIME> 11 |Print| By bike
-Action <CITY> Maastricht <CITY> Maastricht |Print| teleportation
+Action <TIME> 9 <CITY> Maastricht <CITY> Heerlen |Print| By train
+Action <TIME> 11 <CITY> Maastricht <CITY> Heerlen |Print| By car
+Action <TIME> 11 <CITY> Maastricht <CITY> Sittard |Print| By bike
+Action <CITY> Maastricht <CITY> Maastricht  |Print| teleportation
 +++++
 -----
 Name Exams
@@ -34,7 +34,7 @@ Slot <EXAM> Theoretical-Computer-Science Mathematical-Modelling Human-Computer-I
 --
 Action <EXAM> Theoretical-Computer-Science |Print| The exam is from 9 to 11 on Tuesday April 4th
 Action <EXAM> Mathematical-Modelling |Print| The exam is from 13 to 15 on Thursday April 6th
-Action <EXAM> Human-Computer-Interaction-&-Affective-Compution |Print| There is no exams for Human Computer Interaction & Affective Compution 
+Action <EXAM> Human-Computer-Interaction-&-Affective-Compution |Print| There is no exams for Human Computer Interaction & Affective Compution
 +++++
 -----
 Name Subjects
@@ -54,7 +54,16 @@ Question Set a timer for <AMOUNT> <UNIT>.
 Slot <AMOUNT> @INPUT
 Slot <UNIT> seconds minutes hours
 --
-Action <UNIT> seconds <AMOUNT> @INPUT |Search| Set a timer for <AMOUNT> seconds
-Action <UNIT> minutes <AMOUNT> @INPUT |Search| Set a timer for <AMOUNT> minutes
-Action <UNIT> hours <AMOUNT> @INPUT |Search| Set a timer for <AMOUNT> hour(s)
+Action <AMOUNT> @INPUT <UNIT> seconds |Search| Set a timer for <AMOUNT> seconds
+Action <AMOUNT> @INPUT <UNIT> minutes |Search| Set a timer for <AMOUNT> minutes
+Action <AMOUNT> @INPUT <UNIT> hours |Search| Set a timer for <AMOUNT> hour(s)
++++++
+-----
+Name gorilla
+Question gorilla likes <FOOD> and <ACTIVITY>
+Slot <ACTIVITY> jumping eating
+Slot <FOOD> banana orange grape nuts
+--
+Action <ACTIVITY> jumping <FOOD> nuts |Print| i love jumping and eating banan
+Action <ACTIVITY> jumping <FOOD> nuts |Print| I love eating nuts while i jump yummmmmmmmmmm
 +++++

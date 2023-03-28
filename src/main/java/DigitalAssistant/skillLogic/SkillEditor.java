@@ -34,7 +34,7 @@ public class SkillEditor {
     }
 
     public void addSkill(Skill skill) {
-        skills.add(skill);
+        this.skills.add(skill);
         this.saveSkills();
     }
 
@@ -76,10 +76,12 @@ public class SkillEditor {
      * This method takes all defined skill objects and overwrites the skills.txt file with all newly saved skills by printing each object in the correct format.
      */
     public void saveSkills() {
-        loadSkills();//Loads the skills again just in case.
         deleteDuplicateSkills();//Gets rid of duplicate skills before saving new file
+        for(Skill skill : skills){
+            System.out.println(skill.getName());
+        }
         String directoryPath = System.getProperty("user.dir");
-        String fileName = "skillsTest.txt";
+        String fileName = "skills.txt";
         String filePath = directoryPath + "/" + fileName;
 
         try {
@@ -387,6 +389,8 @@ public class SkillEditor {
             Action newAction = new Action(rule.getAction(), rule.getOutput(), actionValues);
             newSkill.addAction(newAction);
         }
+
+        
 
 
         return newSkill;
