@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import DigitalAssistant.Utilities.Rule;
+import DigitalAssistant.Utilities.SkillsUserInput;
+import DigitalAssistant.Utilities.SlotValuePair;
+
 public class SkillEditor {
     private List<Skill> skills;
     public static ArrayList<Event> events = new ArrayList<>();
@@ -31,6 +35,7 @@ public class SkillEditor {
 
     public void addSkill(Skill skill) {
         skills.add(skill);
+        this.saveSkills();
     }
 
     public static void main(String[] args) {
@@ -341,6 +346,50 @@ public class SkillEditor {
         scan.close();
         // save values
         // updateSkills();
+    }
+
+    /**Converts a skillUserInput object from the GUI to a Skill object.
+     * @param skillUserInput
+     * @return Skill object
+     */
+    public Skill convertToSkill(SkillsUserInput skillUserInput){
+        Skill newSkill = new Skill(skillUserInput.getSkillName(), skillUserInput.getProtoSentence());
+
+        
+        //Converting SlotValuePairs->placeholders
+
+        ArrayList<SlotValuePair> slotValuePairs = new ArrayList<SlotValuePair>(skillUserInput.getSlotValuePairs());
+        for(SlotValuePair pair : slotValuePairs){
+            if(newSkill.getPlaceholders().containsKey(pair.getSlot())){//Check to see if the slot (ex: <CITY>) has been added yet
+                newSkill.getPlaceholders().get(pair.getSlot()).add(pair.getValue());//Adds to existing arraylist
+            }else{//creates a new hashmap key value pair and adds the new value to the new ArrayList
+                newSkill.getPlaceholders().put(pair.getSlot(), new ArrayList<String>());
+                newSkill.getPlaceholders().get(pair.getSlot()).add(pair.getValue());
+            }
+        }
+
+        //Converting Rules->Actions
+        ArrayList<Rule> rules = new ArrayList<Rule>(skillUserInput.getRules());
+        for(Rule rule : rules){
+            
+            ArrayList<SlotValuePair> slotValuePairsTwo = new ArrayList<SlotValuePair>(rule.getSlotValuePairs());
+            HashMap<String, ArrayList<String>> actionValues = new HashMap<String, ArrayList<String>>();
+
+            for(SlotValuePair pair : slotValuePairsTwo){
+                if(actionValues.containsKey(pair.getSlot())){
+                    actionValues.get(pair.getSlot()).add(pair.getValue());
+                }else{
+                    actionValues.put(pair.getSlot(), new ArrayList<>());
+                    actionValues.get(pair.getSlot()).add(pair.getValue());
+                }
+            }
+
+            Action newAction = new Action(rule.getAction(), rule.getOutput(), actionValues);
+            newSkill.addAction(newAction);
+        }
+
+
+        return newSkill;
     }
 
     public static void addEventToFile(String eventName, ArrayList<String> parameters){
