@@ -10,9 +10,15 @@ import DigitalAssistant.skillLogic.SkillEditor;
 
 public class CFG {
 
-    public static ArrayList<Rule> grammar;
+    public ArrayList<Rule> grammar;
+    public List<Skill> skills;
 
-    public static void loadRules(List<Skill> skills){
+    public CFG(List<Skill> skills){
+        this.skills = skills;
+        loadRules();
+    }
+
+    public void loadRules(){
         ArrayList<Rule> rules = new ArrayList<Rule>();
         Rule startRule = new Rule("<S>", new ArrayList<String>());
         rules.add(startRule);
@@ -30,14 +36,8 @@ public class CFG {
                 Rule placeholderRule = new Rule(key, skill.getPlaceholders().get(key));
                 rules.add(placeholderRule);
             }
-
-
-
         }
-
-
         grammar = rules;
-
     }
 
     /**This method processes a string for use in defining rules for the CFG algorithm (for now just used for prototype sentences). 
@@ -65,11 +65,9 @@ public class CFG {
         words.removeAll(toRemove);
 
         return words;
-
     }
 
-    
-    private static class Rule {
+    public class Rule {
         private String nonterminal;
         private List<String> expansions;
 
@@ -81,11 +79,11 @@ public class CFG {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor();
-        loadRules(skillEditor.getSkills());
 
+        CFG cfg = new CFG(skillEditor.getSkills());
+        ArrayList<Rule> grammar = cfg.grammar;
         for(Rule rule : grammar){
             System.out.printf("---------\n"+"Rule %d\nNon-Terminal: %s\n Terminals: %s\n", grammar.indexOf(rule), rule.nonterminal, rule.expansions.toString());
         }
-
     }
 }
