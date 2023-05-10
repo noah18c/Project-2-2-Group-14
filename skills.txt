@@ -18,14 +18,14 @@ Action <CITY> @INPUT <CITY> @INPUT  |Search| The distance between <CITY> to <CIT
 +++++
 -----
 Name MariekeSkill
-Question How do I get from <CITY> to <CITY> at <TIME>?
+Question How do I get from <TOWN> to <TOWN> at <TIME>?
 Slot <TIME> 9 11
-Slot <CITY> Maastricht Heerlen Den-Hague New-York
+Slot <TOWN> Maastricht Heerlen Den-Hague New-York
 --
-Action <TIME> 9 <CITY> Maastricht <CITY> Heerlen |Print| By train
-Action <TIME> 11 <CITY> Maastricht <CITY> Heerlen |Print| By car
-Action <TIME> 11 <CITY> Maastricht <CITY> Sittard |Print| By bike
-Action <CITY> Maastricht <CITY> Maastricht  |Print| teleportation
+Action <TIME> 9 <TOWN> Maastricht <TOWN> Heerlen |Print| By train
+Action <TIME> 11 <TOWN> Maastricht <TOWN> Heerlen |Print| By car
+Action <TIME> 11 <TOWN> Maastricht <TOWN> Sittard |Print| By bike
+Action <TOWN> Maastricht <TOWN> Maastricht  |Print| teleportation
 +++++
 -----
 Name Exams

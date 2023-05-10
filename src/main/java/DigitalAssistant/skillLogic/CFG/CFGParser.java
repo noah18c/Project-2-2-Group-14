@@ -65,7 +65,7 @@ public class CFGParser {
                     }
 
 
-                findRule(rule, next);
+                return findRule(rule, next);
                 
             }else{//WE DIDNT FIND A TERMINAL
             
@@ -83,7 +83,7 @@ public class CFGParser {
                         return true;
                     }
                     
-                    findRule(rule, next);
+                    return findRule(rule, next);
                 }
                 
                 if(placeholderFound != true){
