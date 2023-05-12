@@ -21,3 +21,10 @@ jlink {
         name = 'Main'
     }
 }
+dependencies {
+    implementation 'org.languagetool:language-en:5.4'
+    implementation 'org.languagetool:languagetool-core:5.4'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    implementation 'org.apache.commons:commons-text:1.9'
+
+}
