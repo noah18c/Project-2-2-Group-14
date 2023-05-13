@@ -3,6 +3,7 @@ package DigitalAssistant.gui.scenes;
 import DigitalAssistant.Utilities.Handler;
 import DigitalAssistant.gui.stages.SkillEditorStage;
 import DigitalAssistant.skillLogic.SkillEditor;
+import DigitalAssistant.skillLogic.FaceDetection;
 import javafx.animation.Animation;
 import javafx.animation.Transition;
 import javafx.beans.binding.Bindings;
@@ -81,9 +82,17 @@ public class ChatScene implements SceneInterface, Initializable {
             throw new RuntimeException(e);
         }
         this.scene.getStylesheets().add(getClass().getResource("chatStyles.css").toExternalForm());
-        init();
-        initActions();
-
+        //FaceDetection detector = new FaceDetection();
+        System.out.println("+++ Starting face detection...");
+        if (FaceDetection.faceDetection()){
+            System.out.println("face detection successful");
+            init();
+            initActions();
+        }
+        else if(!FaceDetection.faceDetection()) {
+            System.out.println("face detection failed");
+            initFalse();
+        }
     }
 
     /**
@@ -253,6 +262,10 @@ public class ChatScene implements SceneInterface, Initializable {
      */
     private void init() {
         botWriter("Hello user, what would you like to do?");
+    }
+    // inital method when no face was detected
+    private void initFalse() {
+        botWriter("I could not detect a user... Please come back");
     }
 
     private void initActions(){
