@@ -12,13 +12,12 @@ public class CFGParser {
     public ArrayList<String> words;
 
     public String skillName;
-    public ArrayList<String> placeholderValues;
-
+    public HashMap<String, ArrayList<String>> placeholderValues;
     public boolean isFinished = false;
 
     public CFGParser(List<Skill> skills){
         this.skills = skills;
-        placeholderValues = new ArrayList();
+        placeholderValues = new HashMap<>();
         loadRules();
     }
 
@@ -36,12 +35,10 @@ public class CFGParser {
                 break;
             }
             else{
-                placeholderValues = new ArrayList<>();
+                placeholderValues = new HashMap<>();
             }
         }
         
-        System.out.println("---------");
-        System.out.println(skillName + "  " + placeholderValues.toString());
 
         return false;
     }
@@ -66,11 +63,21 @@ public class CFGParser {
                     }   
                 }
             }
+
             
             boolean skillFound = false;
             if((words.size() - next.size()) == rule.expansions.size()){
                 skillFound = true;
+                for (int i = 0; i < skills.size(); i++) {
+                    if(skills.get(i).getName().equals(rule.nonterminal)){
+                        for (String key : skills.get(i).getPlaceholders().keySet()) {
+                            ArrayList<String> list = new ArrayList<>();
+                            placeholderValues.put(key, list ); //Add the key with null value to the clonedHashMap
+                        }                        
+                    }
+                }
             }
+
 
             if(skillFound){
                 for (int i = 0; i < next.size(); i++) {                
@@ -144,21 +151,20 @@ public class CFGParser {
             if(currentPlaceholder.expansions.size() == 1){
                 if(currentPlaceholder.expansions.get(0).equals("@INPUT")){
                     if(input){
-                        placeholderValues.add(wordToCheck);
+                        placeholderValues.get(currentPlaceholder.nonterminal).add(wordToCheck);
                         return true;
                     }
                 }
             }
             for (int i = 0; i < currentPlaceholder.expansions.size(); i++) {
                 if(currentPlaceholder.expansions.get(i).equalsIgnoreCase(wordToCheck)){
-                    placeholderValues.add(wordToCheck);
+                    placeholderValues.get(currentPlaceholder.nonterminal).add(wordToCheck);
                     return true;
                 }
             }
         }
         return false;
     }
-
 
     //If rule cannot be found, null will be returned.
     public Rule getSkillRule(String ruleName){
@@ -170,7 +176,6 @@ public class CFGParser {
         }
         return failCase;
     }
-
 
     public void loadRules(){
         ArrayList<Rule> rules = new ArrayList<Rule>();
@@ -233,6 +238,6 @@ public class CFGParser {
         CFGParser parser = new CFGParser(skillEditor.getSkills());
         ArrayList<Rule> grammar = parser.grammar;
 
-        parser.parse("Which subjects are in period 6?");     
+        parser.parse("What is the distance between ankara to maastricht?");     
     }
 }

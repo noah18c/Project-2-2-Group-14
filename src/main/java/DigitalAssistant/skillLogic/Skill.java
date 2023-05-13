@@ -19,10 +19,8 @@ public class Skill {
         this.actions = new ArrayList<>();
     }
 
-    public String start(ArrayList<String> placeHolderValues){
-
-        
-
+    public String start(HashMap<String, ArrayList<String>> inputValues){        
+        this.inputValues = inputValues;
         return performAction();
     }
 
@@ -39,13 +37,13 @@ public class Skill {
                 for (int j2 = 0; j2 < inputValuesKeyList.size(); j2++) {
                     if(actionKeyList.get(j) == inputValuesKeyList.get(j2)){
                         for (int k = 0; k < currentAction.getActionValues().get(actionKeyList.get(j)).size(); k++) {             
-                            if(currentAction.getActionValues().get(actionKeyList.get(j)).get(k).equals(inputValues.get(inputValuesKeyList.get(j2)).get(k))){
+                            if(currentAction.getActionValues().get(actionKeyList.get(j)).get(k).equalsIgnoreCase(inputValues.get(inputValuesKeyList.get(j2)).get(k))){
                                 counter++;
                             }
                             else if(currentAction.getActionValues().get(actionKeyList.get(j)).size() == 0){
                                 counter ++;
                             }
-                            else if(currentAction.getActionValues().get(actionKeyList.get(j)).get(k).equals("@INPUT")){
+                            else if(currentAction.getActionValues().get(actionKeyList.get(j)).get(k).equalsIgnoreCase("@INPUT")){
                                 counter++;
                             }
                         }
@@ -225,76 +223,80 @@ public class Skill {
         }
         return true;
     }
+
+        // ***THIS METHOD HAS BEEN SCRAPPED***   //
+
+    // The method that checks whether it is corresponding skill to the input or not
+    // If it is the corresponding skill saves the placeholder values to hashmap in order call proper action
+    public String match(String input){
+        inputValues = new HashMap<>();
+        Set<String> keySet = placeholders.keySet();
+        ArrayList<String> keyList = new ArrayList<>(keySet); //get the key values of placeholders into arraylist like <DAY> <TIME>
+        
+        String regex = prototype.substring(0, prototype.length() - 1) + " " + prototype.charAt(prototype.length() - 1); // To spearate last char from the sentence for the case there is "?" at the end of the sentence
+        String[] words = regex.split(" ");//assign every word to array
+
+        String regexInput = input.substring(0, input.length() - 1) + " " + input.charAt(input.length() - 1); // To separate last char from the sentence for the case there is "?" at the end of the sentence
+        String[] preWordsInput = regexInput.split(" ");//assign every word to array
+
+        int numberOfSpace = 0;
+        for (int i = 0; i < preWordsInput.length; i++) {
+            if(preWordsInput[i].length() == 0){
+                numberOfSpace++;
+            }
+        }
+    
+        String[] wordsInput  = new String[preWordsInput.length-numberOfSpace];
+        int index = 0;
+        for (int i = 0; i < preWordsInput.length; i++) {
+            if(!(preWordsInput[i].length() == 0)){
+                wordsInput[index] = preWordsInput[i];
+                index++;
+            }
+        }
+
+        HashMap<String, ArrayList<Integer>> indexOfPlaceholders = new HashMap<>();
+        ArrayList<Integer> allIndexes = new ArrayList<>();
+
+        inputValues = matchHashMap(placeholders, input);
+        
+
+        for (int i = 0; i < actions.size(); i++) {
+            if(checkEquality(actions.get(i).getActionValues(), inputValues)){
+                return performAction();
+            }
+        }
+
+        inputValues = new HashMap<>();
+
+        //FIND THE INDEX OF PLACEHOLDERS IN PROTOTYPE SENTENCE
+        for (int i = 0; i < keyList.size(); i++) {
+            ArrayList<Integer> indexesForKey = new ArrayList<>();
+            for (int j = 0; j < words.length; j++) {
+                if(words[j].equals(keyList.get(i))){
+                    allIndexes.add(j);
+                    indexesForKey.add(j);
+                }
+            }
+            indexOfPlaceholders.put(keyList.get(i), indexesForKey);
+        }
+
+        // GET THE INPUT VALUES FROM INPUT SENTENCE
+        ArrayList<String> keySetIndex = new ArrayList<>(indexOfPlaceholders.keySet());
+
+        for (int i = 0; i < keySetIndex.size(); i++) {
+            ArrayList<String> values = new ArrayList<>();
+            for (int j = 0; j < indexOfPlaceholders.get(keySetIndex.get(i)).size(); j++) {
+                values.add(wordsInput[indexOfPlaceholders.get(keySetIndex.get(i)).get(j)]);
+            }
+            inputValues.put(keySetIndex.get(i), values);
+        }
+        //System.out.println(inputValues);
+        return performAction();
+    }
+    
 }
 
 
-    //     ***THIS METHOD HAS BEEN SCRAPPED***   //
 
-    // // The method that checks whether it is corresponding skill to the input or not
-    // // If it is the corresponding skill saves the placeholder values to hashmap in order call proper action
-    // public String match(String input){
-    //     inputValues = new HashMap<>();
-    //     Set<String> keySet = placeholders.keySet();
-    //     ArrayList<String> keyList = new ArrayList<>(keySet); //get the key values of placeholders into arraylist like <DAY> <TIME>
-        
-    //     String regex = prototype.substring(0, prototype.length() - 1) + " " + prototype.charAt(prototype.length() - 1); // To spearate last char from the sentence for the case there is "?" at the end of the sentence
-    //     String[] words = regex.split(" ");//assign every word to array
-
-    //     String regexInput = input.substring(0, input.length() - 1) + " " + input.charAt(input.length() - 1); // To separate last char from the sentence for the case there is "?" at the end of the sentence
-    //     String[] preWordsInput = regexInput.split(" ");//assign every word to array
-
-    //     int numberOfSpace = 0;
-    //     for (int i = 0; i < preWordsInput.length; i++) {
-    //         if(preWordsInput[i].length() == 0){
-    //             numberOfSpace++;
-    //         }
-    //     }
     
-    //     String[] wordsInput  = new String[preWordsInput.length-numberOfSpace];
-    //     int index = 0;
-    //     for (int i = 0; i < preWordsInput.length; i++) {
-    //         if(!(preWordsInput[i].length() == 0)){
-    //             wordsInput[index] = preWordsInput[i];
-    //             index++;
-    //         }
-    //     }
-
-    //     HashMap<String, ArrayList<Integer>> indexOfPlaceholders = new HashMap<>();
-    //     ArrayList<Integer> allIndexes = new ArrayList<>();
-
-    //     inputValues = matchHashMap(placeholders, input);
-        
-
-    //     for (int i = 0; i < actions.size(); i++) {
-    //         if(checkEquality(actions.get(i).getActionValues(), inputValues)){
-    //             return performAction();
-    //         }
-    //     }
-
-    //     inputValues = new HashMap<>();
-
-    //     //FIND THE INDEX OF PLACEHOLDERS IN PROTOTYPE SENTENCE
-    //     for (int i = 0; i < keyList.size(); i++) {
-    //         ArrayList<Integer> indexesForKey = new ArrayList<>();
-    //         for (int j = 0; j < words.length; j++) {
-    //             if(words[j].equals(keyList.get(i))){
-    //                 allIndexes.add(j);
-    //                 indexesForKey.add(j);
-    //             }
-    //         }
-    //         indexOfPlaceholders.put(keyList.get(i), indexesForKey);
-    //     }
-
-    //     // GET THE INPUT VALUES FROM INPUT SENTENCE
-    //     ArrayList<String> keySetIndex = new ArrayList<>(indexOfPlaceholders.keySet());
-
-    //     for (int i = 0; i < keySetIndex.size(); i++) {
-    //         ArrayList<String> values = new ArrayList<>();
-    //         for (int j = 0; j < indexOfPlaceholders.get(keySetIndex.get(i)).size(); j++) {
-    //             values.add(wordsInput[indexOfPlaceholders.get(keySetIndex.get(i)).get(j)]);
-    //         }
-    //         inputValues.put(keySetIndex.get(i), values);
-    //     }
-    //     //System.out.println(inputValues);
-    //     return performAction();
-    // }

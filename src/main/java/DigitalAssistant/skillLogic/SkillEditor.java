@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-
 import DigitalAssistant.Utilities.Rule;
 import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.Utilities.SlotValuePair;
@@ -49,12 +48,17 @@ public class SkillEditor {
     public String search(String input){
 
         CFGParser parser = new CFGParser(skills);
-
         parser.parse(input);
-
+        
         //If no skill found means no placheolder
         if(parser.placeholderValues.isEmpty()){
-            return "No Skill Found For Given Input!";
+            Match match = new Match(input, getSkills());
+            if(match.searchSkill() == null){
+                return "No Skill Found For Given Input!";
+            }
+            else{
+                return match.searchSkill().match(input);
+            }
         }
         else{ // if the skill found, assign the input placeholder of skill then start
             for (int i = 0; i < skills.size(); i++) {
@@ -64,14 +68,6 @@ public class SkillEditor {
             }
         }
         return "No Skill Found For Given Input!";
-
-        // Match match = new Match(input, getSkills());
-        // if(match.searchSkill() == null){
-        //     return "Sorry! I didnt understand.";
-        // }
-        // else{
-        //     return match.searchSkill().match(input);
-        // }
     }
 
     /*
