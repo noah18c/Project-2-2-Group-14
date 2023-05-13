@@ -84,24 +84,6 @@ public class CFGParser {
                     }
                     
                     return findRule(rule, next);
-                }else if(isInputRule(rule)){
-
-                    System.out.println("isInputRule is true");
-                    placeholderFound = true;
-                    placeholderValues.add(words.get(0));
-
-                    ArrayList<String> next = new ArrayList<String>();
-                    next.addAll(words);
-                    next.remove(words.get(0));
-
-                    if(words.size() == 0){
-                        System.out.println("4");
-
-                        return true;
-                    }
-                    
-                    return findRule(rule, next);
-
                 }
                 
                 if(placeholderFound != true){
@@ -113,24 +95,6 @@ public class CFGParser {
         return false;
     }
 
-    public boolean isInputRule(Rule rule){
-        for(Skill skill : skills){
-            if(rule.nonterminal.equals(skill.getName())){
-
-                Set<String> keySet = skill.getPlaceholders().keySet();//Making the hashMap iterable
-                ArrayList<String> keyList = new ArrayList<>(keySet);
-
-                for(String key : keySet){
-                    if(skill.getPlaceholders().get(key).get(0).equals("@INPUT")){
-                        return true;
-                    }
-                }
-
-            }
-        }
-
-        return false;
-    }
 
     public boolean checkPlaceholders(Rule rule, String wordToCheck){
         for(String placeholder : rule.placeholders){
@@ -218,6 +182,6 @@ public class CFGParser {
         CFGParser parser = new CFGParser(skillEditor.getSkills());
         ArrayList<Rule> grammar = parser.grammar;
 
-        parser.parse("What is the distance between Maastricht to Dubai?");     
+        parser.parse("Which lectures are there on Monday at 9?");     
     }
 }
