@@ -19,6 +19,7 @@ import java.util.Set;
 import DigitalAssistant.Utilities.Rule;
 import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.Utilities.SlotValuePair;
+import DigitalAssistant.skillLogic.CFG.CFGParser;
 
 public class SkillEditor {
     private List<Skill> skills;
@@ -40,19 +41,37 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor();
-        String input = "Ho d I get frm Maastricht to Sittard at 11?";
+        String input = "How do I get from Maastricht to Sittard at 11?";
         System.out.println(input);
         System.out.println(skillEditor.search(input));
     }
 
     public String search(String input){
-        Match match = new Match(input, getSkills());
-        if(match.searchSkill() == null){
-            return "Sorry! I didnt understand.";
+
+        CFGParser parser = new CFGParser(skills);
+
+        parser.parse(input);
+
+        //If no skill found means no placheolder
+        if(parser.placeholderValues.isEmpty()){
+            return "No Skill Found For Given Input!";
         }
-        else{
-            return match.searchSkill().match(input);
+        else{ // if the skill found, assign the input placeholder of skill then start
+            for (int i = 0; i < skills.size(); i++) {
+                if(skills.get(i).getName().equalsIgnoreCase(parser.skillName)){
+                    return skills.get(i).start(parser.placeholderValues);
+                }
+            }
         }
+        return "No Skill Found For Given Input!";
+
+        // Match match = new Match(input, getSkills());
+        // if(match.searchSkill() == null){
+        //     return "Sorry! I didnt understand.";
+        // }
+        // else{
+        //     return match.searchSkill().match(input);
+        // }
     }
 
     /*

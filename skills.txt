@@ -20,7 +20,7 @@ Action <CITY> @INPUT <CITY> @INPUT  |Search| The distance between <CITY> to <CIT
 Name MariekeSkill
 Question How do I get from <TOWN> to <TOWN> at <TIME>?
 Slot <TIME> 9 11
-Slot <TOWN> Maastricht Heerlen Den-Hague New-York
+Slot <TOWN> Maastricht Heerlen Den-Hague New-York Sittard
 --
 Action <TIME> 9 <TOWN> Maastricht <TOWN> Heerlen |Print| By train
 Action <TIME> 11 <TOWN> Maastricht <TOWN> Heerlen |Print| By car

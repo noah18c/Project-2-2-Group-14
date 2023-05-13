@@ -66,25 +66,27 @@ public class CFGParser {
                     }   
                 }
             }
-            System.out.println(next.size() + " " + rule.placeholders.toString());
+            
+            boolean skillFound = false;
+            if((words.size() - next.size()) == rule.expansions.size()){
+                skillFound = true;
+            }
 
-            //if(next.size() == rule.placeholders.size()){
-
-                for (int i = 0; i < next.size(); i++) {
+            if(skillFound){
+                for (int i = 0; i < next.size(); i++) {                
                     if(checkPlaceholders(rule, next.get(i),false)){
                         next.remove(i);
                         i = i-1;
                     }
                 }
-
+    
                 for (int i = 0; i < next.size(); i++) {
                     if(checkPlaceholders(rule, next.get(i), true)){
                         next.remove(i);
                         i = i-1;
                     }
                 }
-
-            //}
+            }
 
             if(next.size() == 0){
                 return true;
@@ -134,9 +136,9 @@ public class CFGParser {
         // return false;
     }
 
+
     public boolean checkPlaceholders(Rule rule, String wordToCheck , boolean input){
 
-        
         for(String placeholder : rule.placeholders){
             Rule currentPlaceholder = getSkillRule(placeholder);
             if(currentPlaceholder.expansions.size() == 1){
@@ -231,6 +233,6 @@ public class CFGParser {
         CFGParser parser = new CFGParser(skillEditor.getSkills());
         ArrayList<Rule> grammar = parser.grammar;
 
-        parser.parse("What is the distance between ankara to maas?");     
+        parser.parse("Which subjects are in period 6?");     
     }
 }
