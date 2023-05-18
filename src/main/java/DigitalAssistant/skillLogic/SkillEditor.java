@@ -18,6 +18,7 @@ import java.util.Set;
 import DigitalAssistant.Utilities.Rule;
 import DigitalAssistant.Utilities.SkillsUserInput;
 import DigitalAssistant.Utilities.SlotValuePair;
+import DigitalAssistant.skillLogic.CFG.CFG;
 import DigitalAssistant.skillLogic.CFG.CFGParser;
 
 public class SkillEditor {
@@ -27,6 +28,25 @@ public class SkillEditor {
     public SkillEditor() {
         skills = new ArrayList<>();
         loadSkills();
+        loadGrammar();
+    }
+
+    public void loadGrammar(){
+        CFG cfg = new CFG(skills);
+        ArrayList<CFG.Rule> arrayList = cfg.grammar;
+        try {
+            FileWriter fileWriter = new FileWriter("grammar.txt");
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            for (CFG.Rule element : arrayList) {
+                printWriter.println(element.ruleName + " " + element.terminal + " " + element.nonterminal);
+            }
+
+            printWriter.close();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Skill> getSkills() {
@@ -40,7 +60,7 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor();
-        String input = "How do I get from Maastricht to Sittard at 11?";
+        String input = "Set a timer for 100 seconds";
         System.out.println(input);
         System.out.println(skillEditor.search(input));
     }
@@ -49,25 +69,44 @@ public class SkillEditor {
 
         CFGParser parser = new CFGParser(skills);
         parser.parse(input);
+
+        CFG cfg = new CFG(skills);
+        cfg.start(input);
+
+
+        //A Parser
+        if(getSkillWithName(parser.skillName) != null){
+            String str = getSkillWithName(parser.skillName).start(parser.placeholderValues);
+            if(!str.equals("I couldn't find the response for the given value(s), please be more precise.")){
+                return str;
+            }
+        }
+
+        //B CFG 
+        if(getSkillWithName(cfg.skillName) != null){
+            String str = getSkillWithName(cfg.skillName).start(cfg.parsedValues);
+            if(!str.equals("I couldn't find the response for the given value(s), please be more precise.")){
+                return str;
+            }
+        }
         
-        //If no skill found means no placheolder
-        if(parser.placeholderValues.isEmpty()){
-            Match match = new Match(input, getSkills());
-            if(match.searchSkill() == null){
-                return "No Skill Found For Given Input!";
-            }
-            else{
-                return match.searchSkill().match(input);
-            }
+        //C Match
+        Match match = new Match(input, getSkills());
+        if(match.searchSkill() == null){}
+        else{
+            return match.searchSkill().match(input);
         }
-        else{ // if the skill found, assign the input placeholder of skill then start
-            for (int i = 0; i < skills.size(); i++) {
-                if(skills.get(i).getName().equalsIgnoreCase(parser.skillName)){
-                    return skills.get(i).start(parser.placeholderValues);
-                }
-            }
-        }
+        
         return "No Skill Found For Given Input!";
+    }
+
+    public Skill getSkillWithName(String skillName){
+        for (int i = 0; i < skills.size(); i++) {
+            if(skills.get(i).getName().equalsIgnoreCase(skillName)){
+                return skills.get(i);
+            }
+        }
+        return null;
     }
 
     /*
@@ -404,10 +443,6 @@ public class SkillEditor {
             Action newAction = new Action(rule.getAction(), rule.getOutput(), actionValues);
             newSkill.addAction(newAction);
         }
-
-        
-
-
         return newSkill;
     }
 

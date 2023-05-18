@@ -17,14 +17,18 @@ public class Skill {
         this.prototype = prototype;
         this.placeholders = new HashMap<>();
         this.actions = new ArrayList<>();
+
     }
 
     public String start(HashMap<String, ArrayList<String>> inputValues){        
         this.inputValues = inputValues;
+
         return performAction();
     }
 
     public String performAction(){
+
+        try {
         //Find Corresponding action for given input then trigger the action
         for (int i = 0; i < actions.size(); i++) {
             
@@ -55,12 +59,17 @@ public class Skill {
             for (int j = 0; j < actionKeyList.size(); j++) {
                 number+= currentAction.getActionValues().get(actionKeyList.get(j)).size();
             }
-
+        
             if(counter == number){
                 currentAction.setInputValues(inputValues);
                 return currentAction.triggerAction();
             }
         }
+
+    } catch (Exception e) {
+        // TODO: handle exception
+    }
+
         return "I couldn't find the response for the given value(s), please be more precise.";
     }
 
@@ -227,17 +236,23 @@ public class Skill {
         // ***THIS METHOD HAS BEEN SCRAPPED***   //
 
     // The method that checks whether it is corresponding skill to the input or not
-    // If it is the corresponding skill saves the placeholder values to hashmap in order call proper action
+    // If it is the corresponding skill saves the placeholder values to hashmap in order to call proper action
     public String match(String input){
         inputValues = new HashMap<>();
         Set<String> keySet = placeholders.keySet();
         ArrayList<String> keyList = new ArrayList<>(keySet); //get the key values of placeholders into arraylist like <DAY> <TIME>
-        
-        String regex = prototype.substring(0, prototype.length() - 1) + " " + prototype.charAt(prototype.length() - 1); // To spearate last char from the sentence for the case there is "?" at the end of the sentence
-        String[] words = regex.split(" ");//assign every word to array
 
-        String regexInput = input.substring(0, input.length() - 1) + " " + input.charAt(input.length() - 1); // To separate last char from the sentence for the case there is "?" at the end of the sentence
-        String[] preWordsInput = regexInput.split(" ");//assign every word to array
+        prototype = prototype.replaceAll("[!" + 
+        ".?'\"\\-,;:()\\[\\]{}\\\\|#$%^&*_+=~`]", "");//Regex replaces all non-alphabetic characters
+        
+        //String regex = prototype.substring(0, prototype.length() - 1) + " " + prototype.charAt(prototype.length() - 1); // To spearate last char from the sentence for the case there is "?" at the end of the sentence 
+        String[] words = prototype.split(" ");//assign every word to array
+
+        input = input.replaceAll("[!" + 
+        ".?'\"\\-,;:()\\[\\]{}\\\\|#$%^&*_+=~`]", "");//Regex replaces all non-alphabetic characters
+        
+        //String regexInput = input.substring(0, input.length() - 1) + " " + input.charAt(input.length() - 1); // To separate last char from the sentence for the case there is "?" at the end of the sentence
+        String[] preWordsInput = input.split(" ");//assign every word to array
 
         int numberOfSpace = 0;
         for (int i = 0; i < preWordsInput.length; i++) {
@@ -294,9 +309,4 @@ public class Skill {
         //System.out.println(inputValues);
         return performAction();
     }
-    
 }
-
-
-
-    
