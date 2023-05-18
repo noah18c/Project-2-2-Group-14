@@ -1,9 +1,10 @@
 -----
 Name DistanceFinderSearch
-Question What is the distance between <CITY> to <CITY>?
-Slot <CITY> @INPUT
+Question What is the distance between <CITY1> to <CITY2>?
+Slot <CITY1> @INPUT
+Slot <CITY2> @INPUT
 --
-Action <CITY> @INPUT <CITY> @INPUT  |Search| The distance between <CITY> to <CITY>.
+Action <CITY1> @INPUT <CITY2> @INPUT  |Search| The distance between <CITY> to <CITY>.
 +++++
 -----
 Name MariekeSkill
@@ -64,4 +65,17 @@ Slot <DAYS> Monday Tuesday Wednesday Thursday Friday Saturday
 Slot <TIMES> 9 12
 --
 Action <DAYS> Monday <TIMES> 9 |Print| We start the week with math.
++++++
+-----
+Name weather
+Question How is the weather in <LOCATION> <pro> <verb> in <location>. What is the weather?
+Slot <LOCATION> in <place> <hour>
+Slot <place> NewYork Berlin
+Slot <hour> tomorrow today
+Slot <pro> I she he my-mother
+Slot <verb> am is
+--
+Action <place> NewYork <hour> tomorrow |Print| It will be sunny.
+Action <pro> my mother <verb> is <place> New York <hour> today |Print| It is stormy today.
+Action <city> Berlin |Print| It is rainy.
 +++++

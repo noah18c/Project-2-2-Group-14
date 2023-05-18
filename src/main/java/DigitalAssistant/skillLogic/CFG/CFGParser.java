@@ -56,7 +56,9 @@ public class CFGParser {
         if(words.size() == 0){//IF WE DELETED EVERYTHING WE SHOULD BE GOOD AND HAPPY AND RETURN
             System.out.println("1");
             if(isInputRule(rule)){
-                if(inputCount == rule.placeholderSkillCount){
+                System.out.println("Input count: "+ inputCount + "| rulePlaceholder input count: " + rule.placeholderInputCount);
+
+                if(inputCount == rule.placeholderInputCount){
                     return true;
                 }else{
                     inputCount = 0;
@@ -68,14 +70,15 @@ public class CFGParser {
 
 
         }else{
-            if(rule.expansions.contains(words.get(0))){//WE FOUND A NON-TERMINAL, SO WE DELETE AND CONTINUE
+            if(rule.expansions.contains(words.get(0))){//WE FOUND A TERMINAL, SO WE DELETE AND CONTINUE
                 ArrayList<String> next = new ArrayList<String>();
                 next.addAll(words);
                 next.remove(words.get(0));
 
                 if(words.size() == 0){
                     if(isInputRule(rule)){
-                        if(inputCount == rule.placeholderSkillCount){
+                        if(inputCount == rule.placeholderInputCount){
+                            inputCount = 0;
                             return true;
                         }else{
                             inputCount = 0;
@@ -90,8 +93,9 @@ public class CFGParser {
                 return findRule(rule, next);
                 
             }else{//WE DIDNT FIND A TERMINAL
-                System.out.println("HERE");
+                System.out.println("Didn't find a terminal for " + words.get(0));
                 boolean placeholderFound = false;
+                //System.out.println("|"+rule.placeholders+"|");
                 if(checkPlaceholders(rule, words.get(0), false)){
                     placeholderFound = true;
                     
@@ -101,7 +105,8 @@ public class CFGParser {
 
                     if(words.size() == 0){
                         if(isInputRule(rule)){
-                            if(inputCount == rule.placeholderSkillCount){
+                            if(inputCount == rule.placeholderInputCount){
+                                inputCount = 0;
                                 return true;
                             }else{
                                 inputCount = 0;
@@ -115,12 +120,22 @@ public class CFGParser {
                     return findRule(rule, next);
                 }else if(isInputRule(rule)){
 
-                    System.out.println("isInputRule is true");
+
+
+                    System.out.println("isInputRule is true and rule has inputCount " + rule.placeholderInputCount);
                     placeholderFound = true;
                     ArrayList<String> temp = new ArrayList<String>();
                     temp.add(words.get(0));
-                    placeholderValues.put("@INPUT", temp);
+                    if(placeholderValues.containsKey("@input")){
+                        System.out.println("****Making new key value pair****");
+                        placeholderValues.get("@input").add(words.get(0));
+                    }else{
+                        System.out.println("****Adding to existing key value pair****");
+                        placeholderValues.put("@input", temp);
+                    }
+
                     inputCount++;
+                    System.out.println("Adding " + words.get(0) + " as input placeholder");
 
                     ArrayList<String> next = new ArrayList<String>();
                     next.addAll(words);
@@ -128,7 +143,8 @@ public class CFGParser {
 
                     if(words.size() == 0){
                         System.out.println("4");
-                        if(inputCount==rule.placeholderSkillCount){
+                        if(inputCount==rule.placeholderInputCount){
+                            inputCount = 0;
                             return true;
                         }else{
                             inputCount = 0;
@@ -158,7 +174,7 @@ public class CFGParser {
                 ArrayList<String> keyList = new ArrayList<>(keySet);
 
                 for(String key : keySet){
-                    if(skill.getPlaceholders().get(key).get(0).equals("@INPUT")){
+                    if(skill.getPlaceholders().get(key).get(0).equalsIgnoreCase("@INPUT")){
                         return true;
                     }
                 }
@@ -192,17 +208,25 @@ public class CFGParser {
                 return true;
 
             }else if(placeholderName.charAt(0) == '<' || placeholderName.charAt(placeholderName.length() - 1) == '>'){//recursive call in case of nested placeholders
-                System.out.println(getSkillRule(placeholderName));
+                System.out.println("Starting checkPlaceholders recursion on " + getSkillRule(placeholderName) + "  with word: " + wordToCheck);
                 if(firstIteration){
                     currentPlaceholderSearch = placeholderName;
                     firstIteration = false;
                 }
                 if(checkPlaceholders(getSkillRule(placeholderName), wordToCheck, false)){
                     firstIteration = true;
-                    //System.out.print("HERE");
+                    System.out.print("We found a valid value for placeholder");
+
                     ArrayList<String> temp = new ArrayList<String>();
                     temp.add(wordToCheck);
-                    placeholderValues.put(currentPlaceholder.nonterminal, temp);
+
+                    if(placeholderValues.containsKey(currentPlaceholder.nonterminal)){
+                        System.out.println("****Making new key value pair****");
+                        placeholderValues.get(currentPlaceholder.nonterminal).add(wordToCheck);
+                    }else{
+                        System.out.println("****Adding to existing key value pair****");
+                        placeholderValues.put(currentPlaceholder.nonterminal, temp);
+                    }
                     return true;
                 }
                 
@@ -240,7 +264,7 @@ public class CFGParser {
             Set<String> keySet = skill.getPlaceholders().keySet();//Making the hashMap iterable
             ArrayList<String> keyList = new ArrayList<>(keySet);
             int count = 0;
-            for(String key : keyList){
+            for(String key : keyList){//slots for skills as rules
 
                 ArrayList<String> placeholderRuleExpansions = new ArrayList<String>();
                 for(String expansion : skill.getPlaceholders().get(key)){
@@ -250,11 +274,11 @@ public class CFGParser {
                 Rule placeholderRule = new Rule(key, placeholderRuleExpansions);
                 rules.add(placeholderRule);
                 skillRules.add(placeholderRule);
-                count++;
+               if(placeholderRuleExpansions.contains("@input")){count++;};
 
             }
             Rule newRule = new Rule(skill.getName(), processStringCFG(skill.getPrototype()));
-            newRule.placeholderSkillCount = count;
+            newRule.placeholderInputCount = count;
             newRule.placeholders.addAll(skillRules);
             rules.add(newRule);
         }
@@ -284,7 +308,7 @@ public class CFGParser {
         private String nonterminal;
         private List<String> expansions;
         private ArrayList<Rule> placeholders;
-        private int placeholderSkillCount = 0;
+        private int placeholderInputCount = 0;
 
         public Rule(String nonterminal, List<String> expansions) {
             this.nonterminal = nonterminal;
@@ -303,6 +327,11 @@ public class CFGParser {
         CFGParser parser = new CFGParser(skillEditor.getSkills());
         ArrayList<Rule> grammar = parser.grammar;
 
-        parser.parse("Which lectures are on Monday at 9?");     
+        parser.parse("What is the distance between Maastricht to Heerlen?");    
+        
+        // System.out.printf("\n\n\nGrammar:\n");
+        // for (Rule rule : grammar) {
+        //     System.out.println(rule + "\n\n");
+        // }
     }
 }
