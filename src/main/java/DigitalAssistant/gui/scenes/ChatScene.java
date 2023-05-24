@@ -83,16 +83,8 @@ public class ChatScene implements SceneInterface, Initializable {
         }
         this.scene.getStylesheets().add(getClass().getResource("chatStyles.css").toExternalForm());
         //FaceDetection detector = new FaceDetection();
-        System.out.println("+++ Starting face detection...");
-        if (FaceDetection.faceDetection()){
-            System.out.println("face detection successful");
-            init();
-            initActions();
-        }
-        else if(!FaceDetection.faceDetection()) {
-            System.out.println("face detection failed");
-            initFalse();
-        }
+        init();
+        initActions();
     }
 
     /**

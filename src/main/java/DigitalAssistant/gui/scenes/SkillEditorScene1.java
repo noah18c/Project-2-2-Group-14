@@ -262,7 +262,7 @@ public class SkillEditorScene1 implements Initializable {
         ArrayList<String> temp = new ArrayList<String>();
         String prototype = input;
         Scanner in = new Scanner(prototype);
-        in.useDelimiter(" ");
+        in.useDelimiter("");
         int i = 0;
         while(in.hasNext()){
             temp.add(in.next());
@@ -272,7 +272,7 @@ public class SkillEditorScene1 implements Initializable {
                 while(temp.get(i).charAt(temp.get(i).length()-1) != '>'){
                     i++;
                     temp.add(in.next());
-                    slot += " "+temp.get(i);
+                    slot += ""+temp.get(i);
                 }
                 phList.add(slot);
             }

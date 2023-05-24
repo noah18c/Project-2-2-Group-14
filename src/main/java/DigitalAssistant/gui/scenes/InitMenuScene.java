@@ -1,6 +1,7 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
+import DigitalAssistant.skillLogic.FaceDetection;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -9,10 +10,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,6 +36,13 @@ public class InitMenuScene implements SceneInterface {
 
     @FXML
     private Button proceedButton;
+
+    @FXML
+    private ProgressBar progressBar;
+
+    @FXML
+    private Label progressLabel;
+
 
 
     public InitMenuScene(Handler handler){
@@ -57,7 +67,6 @@ public class InitMenuScene implements SceneInterface {
 
         proceedButton.setDisable(true);
         this.AnimateText();
-        //proceedButton.setDisable(false);
     }
 
     public void proceed(ActionEvent e){
@@ -85,6 +94,17 @@ public class InitMenuScene implements SceneInterface {
             }
         };
         animation.setOnFinished(e ->{
+            System.out.println("+++ Starting face detection...");
+
+            while(!FaceDetection.faceDetection() && false){
+                progressBar.setProgress(0.5F);
+                System.out.println("face detection failed");
+                progressLabel.setText("face detection failed, trying again...");
+            }
+
+            progressBar.setProgress(1F);
+            System.out.println("face detection successful");
+            progressLabel.setText("Face detection successful!");
             proceedButton.setDisable(false);
         });
 

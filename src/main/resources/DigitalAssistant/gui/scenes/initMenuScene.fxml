@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -18,12 +19,14 @@
                   <Image url="@../../img/HALSQUARE.png" />
                </image>
             </ImageView>
-            <Label fx:id="introLabel" alignment="CENTER" layoutX="73.0" layoutY="265.0" prefHeight="24.0" prefWidth="454.0" text="Hello user, nice to meet you again..." textAlignment="CENTER" wrapText="true">
+            <Label fx:id="introLabel" alignment="CENTER" layoutX="73.0" layoutY="224.0" prefHeight="24.0" prefWidth="454.0" text="Hello user, nice to meet you again..." textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Courier New" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="proceedButton" alignment="CENTER" layoutX="244.0" layoutY="330.0" mnemonicParsing="false" onAction="#proceed" prefHeight="34.0" prefWidth="111.0" style="-fx-font-family: courier; -fx-background-color: linear-gradient(#800000, #be1d00); -fx-background-radius: 40;" text="Proceed" textFill="WHITE" />
+            <Button fx:id="proceedButton" alignment="CENTER" layoutX="244.0" layoutY="342.0" mnemonicParsing="false" onAction="#proceed" prefHeight="34.0" prefWidth="111.0" style="-fx-font-family: courier; -fx-background-color: linear-gradient(#800000, #be1d00); -fx-background-radius: 40;" text="Proceed" textFill="WHITE" />
+            <ProgressBar fx:id="progressBar" layoutX="143.0" layoutY="275.0" prefHeight="18.0" prefWidth="314.0" progress="0.0" />
+            <Label fx:id="progressLabel" alignment="CENTER" layoutY="301.0" prefHeight="17.0" prefWidth="600.0" text="Scanning face..." textAlignment="CENTER" />
          </children>
          <effect>
             <Glow level="0.6" />

@@ -43,7 +43,7 @@ public class SkillsList {
 
 
         String directoryPath = System.getProperty("user.dir");
-        String fileName = "skills.txt";
+        String fileName = "grammar.txt";
         String filePath = directoryPath + "/" + fileName;
         File file = new File(filePath);
 
