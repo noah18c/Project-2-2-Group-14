@@ -77,8 +77,6 @@ public class CFG {
         return str;
     }
 
-
-
     // public boolean isInputRule(Rule rule){
     //     for (int i = 0; i < rule.terminal.size(); i++) {
     //         if(rule.terminal.get(i).equalsIgnoreCase("@input")){
@@ -154,9 +152,10 @@ public class CFG {
         
         ArrayList<String> toRemove = new ArrayList<>();
         for (String word : words) {
-
-            if ((word.charAt(0) == '<' || word.charAt(word.length() - 1) == '>')) {
-                toRemove.add(word);
+            if(!(word.length() == 0)){
+                if ((word.charAt(0) == '<' || word.charAt(word.length() - 1) == '>')) {
+                    toRemove.add(word);
+                }
             }
         }
         words.removeAll(toRemove);

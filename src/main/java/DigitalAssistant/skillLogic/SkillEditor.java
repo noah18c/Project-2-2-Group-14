@@ -60,7 +60,7 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor();
-        String input = "Set a timer for 100 seconds";
+        String input = "How is the weather in NewYork tomorrow?";
         System.out.println(input);
         System.out.println(skillEditor.search(input));
     }
@@ -85,6 +85,7 @@ public class SkillEditor {
         //B CFG 
         if(getSkillWithName(cfg.skillName) != null){
             String str = getSkillWithName(cfg.skillName).start(cfg.parsedValues);
+
             if(!str.equals("I couldn't find the response for the given value(s), please be more precise.")){
                 return str;
             }
@@ -92,11 +93,19 @@ public class SkillEditor {
         
         //C Match
         Match match = new Match(input, getSkills());
-        if(match.searchSkill() == null){}
-        else{
-            return match.searchSkill().match(input);
+        if(match.searchSkill() != null){
+            if(!(match.searchSkill().match(input).equalsIgnoreCase("I couldn't find the response for the given value(s), please be more precise."))){
+                return match.searchSkill().match(input);
+            }
         }
-        
+
+        for (int i = 0; i < skills.size(); i++) {
+            if(!(skills.get(i).match(input).equalsIgnoreCase("I couldn't find the response for the given value(s), please be more precise."))){
+                return skills.get(i).match(input);
+            }
+        }
+
+
         return "No Skill Found For Given Input!";
     }
 

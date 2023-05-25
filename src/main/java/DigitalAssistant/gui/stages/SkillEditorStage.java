@@ -32,8 +32,4 @@ public class SkillEditorStage {
         window.show();
 
     }
-
-
-
-
 }

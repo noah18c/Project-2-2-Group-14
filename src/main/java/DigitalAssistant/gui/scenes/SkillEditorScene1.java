@@ -100,7 +100,6 @@ public class SkillEditorScene1 implements Initializable {
         skillNameString = skillsUserInput.getSkillName();
         protoSentenceString = skillsUserInput.getProtoSentence();
         this.firstVisit = true;
-
     }
 
     public SkillEditorScene1(Handler handler, Stage window, SkillsUserInput skillsUserInput, SkillEditor skillEditor){
@@ -152,9 +151,7 @@ public class SkillEditorScene1 implements Initializable {
             slotChoiceBox.getSelectionModel().selectFirst();
         }
 
-
         insertSkillbutton.setOnAction(e -> {
-
 
            this.protoSentenceString = this.protoSentenceText.getText();
            this.slots = readSlots(this.protoSentenceString);
@@ -168,8 +165,10 @@ public class SkillEditorScene1 implements Initializable {
 
 
                for(int i = 0; i < slots.size(); i++){
-                   slotList.add(slots.get(i));
-                   inputHashmap.put(slots.get(i), false);
+                    if(!slotList.contains(slots.get(i))){
+                        slotList.add(slots.get(i));
+                        inputHashmap.put(slots.get(i), false);
+                    }
                }
 
 
@@ -181,11 +180,18 @@ public class SkillEditorScene1 implements Initializable {
                Alert alert = new Alert(handler,"Please insert atleast one <SLOT> in the prototype sentence.");
                alert.display();
            }
-
-
         });
 
         this.addSlotButton.setOnAction(e -> {
+
+            this.slots = readSlots(slotValueText.getText());
+
+            for(int i = 0; i < slots.size(); i++){
+                if(!slotList.contains(slots.get(i))){
+                    slotList.add(slots.get(i));
+                    inputHashmap.put(slots.get(i), false);
+                }
+            }
 
             if(inputHashmap.get(slotChoiceBox.getValue()) == false && !slotValueText.getText().isEmpty()){
                 slotValuePairs.add(new SlotValuePair(slotChoiceBox.getValue(), slotValueText.getText()));
@@ -264,6 +270,7 @@ public class SkillEditorScene1 implements Initializable {
         Scanner in = new Scanner(prototype);
         in.useDelimiter("");
         int i = 0;
+
         while(in.hasNext()){
             temp.add(in.next());
             char c = '<';

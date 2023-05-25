@@ -194,17 +194,24 @@ public class Skill {
             for (String value : values) {
 
                 // check if the inputSentence contains the current value
-                if (inputSentence.contains(value)) {
-
-                    // if it does, add the value to the matchedValues ArrayList
-                    matchedValues.add(value);
-                }
+                    inputSentence = inputSentence.replaceAll("[!" + 
+                    ".?'\"\\-,;:()\\[\\]{}\\\\|#$%^&*_+=~`]", "");//Regex replaces all non-alphabetic characters
+                    
+                    //String regexInput = input.substring(0, input.length() - 1) + " " + input.charAt(input.length() - 1); // To separate last char from the sentence for the case there is "?" at the end of the sentence
+                    String[] preWordsInput = inputSentence.split(" ");//assign every word to array
+                    
+                    for (int i = 0; i < preWordsInput.length; i++) {
+                        if(preWordsInput[i].equalsIgnoreCase(value)){
+                            // if it does, add the value to the matchedValues ArrayList
+                            if(!matchedValues.contains(value)){
+                                matchedValues.add(value);
+                            }
+                        }
+                    }
             }
-
             // add the key and matchedValues ArrayList to the matchedHashMap
             matchedHashMap.put(key, matchedValues);
         }
-
         return matchedHashMap;
     }
 
@@ -214,26 +221,21 @@ public class Skill {
         if (hashMap1 == hashMap2) {
             return true;
         }
-
-        // check if either hashMap is null or their sizes are different
-        if (hashMap1 == null || hashMap2 == null || hashMap1.size() != hashMap2.size()) {
-            return false;
-        }
-
         // loop through each key in the hashMap1
         for (String key : hashMap1.keySet()) {
             ArrayList<String> values1 = hashMap1.get(key);
             ArrayList<String> values2 = hashMap2.get(key);
 
-            // check if the corresponding key exists in hashMap2 and if the values are the same
-            if (!hashMap2.containsKey(key) || !Objects.equals(values1, values2)) {
-                return false;
+            if(values1.size() != 0){
+                if(!values1.equals(values2)){
+                    return false;
+                }
             }
         }
         return true;
     }
 
-        // ***THIS METHOD HAS BEEN SCRAPPED***   //
+    // ***THIS METHOD HAS BEEN SCRAPPED***   //
 
     // The method that checks whether it is corresponding skill to the input or not
     // If it is the corresponding skill saves the placeholder values to hashmap in order to call proper action
@@ -269,21 +271,22 @@ public class Skill {
                 index++;
             }
         }
-
+        
         HashMap<String, ArrayList<Integer>> indexOfPlaceholders = new HashMap<>();
         ArrayList<Integer> allIndexes = new ArrayList<>();
 
         inputValues = matchHashMap(placeholders, input);
-        
 
         for (int i = 0; i < actions.size(); i++) {
             if(checkEquality(actions.get(i).getActionValues(), inputValues)){
-                return performAction();
+                actions.get(i).setInputValues(inputValues);
+                return actions.get(i).triggerAction();
             }
         }
 
         inputValues = new HashMap<>();
 
+        try {
         //FIND THE INDEX OF PLACEHOLDERS IN PROTOTYPE SENTENCE
         for (int i = 0; i < keyList.size(); i++) {
             ArrayList<Integer> indexesForKey = new ArrayList<>();
@@ -305,8 +308,11 @@ public class Skill {
                 values.add(wordsInput[indexOfPlaceholders.get(keySetIndex.get(i)).get(j)]);
             }
             inputValues.put(keySetIndex.get(i), values);
+        }                    
+        } catch (Exception e) {
+            // TODO: handle exception
         }
-        //System.out.println(inputValues);
+        
         return performAction();
     }
 }

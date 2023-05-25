@@ -25,10 +25,12 @@ public class Match {
     public Skill searchSkill() {
         Skill maxSimilaritySkill = null;
         double maxSimilarity = 0.0;
+        
         for (int i = 0; i < skills.size(); i++) {
+
             String skillproto = skills.get(i).getPrototype();
             double simrating = Math.round(stringSimilarity(input, skillproto));
-            // TODO: adjust sensitivity (simrating)
+            
             if ((simrating > maxSimilarity)&&(simrating > 30)) {
                 maxSimilarity = simrating;
                 maxSimilaritySkill = skills.get(i);
