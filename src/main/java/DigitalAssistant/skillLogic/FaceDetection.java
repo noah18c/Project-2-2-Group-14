@@ -27,7 +27,7 @@ public class FaceDetection {
             OpenCV.loadLocally();
 
             // Open the default camera (index 0)
-            VideoCapture cap = new VideoCapture(0);
+            VideoCapture cap = new VideoCapture(1);
 
             // Check if camera opened successfully
             if (!cap.isOpened()) {
@@ -137,9 +137,18 @@ public class FaceDetection {
     }
 
     public static void main(String[] args) {
-        System.out.println("starting face detection...");
-        if (faceDetection()) System.out.println("face detection successful");
+        System.out.println("Starting face detection...");
+        //long startTime = System.currentTimeMillis();
 
+        if (faceDetection()) {
+            System.out.println("Face detection successful");
+        } else {
+            System.out.println("No face detected");
+        }
+
+        //long endTime = System.currentTimeMillis();
+        //long elapsedTime = endTime - startTime;
+        //System.out.println("Elapsed time: " + elapsedTime + " milliseconds");
     }
 }
 
