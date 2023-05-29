@@ -1,0 +1,44 @@
+=== Time in milliseconds - Batch 3 - binary & grayscale === 
+*** Average of this batch: 27.09917355371901
+*** Faces detected: 318
+*** No face detected: 166
+
+=== Time in milliseconds - Batch 3 - grayscale === 
+*** Average of this batch: 26.03305785123967
+*** Faces detected: 318
+*** No face detected: 166
+
+=== Time in milliseconds - Batch 3 - downscaled & grayscale === 
+*** Average of this batch: 17.40082644628099
+*** Faces detected: 220
+*** No face detected: 264
+
+=== Time in milliseconds - Batch 3 - gaussian & grayscale === 
+*** Average of this batch: 24.50206611570248                    *** 
+*** Faces detected: 330
+*** No face detected: 154
+
+=== Time in milliseconds - Batch 3 - equHist & bgr === 
+*** Average of this batch: 29.929752066115704
+*** Faces detected: 318
+*** No face detected: 166
+
+=== Time in milliseconds - Batch 3 - bgr === 
+*** Average of this batch: 24.4400826446281
+*** Faces detected: 318
+*** No face detected: 166
+
+=== Time in milliseconds - Batch 3 - bgr & gaussian === 
+*** Average of this batch: 24.952479338842974
+*** Faces detected: 329
+*** No face detected: 155
+
+=== Time in milliseconds - Batch 3 - bgr & downscaled === 
+*** Average of this batch: 16.630165289256198
+*** Faces detected: 220
+*** No face detected: 264
+
+=== Time in milliseconds - Batch 3 - bgr 2 === 
+*** Average of this batch: 24.40082644628099
+*** Faces detected: 318
+*** No face detected: 166

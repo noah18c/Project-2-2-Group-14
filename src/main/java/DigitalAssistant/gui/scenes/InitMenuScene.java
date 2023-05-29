@@ -94,18 +94,36 @@ public class InitMenuScene implements SceneInterface {
             }
         };
         animation.setOnFinished(e ->{
+            FaceDetection fd = new FaceDetection();
             System.out.println("+++ Starting face detection...");
 
-            while(!FaceDetection.faceDetection() && false){
-                progressBar.setProgress(0.5F);
-                System.out.println("face detection failed");
-                progressLabel.setText("face detection failed, trying again...");
+            if(fd.faceDetection()){
+                progressBar.setProgress(1F);
+                // System.out.println("face detection successful");
+                System.out.println("### Haar Cascades successfully applied ###");
+                progressLabel.setText("Face detection successful!");
+                proceedButton.setDisable(false);
             }
-
-            progressBar.setProgress(1F);
-            System.out.println("face detection successful");
-            progressLabel.setText("Face detection successful!");
-            proceedButton.setDisable(false);
+            try {
+                if(!fd.faceDetection()){
+                    progressBar.setProgress(0.5F);
+                    System.out.println("--- Sorry, face detection failed");
+                    progressLabel.setText("Face detection failed. Trying again...");
+                    
+                    Thread.sleep(4000);
+                    // second attempt
+                    if(fd.faceDetection()){
+                        progressBar.setProgress(1F);
+                        // System.out.println("face detection successful");
+                        System.out.println("### Haar Cascades successfully applied ###");
+                        progressLabel.setText("Second attempt successful!");
+                        proceedButton.setDisable(false);
+                    }
+                }
+            } catch (InterruptedException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         });
 
         animation.play();
