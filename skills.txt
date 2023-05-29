@@ -88,14 +88,6 @@ Slot <LANGUAGE> @INPUT
 Action <SENTENCE> @INPUT <LANGUAGE> @INPUT  |Search| Translate <SENTENCE> to <LANGUAGE>.
 +++++
 -----
-Name Translator
-Question Can you please translate <SENTENCE> to <LANGUAGE>?
-Slot <SENTENCE> @INPUT
-Slot <LANGUAGE> @INPUT
---
-Action <SENTENCE> @INPUT <LANGUAGE> @INPUT  |Search| Translate <SENTENCE> to <LANGUAGE>.
-+++++
------
 Name OpeningTimes
 Question What are the opening times of the <BUILDING>?
 Slot <BUILDING> university library SportsCentre
