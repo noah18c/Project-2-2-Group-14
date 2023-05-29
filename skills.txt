@@ -4,7 +4,7 @@ Question What is the distance between <CITY1> to <CITY2>?
 Slot <CITY1> @INPUT
 Slot <CITY2> @INPUT
 --
-Action <CITY1> @INPUT <CITY2> @INPUT |Search| The distance between <CITY> to <CITY>.
+Action <CITY1> @INPUT <CITY2> @INPUT |Search| The distance between <CITY1> to <CITY2>.
 +++++
 -----
 Name MariekeSkill
@@ -78,4 +78,29 @@ Slot <pro> I she he mymother
 Action <place> NewYork <hour> tomorrow  |Print| It will be sunny.
 Action <verb> is <place> NewYork <hour> today <pro> mymother |Print| It is stormy today.
 Action <place> Berlin  |Print| It is rainy.
++++++
+-----
+Name Translator
+Question Can you please translate <SENTENCE> to <LANGUAGE>?
+Slot <SENTENCE> @INPUT
+Slot <LANGUAGE> @INPUT
+--
+Action <SENTENCE> @INPUT <LANGUAGE> @INPUT  |Search| Translate <SENTENCE> to <LANGUAGE>.
++++++
+-----
+Name Translator
+Question Can you please translate <SENTENCE> to <LANGUAGE>?
+Slot <SENTENCE> @INPUT
+Slot <LANGUAGE> @INPUT
+--
+Action <SENTENCE> @INPUT <LANGUAGE> @INPUT  |Search| Translate <SENTENCE> to <LANGUAGE>.
++++++
+-----
+Name OpeningTimes
+Question What are the opening times of the <BUILDING>?
+Slot <BUILDING> university library SportsCentre
+--
+Action <BUILDING> university |Print| The university is open from 8:00-20:00 and is closed on weekends
+Action <BUILDING> library |Print| The Inner City Library is open from 8:30-22:00
+Action <BUILDING> SportsCentre |Print| The Sports Centre is open from 7:00-23:00
 +++++
