@@ -96,3 +96,14 @@ Action <BUILDING> university |Print| The university is open from 8:00-20:00 and 
 Action <BUILDING> library |Print| The Inner City Library is open from 8:30-22:00
 Action <BUILDING> SportsCentre |Print| The Sports Centre is open from 7:00-23:00
 +++++
+-----
+Name Fixing
+Question How to <VERB> <PRO> <NOUN>
+Slot <VERB> debug fix implement
+Slot <PRO> my your our
+Slot <NOUN> compiler code program
+--
+Action <VERB> debug <NOUN> code |Print| Use the debug feature on your IDE
+Action <VERB> fix <NOUN> code |Print| Try looking up how to debug and following those steps
+Action <VERB> implement <PRO> our <NOUN> program |Print| Work together on the implementation 
++++++
