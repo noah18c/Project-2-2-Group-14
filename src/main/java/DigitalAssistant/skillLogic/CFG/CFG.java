@@ -41,7 +41,7 @@ public class CFG {
     }
     
     public String parse(Rule rule, String sentence) {
-
+        // System.out.println(rule.ruleName + " " + rule.nonterminal + " " + rule.terminal + "   " + sentence);
         sentence = extract(rule.terminal, sentence, rule.ruleName);
 
         for (int i = 0; i < rule.nonterminal.size(); i++) {
@@ -77,24 +77,6 @@ public class CFG {
         return str;
     }
 
-    // public boolean isInputRule(Rule rule){
-    //     for (int i = 0; i < rule.terminal.size(); i++) {
-    //         if(rule.terminal.get(i).equalsIgnoreCase("@input")){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
-    // public int numberOfInput(Rule rule, int number){
-    //     if(isInputRule(rule)){
-    //         return number++;
-    //     }
-    //     for (int i = 0; i < rule.nonterminal.size(); i++) {
-    //         number+=  numberOfInput(getRule(rule.nonterminal.get(i)), number);
-    //     }
-    //     return number;
-    // }
     
     public Rule getRule(String name){
         for (int i = 0; i < grammar.size(); i++) {
@@ -127,6 +109,15 @@ public class CFG {
                 Rule slotRule = new Rule(name, findTerminals(Values.toString()), findNonTerminals(Values.toString()));
 
                 boolean alreadyAdded = false;
+                
+                for (int j = 0; j < rules.size(); j++) {
+                    if(rules.get(j).ruleName.equalsIgnoreCase(name)){
+                        rules.get(j).nonterminal.addAll(findNonTerminals(Values.toString()));
+                        rules.get(j).terminal.addAll(findTerminals(Values.toString()));
+                        alreadyAdded = true;
+                    }
+                    
+                }
 
                 for (int j = 0; j < rules.size(); j++) {
                     if(rules.get(j).checkEqualRule(slotRule)){
@@ -139,7 +130,19 @@ public class CFG {
             }
         }
 
-        grammar = rules;
+
+        grammar = new ArrayList<>();
+
+        for (int i = 0; i < rules.size(); i++) {
+            if(!rules.get(i).ruleName.startsWith("<") || rules.get(i).ruleName.equals("<S>")){
+                grammar.add(rules.get(i));
+            }
+        }
+        for (int i = 0; i < rules.size(); i++) {
+            if(rules.get(i).ruleName.startsWith("<") && !rules.get(i).ruleName.equals("<S>")){
+                grammar.add(rules.get(i));
+            }
+        }
     }
 
     public ArrayList<String> findTerminals(String str){
@@ -173,9 +176,11 @@ public class CFG {
         ArrayList<String> nonTerminals = new ArrayList<>();
         
         for (String word : words) {
-            if ((word.charAt(0) == '<' || word.charAt(word.length() - 1) == '>') ) {
-                if(!nonTerminals.contains(word)){
-                    nonTerminals.add(word);
+            if(word.length() != 0){
+                if ((word.charAt(0) == '<' || word.charAt(word.length() - 1) == '>') ) {
+                    if(!nonTerminals.contains(word)){
+                        nonTerminals.add(word);
+                    }
                 }
             }
         }

@@ -147,14 +147,16 @@ public class SkillEditorScene2 implements Initializable {
 
         this.confirmRuleButton.setOnAction(e -> {
            Rule rule = new Rule(slotValuePairRule, actionSelector.getSelectionModel().getSelectedItem(), outputTextfield.getText());
+           System.out.println(rule.getSlotValueString());
            rules.add(rule);
         });
+
         this.submitSkillButton.setOnAction(e -> {
            skillsUserInput.setRules(rules);
            window.close();
 
            Skill newSkill = skillEditor.convertToSkill(skillsUserInput);
-        //    System.out.println(newSkill.toFileFormatString());
+        // System.out.println(newSkill.toFileFormatString());
            skillEditor.addSkill(newSkill);
 
            //TODO insert user input for skill here into the backend
@@ -180,7 +182,6 @@ public class SkillEditorScene2 implements Initializable {
         });
 
         this.slotValueTable.setOnMouseClicked(e -> {
-
 
             if(e.getButton().equals(MouseButton.PRIMARY)){
                 if(e.getClickCount() == 2){

@@ -5,6 +5,9 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 
 public class Action {
     private String actionType;
@@ -18,7 +21,8 @@ public class Action {
         this.actionSentence = actionSentence;
         this.actionType = actionType;
         this.actionValues = actionValues;
-        // System.out.println(actionType + " " + actionSentence + " " + actionValues);
+        //System.out.println(actionType + " " + actionSentence + " " + actionValues);
+        //System.out.println(actionSentence);
     }
 
     public String triggerAction(){
@@ -56,18 +60,55 @@ public class Action {
 
     public void loadAction(){
         changeActionSentence();
-
         if(actionType.equals("|Search|")){
             GoogleSearchAction();
         }
         else if(actionType.equals("|Print|")){
             PrintAction();
         }
+        else if(actionType.equals("|Translate|")){
+            translationAction();
+        }
+
         //TODO : More action types ,API's...
 
         
         actionSentence = temporaryActionSentence;
     }
+
+    private void translationAction(){
+        if(actionValues.get("<LANGUAGE>").get(0).equalsIgnoreCase("Japanese")){
+            Translator translator = new Translator("ja");
+            String sentence = actionSentence;
+            String translatedSentence = translator.translate(sentence);
+            output = "Translated Sentence: " + translatedSentence;   
+        }
+        else if(actionValues.get("<LANGUAGE>").get(0).equalsIgnoreCase("Spanish")){
+            Translator translator = new Translator("es");
+            String sentence = actionSentence;
+            String translatedSentence = translator.translate(sentence);
+            output = "Translated Sentence: " + translatedSentence;
+        }
+        else if(actionValues.get("<LANGUAGE>").get(0).equalsIgnoreCase("German")){
+            Translator translator = new Translator("de");
+            String sentence = actionSentence;
+            String translatedSentence = translator.translate(sentence);
+            output = "Translated Sentence: " + translatedSentence;
+        }
+        else if(actionValues.get("<LANGUAGE>").get(0).equalsIgnoreCase("French")){
+            Translator translator = new Translator("fr");
+            String sentence = actionSentence;
+            String translatedSentence = translator.translate(sentence);
+            output = "Translated Sentence: " + translatedSentence;
+        }
+        else if(actionValues.get("<LANGUAGE>").get(0).equalsIgnoreCase("Italian")){
+            Translator translator = new Translator("it");
+            String sentence = actionSentence;
+            String translatedSentence = translator.translate(sentence);
+            output = "Translated Sentence: " + translatedSentence;
+        }
+    }
+
 
     private void GoogleSearchAction() {
         try
@@ -84,12 +125,16 @@ public class Action {
         output = "Searching Google for ..." + actionSentence;
     }
 
+
     public static String separateLastCharIfPunctuation(String sentence) {
         String lastChar = sentence.substring(sentence.length() - 1);
-        if (lastChar.matches("\\p{Punct}")) {
-            String sentenceWithoutLastChar = sentence.substring(0, sentence.length() - 1);
-            return sentenceWithoutLastChar + " " + lastChar;
+        if(!lastChar.equals(">")){
+            if (lastChar.matches("\\p{Punct}")) {
+                String sentenceWithoutLastChar = sentence.substring(0, sentence.length() - 1);
+                return sentenceWithoutLastChar + " " + lastChar;
+            }
         }
+        
         return sentence;
     }
     
@@ -148,4 +193,21 @@ public class Action {
         
         return result;
     }
+
+    public class Translator {
+    private ResourceBundle resourceBundle;
+
+    public Translator(String language) {
+        Locale locale = new Locale.Builder().setLanguage(language).build();
+        resourceBundle = ResourceBundle.getBundle("translations", locale);
+    }
+
+    public String translate(String sentence) {
+        String translatedText = resourceBundle.getString(sentence);
+        return translatedText;
+    }
+
+    }
+
+    
 }

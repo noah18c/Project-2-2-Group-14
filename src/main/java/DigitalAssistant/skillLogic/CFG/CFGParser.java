@@ -296,8 +296,10 @@ public class CFGParser {
 
         ArrayList<String> toRemove = new ArrayList<>();
         for (String word : words) {
-            if (word.charAt(0) == '<' || word.charAt(word.length() - 1) == '>') {
-                toRemove.add(word);
+            if(word.length() != 0){
+                if (word.charAt(0) == '<' || word.charAt(word.length() - 1) == '>') {
+                    toRemove.add(word);
+                }
             }
         }
         words.removeAll(toRemove);

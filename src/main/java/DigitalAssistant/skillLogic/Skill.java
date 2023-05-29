@@ -22,11 +22,23 @@ public class Skill {
 
     public String start(HashMap<String, ArrayList<String>> inputValues){        
         this.inputValues = inputValues;
-
         return performAction();
     }
 
     public String performAction(){
+        
+        // System.out.println(inputValues);
+
+        // for (int i = 0; i < actions.size(); i++) {
+        //     System.out.println(actions.get(i).getActionValues());
+        // }
+
+        for (int i = 0; i < actions.size(); i++) {
+            if(checkEquality(actions.get(i).getActionValues(), inputValues)){
+                actions.get(i).setInputValues(inputValues);
+                return actions.get(i).triggerAction();
+            }
+        }
 
         try {
         //Find Corresponding action for given input then trigger the action
@@ -69,7 +81,6 @@ public class Skill {
     } catch (Exception e) {
         // TODO: handle exception
     }
-
         return "I couldn't find the response for the given value(s), please be more precise.";
     }
 

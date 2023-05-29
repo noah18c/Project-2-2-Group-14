@@ -60,52 +60,43 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor();
-        String input = "How is the weather in NewYork tomorrow?";
+        String input = "Set a timer for 100 seconds?";
         System.out.println(input);
         System.out.println(skillEditor.search(input));
     }
 
-    public String search(String input){
 
+    public String search(String input){
         CFGParser parser = new CFGParser(skills);
         parser.parse(input);
-
         CFG cfg = new CFG(skills);
         cfg.start(input);
+        
+        String response = "I couldn't find the response for the given value(s), please be more precise."; 
 
-
-        //A Parser
         if(getSkillWithName(parser.skillName) != null){
             String str = getSkillWithName(parser.skillName).start(parser.placeholderValues);
-            if(!str.equals("I couldn't find the response for the given value(s), please be more precise.")){
+            if(!str.equals(response)){
                 return str;
             }
         }
-
-        //B CFG 
         if(getSkillWithName(cfg.skillName) != null){
             String str = getSkillWithName(cfg.skillName).start(cfg.parsedValues);
-
-            if(!str.equals("I couldn't find the response for the given value(s), please be more precise.")){
+            if(!str.equals(response)){
                 return str;
             }
         }
-        
-        //C Match
         Match match = new Match(input, getSkills());
         if(match.searchSkill() != null){
-            if(!(match.searchSkill().match(input).equalsIgnoreCase("I couldn't find the response for the given value(s), please be more precise."))){
+            if(!(match.searchSkill().match(input).equalsIgnoreCase(response))){
                 return match.searchSkill().match(input);
             }
         }
-
         for (int i = 0; i < skills.size(); i++) {
-            if(!(skills.get(i).match(input).equalsIgnoreCase("I couldn't find the response for the given value(s), please be more precise."))){
+            if(!(skills.get(i).match(input).equalsIgnoreCase(response))){
                 return skills.get(i).match(input);
             }
         }
-
-
         return "No Skill Found For Given Input!";
     }
 
@@ -241,7 +232,6 @@ public class SkillEditor {
                         String actionType = new String();
                         String actionInput = new String();
                         
-
                         for (int i = 0; i < actionLineString.length; i++) {
                             if(actionLineString[i].startsWith("|") && actionLineString[i].endsWith("|")){
                                 actionType = actionLineString[i];
@@ -257,10 +247,14 @@ public class SkillEditor {
                             }   
                         }
 
+                        
                         actionLine = actionLine.replace(actionType, "");  //delete the actionType part to reach actionValues
+                        
                         actionLine = actionLine.replace(actionInput, ""); //delete the actionInput part to reach actionValues
+                        
                         actionLineString = actionLine.split(" "); // Split every word of line and add every word to array
 
+                        
                         for (int j = 0; j < placeholders.size(); j++) { 
                             ArrayList<String> valuesForPlaceholder = new ArrayList<>();
                             
