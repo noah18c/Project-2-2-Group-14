@@ -81,7 +81,7 @@ Action <place> Berlin  |Print| It is rainy.
 +++++
 -----
 Name Translator
-Question Can you please translate <SENTENCE> to <LANGUAGE>?
+Question Can you translate <SENTENCE> to <LANGUAGE>?
 Slot <SENTENCE> @INPUT
 Slot <LANGUAGE> @INPUT
 --
