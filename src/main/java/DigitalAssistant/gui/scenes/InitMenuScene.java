@@ -96,16 +96,17 @@ public class InitMenuScene implements SceneInterface {
         animation.setOnFinished(e ->{
             FaceDetection fd = new FaceDetection();
             System.out.println("+++ Starting face detection...");
+            //boolean success = fd.faceDetection();
 
-            if(fd.faceDetection()){
-                progressBar.setProgress(1F);
-                // System.out.println("face detection successful");
-                System.out.println("### Haar Cascades successfully applied ###");
-                progressLabel.setText("Face detection successful!");
-                proceedButton.setDisable(false);
-            }
             try {
-                if(!fd.faceDetection()){
+                if(fd.faceDetection()){
+                    progressBar.setProgress(1F);
+                    // System.out.println("face detection successful");
+                    System.out.println("### Haar Cascades successfully applied ###");
+                    progressLabel.setText("Face detection successful!");
+                    proceedButton.setDisable(false);
+                }
+                else {
                     progressBar.setProgress(0.5F);
                     System.out.println("--- Sorry, face detection failed");
                     progressLabel.setText("Face detection failed. Trying again...");
@@ -118,6 +119,11 @@ public class InitMenuScene implements SceneInterface {
                         System.out.println("### Haar Cascades successfully applied ###");
                         progressLabel.setText("Second attempt successful!");
                         proceedButton.setDisable(false);
+                    }
+                    else {
+                        progressBar.setProgress(0.5F);
+                        System.out.println("--- Sorry, face detection failed");
+                        progressLabel.setText("Face detection failed. Trying again...");
                     }
                 }
             } catch (InterruptedException e1) {

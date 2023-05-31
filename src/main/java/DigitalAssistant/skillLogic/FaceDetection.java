@@ -18,7 +18,7 @@ import org.opencv.core.Scalar;
 public class FaceDetection {
 
     public FaceDetection(){
-        faceDetection();
+        //faceDetection();
     }
     /**
      * Method runs face detection based on Haar cascade classifier!
@@ -61,12 +61,12 @@ public class FaceDetection {
                 cap.read(frame);
                 // DOWNSCALE the frame for faster processing
                 Mat downscaledFrame = new Mat();
-                Imgproc.resize(frame, downscaledFrame, new Size(frame.cols() / 2, frame.rows() / 2));
-                imagePath = "src/main/resources/DigitalAssistant/haarcascades/downscaledFrame.jpg";  // Specify the path to save the image
-                Imgcodecs.imwrite(imagePath, downscaledFrame);
+                //Imgproc.resize(frame, downscaledFrame, new Size(frame.cols() / 2, frame.rows() / 2));
+                //imagePath = "src/main/resources/DigitalAssistant/haarcascades/downscaledFrame.jpg";  // Specify the path to save the image
+                //Imgcodecs.imwrite(imagePath, downscaledFrame);
 
                 // Convert the frame to grayscale for faster processing
-                Imgproc.cvtColor(downscaledFrame, gray, Imgproc.COLOR_BGR2GRAY);
+                Imgproc.cvtColor(frame, gray, Imgproc.COLOR_BGR2GRAY);
                 // Imgproc.cvtColor(frame, gray, Imgproc.COLOR_BGR2GRAY);
                 // basic processing for face detection
                 // 1. denoising with gaussian filter
@@ -77,17 +77,22 @@ public class FaceDetection {
                 // edgeFilter(gray);
                 // binarization(gray);
                 // imageSegmentation(frame);
+                Mat filteredImage = new Mat();
+
+                // Apply Gaussian filter
+                //Imgproc.GaussianBlur(gray, filteredImage, new Size(5, 5), 0);
             
                 // Detect faces in the frame using the Haar cascade classifier
                 MatOfRect faces = new MatOfRect();
                 faceCascade.detectMultiScale(gray, faces, 1.3, 5);     // set parameters for face detection here
+                //faceCascade.detectMultiScale(filteredImage, faces, 1.3, 5);     // set parameters for face detection here
 
                 // Check if any faces were detected
                 if (!faces.empty()) {
                     faceDetected = true;
                     successes++;
                     System.out.println("+++ Detected face...");
-                    System.out.println("Successes: " + successes);
+                    //System.out.println("Successes: " + successes);
 
                     for (Rect rect : faces.toArray()) {
                         Imgproc.rectangle(frame, rect.tl(), rect.br(), new Scalar(0, 255, 0), 5);   // Draw a rectangle around each face
@@ -99,10 +104,10 @@ public class FaceDetection {
                     Imgcodecs.imwrite(imagePath, frame);
                     our_images.add(faceROI);
                 }
-                else {
+                else if ((faces.empty())) {
                     System.out.println("--- No face detected");
                     failures++;
-                    System.out.println("Failures: " + failures);
+                    //System.out.println("Failures: " + failures);
                     break;
                 }
 
