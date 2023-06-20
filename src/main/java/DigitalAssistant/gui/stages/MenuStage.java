@@ -24,7 +24,7 @@ public class MenuStage extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.window = primaryStage;
-        this.window.getIcons().add(loadImages.getIcon());
+        this.window.getIcons().add(handler.getLoadImages().getIcon());
 
 
         InitMenuScene scene = new InitMenuScene(handler);

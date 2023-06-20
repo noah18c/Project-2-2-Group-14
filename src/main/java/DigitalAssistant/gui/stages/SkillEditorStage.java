@@ -31,5 +31,7 @@ public class SkillEditorStage {
         window.setScene(scene.getScene());
         window.show();
 
+
+
     }
 }

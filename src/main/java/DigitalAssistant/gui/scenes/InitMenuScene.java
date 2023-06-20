@@ -1,6 +1,7 @@
 package DigitalAssistant.gui.scenes;
 
 import DigitalAssistant.Utilities.Handler;
+import DigitalAssistant.gui.stages.PictureWindowStage;
 import DigitalAssistant.skillLogic.FaceDetection;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -96,6 +97,9 @@ public class InitMenuScene implements SceneInterface {
         animation.setOnFinished(e ->{
             FaceDetection fd = new FaceDetection();
             System.out.println("+++ Starting face detection...");
+            proceedButton.setDisable(false);
+            PictureWindowStage pws = new PictureWindowStage(handler);
+            pws.display();
 
             if(fd.faceDetection()){
                 progressBar.setProgress(1F);
