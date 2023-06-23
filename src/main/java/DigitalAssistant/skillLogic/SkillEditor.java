@@ -60,13 +60,17 @@ public class SkillEditor {
 
     public static void main(String[] args) {
         SkillEditor skillEditor = new SkillEditor();
-        String input = "Set a timer for 100 seconds?";
+        String input = "How s the wther in newrk mymother is n newyrk today?";
         System.out.println(input);
         System.out.println(skillEditor.search(input));
     }
 
 
     public String search(String input){
+
+        SpellChecker3 sp3 = new SpellChecker3(this);
+        input = sp3.search(input);
+
         CFGParser parser = new CFGParser(skills);
         parser.parse(input);
         CFG cfg = new CFG(skills);
