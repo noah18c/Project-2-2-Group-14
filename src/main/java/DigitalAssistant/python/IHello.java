@@ -1,6 +1,6 @@
 package DigitalAssistant.python;
 
 public interface IHello {
-    public int[] sayHello();
-    public int[] sayHello(int i, String s);
+    public boolean sayHello();
+    public boolean sayHello(int i, int s);
 }
