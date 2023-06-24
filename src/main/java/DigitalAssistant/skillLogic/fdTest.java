@@ -19,13 +19,10 @@ import org.opencv.core.Scalar;
 
 public class fdTest {
     private Mat image = new Mat();
-    // private int successes;
-    // private int failures;
     public boolean faceDetected = false;
 
     public fdTest(Mat image){
         this.image = image;
-        //this.faceDetected = this.faceDetected;
         faceDetection(image);
     }
     /**
@@ -33,9 +30,7 @@ public class fdTest {
      * @return 
      */
     public boolean faceDetection(Mat image) {
-        
-        ArrayList<Mat> our_images = new ArrayList<>();
-        //boolean faceDetected = false;
+
         Mat frame = image;
         Mat gray = new Mat();
         String imagePath = "";
@@ -50,16 +45,17 @@ public class fdTest {
 
             // Loop to continuously capture frames
             while (true) {
-                
                 // DOWNSCALE the frame for faster processing!??
-                //Mat downscaledFrame = new Mat();
-                // Imgproc.resize(frame, downscaledFrame, new Size(frame.cols() / 2, frame.rows() / 2));
+                Mat downscaledFrame = new Mat();
+                Imgproc.resize(frame, downscaledFrame, new Size(frame.cols() / 1.2, frame.rows() / 1.2));
                 // imagePath = "src/main/resources/DigitalAssistant/haarcascades/downscaledFrame.jpg";  // Specify the path to save the image
                 // Imgcodecs.imwrite(imagePath, downscaledFrame);
+                Mat downScaled_gray = new Mat();
 
                 // Convert the frame to grayscale for faster processing
-                // Imgproc.cvtColor(frame, gray, Imgproc.COLOR_BGR2GRAY);
-                // Imgproc.cvtColor(downscaledFrame, gray, Imgproc.COLOR_BGR2GRAY);
+                //Imgproc.cvtColor(frame, gray, Imgproc.COLOR_BGR2GRAY);
+                Imgproc.cvtColor(downscaledFrame, downScaled_gray, Imgproc.COLOR_BGR2GRAY);
+                
                 // basic processing for face detection
                 // 1. denoising with gaussian filter
                 // 2. histogram equalisation to increase contrast!? applied to HSV image 
@@ -70,17 +66,18 @@ public class fdTest {
                 // binarization(gray);
                 //imageSegmentation(frame);
                 // Create a blank image to store the filtered result
-                // Mat filteredImage = new Mat();
+                Mat filteredImage = new Mat();
 
                 // Apply Gaussian filter
-                // Imgproc.GaussianBlur(frame, filteredImage, new Size(5, 5), 0);
+                // Imgproc.GaussianBlur(gray, filteredImage, new Size(7, 7), 0);
+                // Imgproc.GaussianBlur(downscaledFrame, filteredImage, new Size(5, 5), 0);
             
                 // Detect faces in the frame using the Haar cascade classifier
                 MatOfRect faces = new MatOfRect();
-                faceCascade.detectMultiScale(frame, faces, 1.3, 5);
-                // faceCascade.detectMultiScale(downscaledFrame, faces, 1.3, 5);
-                //faceCascade.detectMultiScale(gray, faces, 1.3, 5);     // set parameters for face detection here
-                // faceCascade.detectMultiScale(filteredImage, faces, 1.3, 5);
+                // faceCascade.detectMultiScale(frame, faces, 1.3, 5);  // BGR
+                faceCascade.detectMultiScale(downScaled_gray, faces, 1.3, 5);
+                // faceCascade.detectMultiScale(gray, faces, 1.3, 5);     // set parameters for face detection here
+                // faceCascade.detectMultiScale(filteredImage, faces, 1.3, 5);  // gaussian filter
 
                 // Check if any faces were detected
                 if (!faces.empty()) {
@@ -139,7 +136,7 @@ public class fdTest {
 
     public static void binarization(Mat gray){
         // Perform simple thresholding
-        int t = 120;                   // change threshold here
+        int t = 150;                   // change threshold here
         int maxVal = 255;
         Mat binaryMask = new Mat();
         Imgproc.threshold(gray, binaryMask, t, maxVal, Imgproc.THRESH_BINARY);
@@ -232,11 +229,11 @@ public class fdTest {
         Imgcodecs.imwrite("src/main/resources/DigitalAssistant/haarcascades/equImg.jpg", finalImg1);
     }
 
-    public static void writeDataToCSV(ArrayList<Long> measurements, String filePath, int successes, int failures, int totalScanned) {
+    public static void writeDataToCSV(ArrayList<Long> measurements, String filePath, int successes, int failures, int totalScanned, int totalNegSamples) {
         try {
             // FileWriter csvWriter = new FileWriter(filePath);
             BufferedWriter csvWriter = new BufferedWriter(new FileWriter(filePath, true));
-            String header = "=== Time in milliseconds - Batch 3 - bgr 2 === ";      // change batch number and ** equHist **
+            String header = "=== Time in milliseconds - Batch 3 - grayscale & gaussian === ";      // change batch number and ** equHist **
 
             // Write headers to the CSV file
             csvWriter.append(String.join(",", header));
@@ -253,13 +250,23 @@ public class fdTest {
                 }
                 average = (double) sum / array.length;
             }
-        
+            double accuracy = 0.0;     // ( Tp + Tn ) / (Tp + Tn + Fp + Fn)
+            double success = successes;
+            double fails = failures;
+            accuracy = success / (success + fails);
             // Append the average to the CSV file
+            csvWriter.append("*** Number of positive samples scanned: " + totalScanned);
+            csvWriter.append("\n");
+            csvWriter.append("*** Number of negative samples scanned: " + totalNegSamples);
+            csvWriter.append("\n");
             csvWriter.append("*** Average of this batch: " + average);
             csvWriter.append("\n");
-            csvWriter.append("*** Faces detected: " + successes);
+            csvWriter.append("*** Correct detection: " + successes);
             csvWriter.append("\n");
-            csvWriter.append("*** No face detected: " + failures);
+            csvWriter.append("*** Incorrect detection: " + failures);
+            csvWriter.append("\n");
+            // Append the accuracy to the CSV file
+            csvWriter.append("*** Accuracy of this batch: " + accuracy);
             csvWriter.append("\n");
 
             csvWriter.flush();
@@ -273,149 +280,142 @@ public class fdTest {
         fdTest fd;
         int successes;
         int failures;
+        int truePositives;
+        int falsePositives;
+        int trueNegatives;
+        int falseNegatives;
         int totalScanned;
+        int totalNegSamples;
         System.out.println("starting face detection TESTING ...");
 
-        String folderPath = "src/main/resources/DigitalAssistant/haarcascades/Caltech_WebFaces";
-        String imgPathBase1 = "/pic0000";     // 00001 <= x <= 00009
-        String imgPathBase2 = "/pic000";      // 00010 <= x <= 00099
+        String folderPath_PosSamples = "src/main/resources/DigitalAssistant/haarcascades/Caltech_WebFaces";
+        String folderPath_NegSamples = "src/main/resources/DigitalAssistant/haarcascades/NegSamples";
         String imgPathBase3 = "/pic00";       // 00100 <= x <= 00999
         String imgPathBase4 = "/pic0";        // 01000 <= x <= 09999
         String imgPathBase5 = "/pic";        // >= 10000
         String filePath = "src/main/resources/DigitalAssistant/haarcascades/experiment1.data"; // exp. 1 no pre processing
         
         // Read JPG images one at a time and save them as Mat
-        if (batch == 1){
-            ArrayList<Long> measurements = new ArrayList<>();
-            successes = 0;
-            failures = 0;
-            totalScanned = 0;
-            for (int i = 1; i <= 9; i++) {
-                String digit = String.valueOf(i);
-                String imagePath = folderPath + imgPathBase1 + digit + ".jpg";
-                File file = new File(imagePath);
-                if (file.exists()) {
-                    totalScanned++;
-                    Mat img = Imgcodecs.imread(imagePath);
-                    long startTime = System.currentTimeMillis();
-                    fd = new fdTest(img);
-                    if (fd.faceDetected) successes++;
-                    if (!fd.faceDetected) failures++;
-                    long endTime = System.currentTimeMillis();
-                    long elapsedTime = endTime - startTime;
-                    measurements.add(elapsedTime);
-                    System.out.println("Face detection time: " + elapsedTime + " ms");
-                } 
-                
-            }
-            writeDataToCSV(measurements, filePath, successes, failures, totalScanned);
-        }
-        if (batch == 2){
-            ArrayList<Long> measurements = new ArrayList<>();
-            successes = 0;
-            failures = 0;
-            totalScanned = 0;
-            for (int i = 10; i <= 99; i++) {
-                String digit = String.valueOf(i);
-                String imagePath = folderPath + imgPathBase2 + digit + ".jpg";
-                File file = new File(imagePath);
-                if (file.exists()) {
-                    totalScanned++;
-                    Mat img = Imgcodecs.imread(imagePath);
-                    long startTime = System.currentTimeMillis();
-                    fd = new fdTest(img);
-                    if (fd.faceDetected) successes++;
-                    if (!fd.faceDetected) failures++;
-                    long endTime = System.currentTimeMillis();
-                    long elapsedTime = endTime - startTime;
-                    measurements.add(elapsedTime);
-                    System.out.println("Face detection time: " + elapsedTime + " ms");
-                } 
-            }
-            writeDataToCSV(measurements, filePath, successes, failures, totalScanned);
-        }
         if (batch == 3){
-            ArrayList<Long> measurements = new ArrayList<>();
+            truePositives = 0;
+            falsePositives = 0;
+            trueNegatives = 0;
+            falseNegatives = 0;
             successes = 0;
             failures = 0;
             totalScanned = 0;
+            totalNegSamples = 0;
+            ArrayList<Long> measurements = new ArrayList<>();
+            // test model on positive samples
             for (int i = 100; i <= 999; i++) {
                 String digit = String.valueOf(i);
-                String imagePath = folderPath + imgPathBase3 + digit + ".jpg";
+                String imagePath = folderPath_PosSamples + imgPathBase3 + digit + ".jpg";
                 File file = new File(imagePath);
                 if (file.exists()) {
                     totalScanned++;
                     Mat img = Imgcodecs.imread(imagePath);
                     long startTime = System.currentTimeMillis();
                     fd = new fdTest(img);
-                    if (fd.faceDetected) successes++;
-                    if (!fd.faceDetected) failures++;
+                    if (fd.faceDetected) truePositives++;
+                    if (!fd.faceDetected) falseNegatives++;
                     long endTime = System.currentTimeMillis();
                     long elapsedTime = endTime - startTime;
                     measurements.add(elapsedTime);
                     System.out.println("Face detection time: " + elapsedTime + " ms");
-                } 
-                
+                }        
             }
-            writeDataToCSV(measurements, filePath, successes, failures, totalScanned);
+            // test model on negative samples
+            for (int j = 1; j <= 12; j++) {
+                String folder = folderPath_NegSamples + "/cat_" + String.valueOf(j);
+                for (int i = 10; i <= 60; i++) {
+                    //System.out.println("index: " + i);
+                    String digit = String.valueOf(i);
+                    String imgPath = folder + "/image_" + "00" + digit + ".jpg";
+                    // src/main/resources/DigitalAssistant/haarcascades/NegSamples/cat_1/image_0010.jpg
+                    File file = new File(imgPath);
+                    if (file.exists()) {
+                        totalNegSamples++;
+                        Mat img = Imgcodecs.imread(imgPath);
+                        long startTime = System.currentTimeMillis();
+                        fd = new fdTest(img);
+                        if (fd.faceDetected) falsePositives++;
+                        if (!fd.faceDetected) trueNegatives++;
+                        long endTime = System.currentTimeMillis();
+                        long elapsedTime = endTime - startTime;
+                        measurements.add(elapsedTime);
+                        System.out.println("Face detection time: " + elapsedTime + " ms");
+                    } 
+                }
+            }
+            System.out.println("faces scanned: " + totalScanned);
+            System.out.println("negative samples scanned: " + totalNegSamples);
+            successes = truePositives+trueNegatives;
+            failures = falsePositives+falseNegatives;
+            writeDataToCSV(measurements, filePath, successes, failures, totalScanned, totalNegSamples);
         }
         if (batch == 4){
-            ArrayList<Long> measurements = new ArrayList<>();
+            truePositives = 0;
+            falsePositives = 0;
+            trueNegatives = 0;
+            falseNegatives = 0;
             successes = 0;
             failures = 0;
             totalScanned = 0;
-            for (int i = 1000; i <= 9999; i++) {
+            totalNegSamples = 0;
+            ArrayList<Long> measurements = new ArrayList<>();
+            // test model on positive samples
+            for (int i = 1000; i <= 1920; i++) {
                 String digit = String.valueOf(i);
-                String imagePath = folderPath + imgPathBase4 + digit + ".jpg";
+                String imagePath = folderPath_PosSamples + imgPathBase4 + digit + ".jpg";
                 File file = new File(imagePath);
                 if (file.exists()) {
                     totalScanned++;
                     Mat img = Imgcodecs.imread(imagePath);
                     long startTime = System.currentTimeMillis();
                     fd = new fdTest(img);
-                    if (fd.faceDetected) successes++;
-                    if (!fd.faceDetected) failures++;
+                    if (fd.faceDetected) truePositives++;
+                    if (!fd.faceDetected) falseNegatives++;
                     long endTime = System.currentTimeMillis();
                     long elapsedTime = endTime - startTime;
                     measurements.add(elapsedTime);
                     System.out.println("Face detection time: " + elapsedTime + " ms");
                 } 
-                
             }
-            writeDataToCSV(measurements, filePath, successes, failures, totalScanned);
-        }
-        if (batch == 5){
-            ArrayList<Long> measurements = new ArrayList<>();
-            successes = 0;
-            failures = 0;
-            totalScanned = 0;
-            for (int i = 10000; i <= 14265; i++) {
-                String digit = String.valueOf(i);
-                String imagePath = folderPath + imgPathBase5 + digit + ".jpg";
-                File file = new File(imagePath);
-                if (file.exists()) {
-                    totalScanned++;
-                    Mat img = Imgcodecs.imread(imagePath);
-                    long startTime = System.currentTimeMillis();
-                    fd = new fdTest(img);
-                    if (fd.faceDetected) successes++;
-                    if (!fd.faceDetected) failures++;
-                    long endTime = System.currentTimeMillis();
-                    long elapsedTime = endTime - startTime;
-                    measurements.add(elapsedTime);
-                    System.out.println("Face detection time: " + elapsedTime + " ms");
-                } 
-                
+            // test model on negative samples
+            for (int j = 1; j <= 12; j++) {
+                String folder = folderPath_NegSamples + "/cat_" + String.valueOf(j);
+                for (int i = 10; i <= 60; i++) {
+                    //System.out.println("index: " + i);
+                    String digit = String.valueOf(i);
+                    String imgPath = folder + "/image_" + "00" + digit + ".jpg";
+                    // src/main/resources/DigitalAssistant/haarcascades/NegSamples/cat_1/image_0010.jpg
+                    File file = new File(imgPath);
+                    if (file.exists()) {
+                        totalNegSamples++;
+                        Mat img = Imgcodecs.imread(imgPath);
+                        long startTime = System.currentTimeMillis();
+                        fd = new fdTest(img);
+                        if (fd.faceDetected) falsePositives++;
+                        if (!fd.faceDetected) trueNegatives++;
+                        long endTime = System.currentTimeMillis();
+                        long elapsedTime = endTime - startTime;
+                        measurements.add(elapsedTime);
+                        System.out.println("Face detection time: " + elapsedTime + " ms");
+                    } 
+                }
             }
-            writeDataToCSV(measurements, filePath, successes, failures, totalScanned);
+            System.out.println("faces scanned: " + totalScanned);
+            System.out.println("negative samples scanned: " + totalNegSamples);
+            successes = truePositives+trueNegatives;
+            failures = falsePositives+falseNegatives;
+            writeDataToCSV(measurements, filePath, successes, failures, totalScanned, totalNegSamples);
         }
     }
 
     public static void main(String[] args) {
         // Load the OpenCV native library
         OpenCV.loadLocally();
-        experiment(3); 
-
+        experiment(4);
         System.out.println("=== finished ===");
     
     }
