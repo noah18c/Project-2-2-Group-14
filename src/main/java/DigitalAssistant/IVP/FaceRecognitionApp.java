@@ -5,19 +5,34 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-
 
 public class FaceRecognitionApp {
 
     public static String eigenFaceRecognition(){
-
+    
         try {
             // Command to execute the Python script
-            String pythonScript = "src/main/java/DigitalAssistant/IVP/Recognition.py";                    
+            String pythonScript = "src/main/java/DigitalAssistant/IVP/Recognition.py"; 
+            
+            String osName = System.getProperty("os.name").toLowerCase();
+
+            ProcessBuilder processBuilder;
+
+
+            if (osName.contains("mac") || osName.contains("darwin")) {
+                processBuilder = new ProcessBuilder("python.app", pythonScript);
+
+            } else if (osName.contains("win")) {
+                processBuilder = new ProcessBuilder("python.exe", pythonScript);
+
+            } else {
+                processBuilder = new ProcessBuilder("python", pythonScript);
+            }
 
             // Create the ProcessBuilder
-            ProcessBuilder processBuilder = new ProcessBuilder("/Users/user/opt/anaconda3/bin/python", pythonScript);
+            // ProcessBuilder processBuilder = new ProcessBuilder("python.app", pythonScript);
+
+            //ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScript);
             
             //ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScript);
 
@@ -50,9 +65,7 @@ public class FaceRecognitionApp {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
         return "Error";
-
     }
 
     public static void main(String[] args) {
