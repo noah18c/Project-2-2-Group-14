@@ -1,0 +1,487 @@
+Sentence,Skill
+What is the distance between <CITY1> to <CITY2>?,1.00
+What is the distance between maastricht to heerlen?,1.00
+What is the distance between Istanbul to New York,1.00
+What is the distance between to ?,1.00
+What is the distance between Paris and London?, 1.00
+How far is it from Rome to Milan?, 1.00
+Calculate the distance between Sydney and Melbourne., 1.00
+Find the travel distance from Tokyo to Osaka., 1.00
+Tell me the distance between Berlin and Munich., 1.00
+What's the distance from Madrid to Barcelona?, 1.00
+Give me the distance between Beijing and Shanghai., 1.00
+Determine the road distance between Vancouver and Toronto., 1.00
+How long does it take to travel from New Delhi to Mumbai?, 1.00
+Provide the distance between Cairo and Alexandria., 1.00
+Can you tell me the distance from Los Angeles to San Francisco?, 1.00
+What's the travel distance between Stockholm and Gothenburg?, 1.00
+How far is it from Amsterdam to Rotterdam?, 1.00
+Calculate the driving distance from Lisbon to Porto., 1.00
+Find the road distance between Dublin and Cork., 1.00
+Tell me the distance from Prague to Bratislava., 1.00
+What's the travel distance between Vienna and Salzburg?, 1.00
+Provide the road distance from Budapest to Debrecen., 1.00
+Determine the distance between Warsaw and Krakow., 1.00
+How long does it take to travel from Oslo to Bergen?, 1.00
+Give me the travel time from Helsinki to Tampere., 1.00
+Can you tell me the driving time between Copenhagen and Aarhus?, 1.00
+What's the distance from Athens to Thessaloniki?, 1.00
+Calculate the road distance between Istanbul and Ankara., 1.00
+Find the travel distance from Rome to Venice., 1.00
+Tell me the driving distance between Sydney and Brisbane., 1.00
+How far is it from Tokyo to Kyoto?, 1.00
+Provide the distance between Madrid and Valencia., 1.00
+Determine the road distance between Berlin and Hamburg., 1.00
+What's the travel distance between London and Edinburgh?, 1.00
+Give me the distance from Paris to Marseille., 1.00
+Can you tell me the travel time from New York to Washington?, 1.00
+What's the distance between San Francisco and Los Angeles?, 1.00
+Calculate the driving distance between Toronto and Montreal., 1.00
+Find the road distance from Mumbai to Bangalore., 1.00
+Tell me the distance between Dubai and Abu Dhabi., 1.00
+How far is it from Beijing to Guangzhou?, 1.00
+Provide the travel distance between Shanghai and Beijing., 1.00
+Determine the distance between Sydney and Perth., 1.00
+What's the travel time from Melbourne to Brisbane?, 1.00
+Give me the distance between Helsinki and Turku., 1.00
+Can you tell me the driving distance from Stockholm to Uppsala?, 1.00
+What's the road distance between Oslo and Stavanger?, 1.00
+Calculate the distance from Amsterdam to The Hague., 1.00
+How do I get from Maastricht to Heerlen at 9,2.00
+How do I get from Maastricht to Heerlen at 11,2.00
+How do I get from Maastricht to Sittard at 11,2.00
+How do I get from Maastricht to Maastricht,2.00
+ow can I travel from Maastricht to Heerlen at 9?,2.00
+How can I go from Maastricht to Heerlen at 11?,2.00
+How do I get to Heerlen from Maastricht at 9?,2.00
+How do I reach Heerlen from Maastricht at 11?,2.00
+How do I travel between Maastricht and Heerlen at 9?,2.00
+How can I get to Heerlen from Maastricht at 11?,2.00
+How can I commute from Maastricht to Heerlen at 9?,2.00
+How can I go from Maastricht to Heerlen around 11?,2.00
+How do I get from Maastricht to Heerlen at 9 o'clock?,2.00
+How do I travel from Maastricht to Heerlen at 11 in the morning?,2.00
+How can I get to Heerlen from Maastricht at 9 am?,2.00
+How can I reach Heerlen from Maastricht around 11 am?,2.00
+How do I travel between Maastricht and Heerlen at 9 in the morning?,2.00
+How can I go from Maastricht to Heerlen at 11 o'clock?,2.00
+How can I commute from Maastricht to Heerlen at 9 in the morning?,2.00
+How can I travel from Maastricht to Heerlen at 11 am?,2.00
+How do I get to Heerlen from Maastricht at 9 in the morning?,2.00
+How do I reach Heerlen from Maastricht around 11 in the morning?,2.00
+How do I travel between Maastricht and Heerlen at 9 am?,2.00
+How can I get to Heerlen from Maastricht at 11 in the morning?,2.00
+How can I commute from Maastricht to Heerlen at 9 o'clock?,2.00
+How can I go from Maastricht to Heerlen at 11 am?,2.00
+How do I get from Maastricht to Heerlen at 9 in the morning?,2.00
+How do I travel from Maastricht to Heerlen around 11 am?,2.00
+How can I get to Heerlen from Maastricht at 9 in the morning?,2.00
+How can I reach Heerlen from Maastricht at 11 am?,2.00
+How do I travel between Maastricht and Heerlen at 9 o'clock?,2.00
+How can I go from Maastricht to Heerlen at 11 in the morning?,2.00
+How can I commute from Maastricht to Heerlen at 9 am?,2.00
+How do I get from <TOWN> to <TOWN> at <TIME>?,2.00
+When is the <EXAM> exam?,3.00
+When is the Theoretical Computer Science exam?,3.00
+When When is the Mathematical Modelling exam?,3.00
+When is the Human Computer Interaction & Affective Computation exam>?,3.00
+When is the <EXAM> exam?,3.00
+When is the Artificial Intelligence exam?,3.00
+When is the Software Engineering exam?,3.00
+When is the Data Science exam?,3.00
+When is the Machine Learning exam?,3.00
+When is the <EXAM> exam scheduled?,3.00
+When is the Computer Networks exam?,3.00
+When is the Database Systems exam?,3.00
+When is the Operating Systems exam?,3.00
+When is the Algorithms exam?,3.00
+When is the <EXAM> exam taking place?,3.00
+When is the Computer Architecture exam?,3.00
+When is the Information Retrieval exam?,3.00
+When is the Cryptography exam?,3.00
+When is the <EXAM> exam happening?,3.00
+When is the Network Security exam?,3.00
+When is the Artificial Intelligence and Machine Learning exam?,3.00
+When is the Computational Linguistics exam?,3.00
+When is the Computer Vision exam?,3.00
+When is the <EXAM> exam occurring?,3.00
+When is the Software Testing exam?,3.00
+When is the Web Development exam?,3.00
+When is the Natural Language Processing exam?,3.00
+When is the <EXAM> exam set?,3.00
+When is the Software Project Management exam?,3.00
+When is the Parallel Computing exam?,3.00
+When is the Human-Computer Interaction exam?,3.00
+When is the Data Mining exam?,3.00
+When is the <EXAM> exam happening?,3.00
+When is the Wireless Networks exam?,3.00
+When is the Distributed Systems exam?,3.00
+When is the Computational Biology exam?,3.00
+When is the <EXAM> exam scheduled for?,3.00
+When is the Computer Graphics exam?,3.00
+When is the Artificial Neural Networks exam?,3.00
+When is the Big Data exam?,3.00
+When is the <EXAM> exam taking place?,3.00
+When is the Software Architecture exam?,3.00
+When is the Information Security exam?,3.00
+When is the Robotics exam?,3.00
+When is the <EXAM> exam occurring?,3.00
+When is the Cloud Computing exam?,3.00
+When is the Internet of Things exam?,3.00
+When is the Data Structures exam?,3.00
+When is the <EXAM> exam set to be held?,3.00
+When is the Compiler Design exam?,3.00
+When is the Computer Ethics exam?,3.00
+When is the Artificial Intelligence for Gaming exam?,3.00
+When is the <EXAM> exam scheduled to take place?,3.00
+Which subjects are in period <PERIOD>?,4.00
+Which subjects are in period 1?,4.00
+Which subjects are in period 2?,4.00
+Which subjects are in period 3?,4.00
+Which subjects are in period 4?,4.00
+Which subjects are in period 5?,4.00
+Which subjects are in period 6?,4.00
+Which subjects are in period <PERIOD>?,4.00
+Which subjects are in period 1?,4.00
+Which subjects are in period 2?,4.00
+Which subjects are in period 3?,4.00
+Which subjects are in period 4?,4.00
+Which subjects are in period 5?,4.00
+Which subjects are in period 6?,4.00
+Which courses are offered in period <PERIOD>?,4.00
+Which courses are offered in period 1?,4.00
+Which courses are offered in period 2?,4.00
+Which courses are offered in period 3?,4.00
+Which courses are offered in period 4?,4.00
+Which courses are offered in period 5?,4.00
+Which courses are offered in period 6?,4.00
+What are the subjects in period <PERIOD>?,4.00
+What are the subjects in period 1?,4.00
+What are the subjects in period 2?,4.00
+What are the subjects in period 3?,4.00
+What are the subjects in period 4?,4.00
+What are the subjects in period 5?,4.00
+What are the subjects in period 6?,4.00
+Can you tell me which subjects are in period <PERIOD>?,4.00
+Can you tell me which subjects are in period 1?,4.00
+Can you tell me which subjects are in period 2?,4.00
+Can you tell me which subjects are in period 3?,4.00
+Can you tell me which subjects are in period 4?,4.00
+Can you tell me which subjects are in period 5?,4.00
+Can you tell me which subjects are in period 6?,4.00
+Which courses are scheduled for period <PERIOD>?,4.00
+Which courses are scheduled for period 1?,4.00
+Which courses are scheduled for period 2?,4.00
+Which courses are scheduled for period 3?,4.00
+Which courses are scheduled for period 4?,4.00
+Which courses are scheduled for period 5?,4.00
+Which courses are scheduled for period 6?,4.00
+Which subjects are included in period <PERIOD>?,4.00
+Which subjects are included in period 1?,4.00
+Which subjects are included in period 2?,4.00
+Which subjects are included in period 3?,4.00
+Which subjects are included in period 4?,4.00
+Which subjects are included in period 5?,4.00
+Which subjects are included in period 6?,4.00
+Tell me the subjects offered in period <PERIOD>?,4.00
+Tell me the subjects offered in period 1?,4.00
+Tell me the subjects offered in period 2?,4.00
+Set a timer for <AMOUNT> <UNIT>.,5.00
+Set a timer for <AMOUNT> seconds.,5.00
+Set a timer for <AMOUNT> minutes.,5.00
+Set a timer for <AMOUNT> hours.,5.00
+Set a timer for  seconds.,5.00
+Set a timer for  minutes.,5.00
+Set a timer for  hours.,5.00
+Set a timer for <AMOUNT> <UNIT>,5.00
+Set a timer for <AMOUNT> seconds,5.00
+Set a timer for <AMOUNT> minutes,5.00
+Set a timer for <AMOUNT> hours,5.00
+Set a timer for seconds,5.00
+Set a timer for minutes,5.00
+Set a timer for hours,5.00
+Start a timer for <AMOUNT> <UNIT>,5.00
+Start a timer for <AMOUNT> seconds,5.00
+Start a timer for <AMOUNT> minutes,5.00
+Start a timer for <AMOUNT> hours,5.00
+Start a timer for seconds,5.00
+Start a timer for minutes,5.00
+Start a timer for hours,5.00
+Begin a timer for <AMOUNT> <UNIT>,5.00
+Begin a timer for <AMOUNT> seconds,5.00
+Begin a timer for <AMOUNT> minutes,5.00
+Begin a timer for <AMOUNT> hours,5.00
+Begin a timer for seconds,5.00
+Begin a timer for minutes,5.00
+Begin a timer for hours,5.00
+Set an alarm for <AMOUNT> <UNIT>,5.00
+Set an alarm for <AMOUNT> seconds,5.00
+Set an alarm for <AMOUNT> minutes,5.00
+Set an alarm for <AMOUNT> hours,5.00
+Set an alarm for seconds,5.00
+Set an alarm for minutes,5.00
+Set an alarm for hours,5.00
+Start an alarm for <AMOUNT> <UNIT>,5.00
+Start an alarm for <AMOUNT> seconds,5.00
+Start an alarm for <AMOUNT> minutes,5.00
+Start an alarm for <AMOUNT> hours,5.00
+Start an alarm for seconds,5.00
+Start an alarm for minutes,5.00
+Start an alarm for hours,5.00
+Begin an alarm for <AMOUNT> <UNIT>,5.00
+Begin an alarm for <AMOUNT> seconds,5.00
+Begin an alarm for <AMOUNT> minutes,5.00
+Begin an alarm for <AMOUNT> hours,5.00
+Begin an alarm for seconds,5.00
+Begin an alarm for minutes,5.00
+Begin an alarm for hours,5.00
+Set a countdown for <AMOUNT> <UNIT>,5.00
+Set a countdown for <AMOUNT> seconds,5.00
+Set a countdown for <AMOUNT> minutes,5.00
+Set a countdown for <AMOUNT> hours,5.00
+Set a countdown for seconds,5.00
+Set a countdown for minutes,5.00
+Set a countdown for hours,5.00
+Start a countdown for <AMOUNT> <UNIT>,5.00
+Start a countdown for <AMOUNT> seconds,5.00
+Which lectures are there <TIMEEXPRESSION>,6.00
+Which lectures are there on Monday at 9?,6.00
+Which lectures are there on Monday at 12?,6.00
+Which lectures are there on Tuesday at 9?,6.00
+Which lectures are there on Tuesday at 12?,6.00
+Which lectures are there on Wednesday at 9?,6.00
+Which lectures are there on Wednesday at 12?,6.00
+Which lectures are there on Thursday at 9?,6.00
+Which lectures are there on Thursday at 12?,6.00
+Which lectures are there on Friday at 9?,6.00
+Which lectures are there on Friday at 12?,6.00
+Which lectures are there on Saturday at 9?,6.00
+Which lectures are there on Saturday at 12?,6.00
+Which lectures are there on Sunday at 9?,6.00
+Which lectures are there on Sunday at 12?,6.00
+Which lectures are there <TIMEEXPRESSION>,6.00
+Which lectures are there on Monday at 9?,6.00
+Which lectures are there on Monday at 12?,6.00
+Which lectures are there on Tuesday at 9?,6.00
+Which lectures are there on Tuesday at 12?,6.00
+Which lectures are there on Wednesday at 9?,6.00
+Which lectures are there on Wednesday at 12?,6.00
+Which lectures are there on Thursday at 9?,6.00
+Which lectures are there on Thursday at 12?,6.00
+Which lectures are there on Friday at 9?,6.00
+Which lectures are there on Friday at 12?,6.00
+Which lectures are there on Saturday at 9?,6.00
+Which lectures are there on Saturday at 12?,6.00
+Which lectures are there on Sunday at 9?,6.00
+Which lectures are there on Sunday at 12?,6.00
+What lectures are scheduled <TIMEEXPRESSION>,6.00
+What lectures are scheduled on Monday at 9?,6.00
+What lectures are scheduled on Monday at 12?,6.00
+What lectures are scheduled on Tuesday at 9?,6.00
+What lectures are scheduled on Tuesday at 12?,6.00
+What lectures are scheduled on Wednesday at 9?,6.00
+What lectures are scheduled on Wednesday at 12?,6.00
+What lectures are scheduled on Thursday at 9?,6.00
+What lectures are scheduled on Thursday at 12?,6.00
+What lectures are scheduled on Friday at 9?,6.00
+What lectures are scheduled on Friday at 12?,6.00
+What lectures are scheduled on Saturday at 9?,6.00
+What lectures are scheduled on Saturday at 12?,6.00
+What lectures are scheduled on Sunday at 9?,6.00
+What lectures are scheduled on Sunday at 12?,6.00
+List the lectures available <TIMEEXPRESSION>,6.00
+List the lectures available on Monday at 9?,6.00
+List the lectures available on Monday at 12?,6.00
+List the lectures available on Tuesday at 9?,6.00
+List the lectures available on Tuesday at 12?,6.00
+List the lectures available on Wednesday at 9?,6.00
+List the lectures available on Wednesday at 12?,6.00
+List the lectures available on Thursday at 9?,6.00
+List the lectures available on Thursday at 12?,6.00
+List the lectures available on Friday at 9?,6.00
+List the lectures available on Friday at 12?,6.00
+List the lectures available on Saturday at 9?,6.00
+List the lectures available on Saturday at 12?,6.00
+List the lectures available on Sunday at 9?,6.00
+List the lectures available on Sunday at 12?,6.00
+Show me the lectures <TIMEEXPRESSION>,6.00
+Can you translate <SENTENCE> to <LANGUAGE>?,7.00
+Can you translate hello to Russian?,7.00
+Can you translate hi to Spanish?,7.00
+Can you translate hello to Chinese?,7.00
+Can you translate  to  ?,7.00
+Can you translate Jaguar to Swedish?,7.00
+Can you translate <SENTENCE> to French?,7.00
+Can you translate bonjour to German?,7.00
+Can you translate hola to Italian?,7.00
+Can you translate konnichiwa to Arabic?,7.00
+Can you translate to Dutch?,7.00
+Can you translate apple to Korean?,7.00
+Could you please translate <SENTENCE> to Portuguese?,7.00
+Could you please translate goodbye to Chinese?,7.00
+Could you please translate thank you to Russian?,7.00
+Could you please translate dog to Turkish?,7.00
+Could you please translate to Swedish?,7.00
+Could you please translate cat to Hindi?,7.00
+Please translate <SENTENCE> to Spanish,7.00
+Please translate yes to French,7.00
+Please translate no to German,7.00
+Please translate house to Italian,7.00
+Please translate to Russian,7.00
+Please translate tree to Chinese,7.00
+I need a translation for <SENTENCE> in Japanese,7.00
+I need a translation for good morning in Korean,7.00
+I need a translation for how are you in Arabic,7.00
+I need a translation for thank you in Dutch,7.00
+I need a translation for in Portuguese,7.00
+I need a translation for book in Swedish,7.00
+Is it possible to translate <SENTENCE> to Hindi?,7.00
+Is it possible to translate good night to Turkish?,7.00
+Is it possible to translate please to Korean?,7.00
+Is it possible to translate water to French?,7.00
+Is it possible to translate to German?,7.00
+Is it possible to translate house to Italian?,7.00
+Can you help me translate <SENTENCE> to Russian?,7.00
+Can you help me translate thank you to Chinese?,7.00
+Can you help me translate hello to Japanese?,7.00
+Can you help me translate to Arabic?,7.00
+Can you help me translate cat to Hindi?,7.00
+Can you help me translate dog to Spanish?,7.00
+Please assist in translating <SENTENCE> to Dutch,7.00
+Please assist in translating goodbye to French,7.00
+Please assist in translating thank you to German,7.00
+Please assist in translating hello to Italian,7.00
+Please assist in translating to Russian,7.00
+Please assist in translating apple to Chinese,7.00
+Could you translate <SENTENCE> into Swedish?,7.00
+Could you translate hello into Hindi?,7.00
+Could you translate goodbye into Korean?,7.00
+Could you translate yes into Arabic?,7.00
+Could you translate into Portuguese?,7.00
+Could you translate book into Turkish?,7.00
+Can you convert <SENTENCE> to French?,7.00
+Can you convert thank you to German?,7.00
+What are the opening times of the <BUILDING>?,8.00
+What are the opening times of the university?,8.00
+What are the opening times of the library?,8.00
+What are the opening times of the SportsCentre?,8.00
+What are the opening times of the  ?,8.00
+What are the opening times of the <BUILDING>?,8.00
+What are the opening times of the university?,8.00
+What are the opening times of the library?,8.00
+What are the opening times of the SportsCentre?,8.00
+What are the opening times of the stadium?,8.00
+What are the opening times of the museum?,8.00
+What are the opening times of the theater?,8.00
+What are the opening times of the café?,8.00
+What are the opening times of the restaurant?,8.00
+What are the opening times of the park?,8.00
+What are the opening times of the mall?,8.00
+What are the opening times of the gym?,8.00
+What are the opening times of the hospital?,8.00
+What are the opening times of the bank?,8.00
+What are the opening times of the post office?,8.00
+What are the opening times of the supermarket?,8.00
+What are the opening times of the pharmacy?,8.00
+What are the opening times of the hotel?,8.00
+What are the opening times of the airport?,8.00
+What are the opening times of the train station?,8.00
+What are the opening times of the bus station?,8.00
+What are the opening times of the cinema?,8.00
+What are the opening times of the gallery?,8.00
+What are the opening times of the zoo?,8.00
+What are the opening times of the stadium?,8.00
+What are the opening times of the concert hall?,8.00
+What are the opening times of the conference center?,8.00
+What are the opening times of the library?,8.00
+What are the opening times of the theater?,8.00
+What are the opening times of the gallery?,8.00
+What are the opening times of the museum?,8.00
+What are the opening times of the café?,8.00
+What are the opening times of the restaurant?,8.00
+What are the opening times of the park?,8.00
+What are the opening times of the mall?,8.00
+What are the opening times of the gym?,8.00
+What are the opening times of the hospital?,8.00
+What are the opening times of the bank?,8.00
+What are the opening times of the post office?,8.00
+What are the opening times of the supermarket?,8.00
+What are the opening times of the pharmacy?,8.00
+What are the opening times of the hotel?,8.00
+What are the opening times of the airport?,8.00
+What are the opening times of the train station?,8.00
+What are the opening times of the bus station?,8.00
+What are the opening times of the cinema?,8.00
+What are the opening times of the gallery?,8.00
+What are the opening times of the zoo?,8.00
+ How to <VERB> <PRO> <NOUN>,9.00
+How to debug my compiler,9.00
+How to fix my compiler,9.00
+How to implement my compiler,9.00
+How to fix my compiler,9.00
+How to fix my code,9.00
+how to implement your compiler,9.00
+How to implement your code,9.00
+How to fix our code,9.00
+How to fix our compiler,9.00
+How to fix your code,9.00
+how to fix your program,9.00
+how to fix your compiler,9.00
+how to fix our program,9.00
+How to debug my compiler,9.00
+How to fix my compiler,9.00
+How to implement my compiler,9.00
+How to improve my compiler,9.00
+How to optimize my compiler,9.00
+How to troubleshoot my compiler,9.00
+How to resolve issues with my compiler,9.00
+How to diagnose problems with my compiler,9.00
+How to fix errors in my compiler,9.00
+How to enhance my compiler's performance,9.00
+How to debug your compiler,9.00
+How to fix your compiler,9.00
+How to implement your compiler,9.00
+How to improve your compiler,9.00
+How to optimize your compiler,9.00
+How to troubleshoot your compiler,9.00
+How to resolve issues with your compiler,9.00
+How to diagnose problems with your compiler,9.00
+How to fix errors in your compiler,9.00
+How to enhance your compiler's performance,9.00
+How to debug our compiler,9.00
+How to fix our compiler,9.00
+How to implement our compiler,9.00
+How to improve our compiler,9.00
+How to optimize our compiler,9.00
+How to troubleshoot our compiler,9.00
+How to resolve issues with our compiler,9.00
+How to diagnose problems with our compiler,9.00
+How to fix errors in our compiler,9.00
+How to enhance our compiler's performance,9.00
+How to debug your code,9.00
+How to fix your code,9.00
+How to implement your code,9.00
+How to improve your code,9.00
+How to optimize your code,9.00
+How to troubleshoot your code,9.00
+How to resolve issues with your code,9.00
+How to diagnose problems with your code,9.00
+How to fix errors in your code,9.00
+How to enhance your code's performance,9.00
+How to debug our code,9.00
+How to fix our code,9.00
+How to implement our code,9.00
+How to improve our code,9.00
+How to optimize our code,9.00
+How to troubleshoot our code,9.00
+How to resolve issues with our code,9.00
+How to diagnose problems with our code,9.00
+How to fix errors in our code,9.00
+How to enhance our code's performance,9.00
+How to debug your program,9.00
+How to fix your program,9.00
+How to implement your program,9.00
+How to improve your program,9.00
+How to optimize your program,9.00
+How to troubleshoot your program,9.00
+How to resolve issues with your program,9.00
