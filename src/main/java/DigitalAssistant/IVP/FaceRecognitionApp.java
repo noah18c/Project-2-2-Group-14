@@ -14,7 +14,7 @@ public class FaceRecognitionApp {
             String pythonScript = "src/main/java/DigitalAssistant/IVP/Recognition.py";
 
             // Create the ProcessBuilder
-            ProcessBuilder processBuilder = new ProcessBuilder("/Users/user/opt/anaconda3/bin/python", pythonScript);
+            ProcessBuilder processBuilder = new ProcessBuilder("C:\\Users\\bcroe\\anaconda3\\python.exe", pythonScript);
             //ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScript);
 
             // Redirect error stream to output stream

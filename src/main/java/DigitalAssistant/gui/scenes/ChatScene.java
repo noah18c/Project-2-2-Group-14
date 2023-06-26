@@ -121,7 +121,7 @@ public class ChatScene implements SceneInterface, Initializable {
 
     /**
      * Method for posting a string from the textfield on one side of the chatbox
-     * @param isUser    if its a user, post on right, if not, post on left side
+     * @param isUser if its a user, post on right, if not, post on left side
      * @return the string that has been put in
      */
 
@@ -383,7 +383,6 @@ public class ChatScene implements SceneInterface, Initializable {
         choiceBoxOptions.add("Open skills editor");
         choiceBoxOptions.add("View current skills");
         choiceBoxOptions.add("Restart chat");
-
 
         choiceBox.setItems(choiceBoxOptions);
         choiceBox.getSelectionModel().selectFirst();
