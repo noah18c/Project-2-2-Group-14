@@ -5,7 +5,13 @@ Team: Alex, Dominic, Jasmijn, Noah, Ruben, Simon, Semih
 Instructions:
 
     To start our software, please run the Run.java file located in "src\main\java\DigitalAssistant\Run.java"
-
+    After the welcome screen has opened, the user can use the choice box/menu to choose one of three different video processing methods to be applied.
+    These choices are:
+        - simple face detection based on a Haar Cascade classifer
+        - facial recognition based on eigenfaces method
+        - facial recognition based on a convolutional neural network with pre-trained weights
+    After successful completion of the facial processing method, the chat screen is opened.
+    
     Chatting with our assistant:
         Our assistant is equiped with a few features which we are sure you will enjoy;
             - A google search feature:
