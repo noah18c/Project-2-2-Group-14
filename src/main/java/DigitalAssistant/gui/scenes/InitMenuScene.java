@@ -104,8 +104,8 @@ public class InitMenuScene implements SceneInterface, Initializable {
             case "Simple Face Detection":
                 simpleFaceDetection();
                 break;
-            case "Eigen Face Detection":
-                eigenFaceDetection();
+            case "Eigen Face Recognition":
+                eigenFaceRecognition();
                 break;
             case "NN Face Detection":
 
@@ -153,8 +153,9 @@ public class InitMenuScene implements SceneInterface, Initializable {
 
     }
 
-    private void eigenFaceDetection(){
-        FaceRecognitionApp.eigenFaceRecognition();
+    private void eigenFaceRecognition(){
+        //FaceRecognitionApp.eigenFaceRecognition();
+        progressLabel.setText(FaceRecognitionApp.eigenFaceRecognition());
         progressBar.setProgress(1.0F);
     }
 
@@ -189,7 +190,7 @@ public class InitMenuScene implements SceneInterface, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         detectionSelectionList.add("Simple Face Detection");
-        detectionSelectionList.add("Eigen Face Detection");
+        detectionSelectionList.add("Eigen Face Recognition");
         detectionSelectionList.add("NN Face Detection");
 
         detectionSelectChoiceBox.setItems(detectionSelectionList);

@@ -10,7 +10,7 @@ import time
 
 
 class FaceRecognitionApp:
-    def __init__(self, dataset_dir, num_eigen_faces=3, threshold=0.3):
+    def __init__(self, dataset_dir, num_eigen_faces=4, threshold=0.3):
         self.dataset_dir = dataset_dir
         self.num_eigen_faces = num_eigen_faces
         self.threshold = threshold
@@ -33,6 +33,8 @@ class FaceRecognitionApp:
         return weights
 
     def recognize_face(self, test_image):
+        MaximalMinDistance = 100
+
         # Step 1: Iterate over each folder (person) in the dataset
         for person_dir in glob.glob(os.path.join(self.dataset_dir, '*')):
             if not os.path.isdir(person_dir):
@@ -71,14 +73,13 @@ class FaceRecognitionApp:
             # Find the closest matching label
             min_distance_idx = np.argmin(distances)
             min_distance = distances[min_distance_idx]
-
-            # Check if the distance is below the threshold
-            if min_distance < self.threshold:
+            
+            if min_distance < MaximalMinDistance:
+                MaximalMinDistance = min_distance
                 person_name = os.path.basename(person_dir)
-                return person_name
+            
 
-        # If no match is found, return None
-        return None
+        return MaximalMinDistance , person_name , self.threshold
 
     def capture_images(self, person_name, output_dir, num_images, image_width, image_height):
         # Create a folder for the person if it doesn't exist
@@ -206,31 +207,53 @@ class FaceRecognitionGUI:
         # Capture a single face image
         a = 0
         recognized_person = "Unknown"
-        
+        distances = []
         while True:
-            a += 1        
-            if a == 11:
-                break
-    
-            face_image = self.face_recognition.capture_single_face(image_width=128,image_height=128)
-    
+            a+=1
+
+            face_image = self.face_recognition.capture_single_face(image_width=256,image_height=256)
+
             # Perform face recognition on the captured image
             if face_image is not None:
-                recognized_person = self.face_recognition.recognize_face(face_image)
-                if recognized_person is not None:
-                    self.result_label.config(text=recognized_person)
-                    #print(recognized_person)
-                    time.sleep(2)  # Wait for 2 seconds before closing
-                    self.main_window.destroy()
-                    
-                    break
-                else:
-                    self.result_label.config(text="Unknown")
-                    recognized_person = "Unknown"
-                    #print("Unknown person")
+                distance ,person_name,threshold = self.face_recognition.recognize_face(face_image)
+                distances.append((distance,person_name,threshold))
+
+            if a == 5:
+                break
         
-        print(recognized_person)    
-        time.sleep(1)  # Wait for 2 seconds before closing   
+        # Sort the results based on distance
+        sorted_results = sorted(distances, key=lambda x: x[0])
+
+        # Retrieve the entry with the smallest distance
+        smallest_distance_entry = sorted_results[0]
+        smallest_distance, smallest_person_name, smallest_threshold = smallest_distance_entry
+                
+        if smallest_distance < smallest_threshold:
+            self.result_label.config(text=person_name)
+            recognized_person = smallest_person_name
+        #     #print(recognized_person)
+        #     time.sleep(2)  # Wait for 2 seconds before closing
+        #     self.main_window.destroy()
+        
+        else:
+            self.result_label.config(text="Unknown")
+            recognized_person = "Unknown"
+        #     #print("Unknown person")
+
+
+        # if recognized_person is not None:
+        #     self.result_label.config(text=recognized_person)
+        #     #print(recognized_person)
+        #     time.sleep(2)  # Wait for 2 seconds before closing
+        #     self.main_window.destroy()
+            
+        #     break
+        # else:
+        #     self.result_label.config(text="Unknown")
+        #     recognized_person = "Unknown"
+        #     #print("Unknown person")
+    
+        print(recognized_person , smallest_distance)    
         self.main_window.quit()
 
     def introduce_person(self):
@@ -252,7 +275,7 @@ class FaceRecognitionGUI:
     def capture_images(self, person_name):
         # Capture multiple images for the person
         self.face_recognition.capture_images(person_name, output_dir='dataset',
-                                             num_images=10, image_width=128, image_height=128)
+                                             num_images=10, image_width=256, image_height=256)
 
     def run(self):
         # Start the GUI event loop
